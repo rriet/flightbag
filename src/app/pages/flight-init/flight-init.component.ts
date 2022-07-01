@@ -3,6 +3,7 @@ import { ClipboardService } from 'ngx-clipboard'
 import { FlightService } from 'src/app/services/flight.service';
 import { PdfReadService } from 'src/app/services/pdf-read.service';
 import { saveAs } from 'file-saver';
+import { ToastService } from 'src/app/services/toast-service';
 
 @Component({
   selector: 'app-flight-init',
@@ -13,7 +14,8 @@ export class FlightInitComponent implements OnInit {
   constructor(
     private _pdf: PdfReadService,
     public _flight: FlightService,
-    private _clipboard: ClipboardService
+    private _clipboard: ClipboardService,
+    public _toastService: ToastService,
   ) { }
 
   ngOnInit(): void {
@@ -65,10 +67,12 @@ export class FlightInitComponent implements OnInit {
   }
 
   copyRoute() {
+    this._toastService.show('Route copied to clipboard.', { classname: 'toast-mgs', delay: 2000 });
     this._clipboard.copy(this._flight.flight.route);
   }
 
   copyAlternates() {
+    this._toastService.show('Alternates copied to clipboard.', { classname: 'toast-mgs', delay: 2000 });
     this._clipboard.copy(this._flight.flight.alternateList);
   }
 
