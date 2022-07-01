@@ -1,0 +1,44 @@
+<div  class="page-header">
+    <div class="page-title">Dangerous Goods</div>
+    <div class="floating-button">
+        <button class="btn btn-primary floating-button btn-icon" type="button">
+            <img class="floating-button-image" src="assets/img/add_circle.svg" (click)="openAddDgDialog()">
+        </button>
+    </div>
+</div>
+
+<div class="container dangerous-goods pt-2">
+    <div class="row" *ngFor="let dg of _flight.dgs; let i = index;">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header">{{dg.primaryHazard.number}} - {{dg.primaryHazard.title}}</div>
+                <div class="card-body">
+                    <div class="row" *ngFor="let drill of dg.drills;">
+                        <div class="col">
+                            {{drill.letter}} - {{drill.hazard}}
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="dg.location">
+                        <div class="col">
+                            <small>Notes & Location:</small>
+                            <br>
+                            {{dg.location}}
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary btn-sm w-100" aria-label="Close"
+                                (click)="showDgDialog(dg)">Drill</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary btn-sm w-100" aria-label="Close" (click)="removeDg(i)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="page-header">
+    <div class="page-title">Inflight Rest</div>
+</div>
+<div class="container inflight-rest">
+    <ul ngbNav #restNav="ngbNav" [(activeId)]="_flight.restReference" class="nav-tabs">
+        <li [ngbNavItem]="'dep-arr'" class="nav-tabs-item">
+            <a ngbNavLink>Departure - Arrival</a>
+            <ng-template ngbNavContent>
+                <div class="row">
+                    <div class="col">
+                        <app-time [(time)]="_flight.timeTakeoff" label="ATD"></app-time>
+                    </div>
+                    <div class="col">
+                        <app-time [(time)]="_flight.timeTrip" label="Flight Time"></app-time>
+                    </div>
+                    <div class="col">
+                        <app-time [(time)]="_flight.timeEta" label="ETA"></app-time>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <app-number [(value)]="_prefs.timeBeforeRest" [int]=true [req]=true label="From T/O"></app-number>
+                    </div>
+                    <div class="col">
+                        <app-number [(value)]="_prefs.timeBetweenRest" [int]=true [req]=true label="Between"></app-number>
+                    </div>
+                    <div class="col">
+                        <app-number [(value)]="_prefs.timeAfterRest" [int]=true [req]=true label="To Land"></app-number>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="'start-end'">
+            <a ngbNavLink>Start - End</a>
+            <ng-template ngbNavContent>
+                <div class="row">
+                    <div class="col">
+                        <app-time [(time)]="_flight.restStart" label="Rest Start"></app-time>
+                    </div>
+                    <div class="col">
+                        <app-number [(value)]="_prefs.timeBetweenRest" [int]=true [req]=true label="Between"></app-number>
+                    </div>
+                    <div class="col">
+                        <app-time [(time)]="_flight.restEnd" label="Rest End"></app-time>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="restNav" class="mt-2"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="col">
+                <select class="form-select form-select-sm select" aria-label=".form-select-sm example"
+                    [(ngModel)]="_flight.restType">
+                    <option value='1,1'>R / R</option>
+                    <option value='1,1,1'>R / R / R</option>
+                    <option value='1,2,1'>R / 2R / R</option>
+                    <option value='1,1,1,1'>R / R / R / R</option>
+                    <option value='1,1,2,2'>R / R / 2R/ 2R</option>
+                    <option value='2,2,1,1'>2R / 2R / R / R</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <table class="table" *ngIf="_flight.rests">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Rest Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rest of _flight.rests; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                    {{rest.start|toHours}}
+                </td>
+                <td>{{ rest.end|toHours }}</td>
+                <td>{{ rest.time|toHours }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

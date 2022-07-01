@@ -1,0 +1,39 @@
+<div class="toast-container">
+  <app-toast aria-live="polite" class="toast-mgs" aria-atomic="true"></app-toast>
+</div>
+<div class="page ">
+  <nav class="navbar fixed-top nav-bar">
+    <div>
+      <button type="button" class="d-md-none side-menu-button" (click)="colapsed = !colapsed">
+        <img src="assets/img/bars-solid.svg" width="20" height="25">
+      </button>
+    </div>
+    <div class="app-title">
+      <span *ngIf="_flight.flight && _flight.callsign; else notShow" class="flight-number">QTR -
+        {{_flight.callsign | uppercase}}</span>
+      <ng-template #notShow><span class="flight-number">eFlightBag</span></ng-template>
+    </div>
+    <div>
+      <button type="button" class="btn-meter" [class.meter-active]="meter" (click)="openMeterTable()">
+        M
+      </button>
+    </div>
+  </nav>
+  <div class="content container-fluid">
+    <div class="row">
+      <nav class="col-sm-4 col-md-3 d-md-block side-menu" *ngIf="!colapsed">
+        <div class="position-sticky pt-3">
+          <ul class="list-group">
+            <li class="list-group-item menu-item" *ngFor="let p of appPages; let i = index" [routerLink]="[p.url]"
+              [routerLinkActive]="'active'" (click)="closeIfSmall()">
+              {{ p.title }}
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <main class="col-sm-12 col-md-9 container-fluid main-content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</div>

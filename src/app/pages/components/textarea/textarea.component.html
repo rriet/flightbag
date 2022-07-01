@@ -1,0 +1,10 @@
+<fieldset class="input-field" [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution"
+    [class.warning]="warning" [class.input-display-readonly]="!edit && !req">
+    <legend>{{label}}<span *ngIf="req">*</span></legend>
+    
+    <div class="input-group">
+        <textarea class="form-control text input-display" placeholder="{{hint}}"
+            [(ngModel)]="value" (ngModelChange)="changed()" [readonly]="!edit" (click)="clicked()"
+            (focus)="focused($event)" (blur)="blured()" rows="{{rows}}" maxlength="{{maxLen}}"></textarea>
+    </div>
+</fieldset>

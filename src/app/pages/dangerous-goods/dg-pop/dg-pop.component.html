@@ -1,0 +1,29 @@
+<div class="container dg-pop p-3">
+    <div class="row p-1">
+        <div class="col">
+            <select class="form-select form-select-sm select" aria-label=".form-select-sm example" [(ngModel)]="selectedDg">
+                <option value='{{dg.number}}' *ngFor="let dg of _dg.getDgs()">{{dg.number}} - {{dg.title}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col">
+            <app-text [(value)]="selectedDrill" [req]=true [label]="'Drill Letter(s)'" [upper]=true></app-text>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col">
+            <app-text [(value)]="location" [label]="'Notes & Location'"></app-text>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary dialog-button" aria-label="Close"
+                (click)="save()">Use</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-secondary dialog-button" aria-label="Close"
+                (click)="_activeModal.dismiss()">Cancel</button>
+        </div>
+    </div>
+</div>

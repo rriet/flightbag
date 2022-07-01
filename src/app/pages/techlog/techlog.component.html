@@ -1,0 +1,74 @@
+<div class="page-header">
+    <div class="page-title">TechLog</div>
+</div>
+<div class="container techlog">
+    <div class="row">
+        <div class="col">
+            <app-number [(value)]="_flight.fuelFinalRamp" [maxLen]="6" (blur)="copyValue(rampFuel.value, fuelDeparture);"
+                #rampFuel [req]=true [tons]=true label="Required Fuel"></app-number>
+        </div>
+        <div class="col">
+            <app-number [(value)]="_flight.fuelArrivalBeforeRefuel" [maxLen]="6" (blur)="copyValue(fuelArrival.value, fuelBefore);"
+                #fuelArrival [req]=true [tons]=true label="Arrival Fuel"></app-number>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-number [(value)]="_flight.fuelBefore" [maxLen]="6" (blur)="copyValue(fuelBefore.value, fuelArrival);"
+                #fuelBefore [req]=true [tons]=true label="Qty Before Refuel"></app-number>
+        </div>
+        <div class="col">
+            <app-number [value]="_flight.fuelUpliftKg" [edit]=false label="Metered Uplift (Kg)"></app-number>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-number [value]="_flight.fuelReqUplift" [edit]=false label="Required Uplift"></app-number>
+        </div>
+        <div class="col">
+            <app-number [(value)]="_flight.fuelDeparture" [maxLen]="6"
+                (blur)="copyValue(fuelDeparture.value, rampFuel);" #fuelDeparture [req]=true [tons]=true
+                label="Departure Fuel"></app-number>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-number [value]="_flight.fuelMeteredUplift" [req]=true [edit]=false (click)="showUpliftMenu()"
+                label="Metered Uplift (L)">
+            </app-number>
+        </div>
+        <div class="col">
+            <app-number [value]="_flight.fuelUsedOnGround" [edit]=false label="Fuel Used on Ground"></app-number>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <app-number [(value)]="_flight.fuelSg" [int]=true [maxLen]="3" [prefix]="'0.'" [req]=true
+                label="SG (Kg/L) | (Lb/Gl)" [sufix]="_flight.fuelSgLgG">
+            </app-number>
+        </div>
+        <div class="col">
+            <app-number [value]="_flight.fuelDiscrepancy" [edit]=false label="Discrepancy"></app-number>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p>
+                        <small><b>Note:</b> Click on the icon <img src="assets/img/content_copy.svg"> to copy the value
+                            to the
+                            clipboard.</small>
+                    </p>
+                    <p>
+                        <small>
+                            <b>Note2:</b> Fuel input will be considered Tons if it has a decimal point. (Example: 5.8 ->
+                            5800 or 23. ->
+                            23000)
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

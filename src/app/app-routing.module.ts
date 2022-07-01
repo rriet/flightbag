@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DangerousGoodsComponent } from './pages/dangerous-goods/dangerous-goods.component';
+import { FlightDisplayComponent } from './pages/flight-display/flight-display.component';
+import { FlightInitComponent } from './pages/flight-init/flight-init.component';
+import { InflightRestComponent } from './pages/inflight-rest/inflight-rest.component';
+import { MainComponent } from './pages/main/main.component';
+import { MeterTableComponent } from './pages/meter-table/meter-table.component';
+import { TechlogComponent } from './pages/techlog/techlog.component';
+import { ToolsComponent } from './pages/tools/tools.component';
+
+const routes: Routes = [
+  //{ path: '', redirectTo: '', pathMatch: 'full' },
+  {path: 'dangerous-goods', component: DangerousGoodsComponent },
+  {path: 'flight-display', component: FlightDisplayComponent },
+  {path: 'flight-init', component: FlightInitComponent },
+  {path: 'inflight-rest', component: InflightRestComponent },
+  { path: '', component: MainComponent },
+  {path: 'meter-table', component: MeterTableComponent },
+  {path: 'techlog', component: TechlogComponent },
+  {path: 'tools', component: ToolsComponent },
+  { path: '**', redirectTo: 'main' },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,0 +1,16 @@
+<fieldset class="input-field" [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution"
+    [class.warning]="warning" [class.input-display-readonly]="!edit && !req">
+    <legend>{{label}}<span *ngIf="req">*</span></legend>
+
+    <div class="input-group">
+        <span class="input-group-text input-display-prefix" *ngIf="prefix" (click)="clicked()">{{prefix}}</span>
+        <input class="form-control input-display" [class.text]="!center && !right" [class.number]="right"
+            [class.center-text]="center" [class.has-prefix]="prefix" placeholder="{{hint}}" [(ngModel)]="value"
+            (ngModelChange)="changed()" [readonly]="!edit" (click)="clicked()" (focus)="focused($event)"
+            (blur)="blured()" maxlength="{{maxLen}}">
+        <span class="input-group-text input-display-sufix" *ngIf="sufix || sufixIcon" (click)="sufixClicked()">
+            {{sufix}}
+            <img *ngIf="sufixIcon" src="assets/img/{{sufixIcon}}">
+        </span>
+    </div>
+</fieldset>

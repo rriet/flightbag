@@ -1,0 +1,47 @@
+<div class="page-header">
+    <div class="page-title">Flight Configuration</div>
+</div>
+<div class="container flight-init">
+    <div class="card mb-3">
+        <div class="card-header">Flight Information</div>
+        <div class="card-body">
+            Flight Number: {{_flight.flight.number}}
+            <br>
+            From: {{_flight.flight.from}}
+            <br>
+            To: {{_flight.flight.to}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="fileUpload.click()">Load Flight</button>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="copyRoute()">Copy Route</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="copyAlternates()">Copy Alternates</button>
+        </div>
+    </div>
+    <div class="row  pt-2">
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="downloadFligh()">Download Flight</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="backupUpload.click()">Restore Flight</button>
+        </div>
+    </div>
+    <div class="row  pt-2">
+        <div class="col">
+            <button type="button" class="btn btn-warning" (click)="_flight.clearFligh()">Clear Flight</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-danger" (click)="clearLocalStorage()">Clear All Data</button>
+        </div>
+    </div>
+</div>
+<input type="file" class="hidden-input form-control" (change)="extractText($event)" #fileUpload>
+<input type="file" class="hidden-input form-control" (change)="restoreBackup($event)" #backupUpload>

@@ -1,0 +1,73 @@
+<div class="card mb-3">
+    <div class="card-header">Fuel Planing</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [int]=true [(value)]="_flight.fuelTaxi" label="Taxi Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [tons]=true [(value)]="_flight.fuelTrip" label="Trip Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [tons]=true [(value)]="_flight.fuelRamp" label="Ramp Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [int]=true [(value)]="_flight.fuelCrewExtra" label="Crew Extra Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [tons]=true [(value)]="_flight.fuelFinalRamp" label="Final Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <app-number [tons]=true [(value)]="_flight.fuelDeparture" label="Departure Fuel" [round]="100" [req]="true"></app-number>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">Weight Planing</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-number [int]=true [(value)]="_flight.mzfw" label="MZFW" [req]="true"></app-number>
+            </div>
+            <div class="col">
+                <app-number [int]=true [(value)]="_flight.mtow" label="MTOW" [req]="true"></app-number>
+            </div>
+            <div class="col">
+                <app-number [int]=true [(value)]="_flight.mlwt" label="MLWT" [req]="true"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="_flight.ezfw" label="EZFW" [tons]="true" [req]="true"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.etow" label="ETOW" [edit]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.elwt" label="ELWT" [edit]="false"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [value]="_flight.zfwMargin" label="ZFW Margin" [edit]="false" [clickable]="false" [caution]="_flight.limitingWeight == 'ZFW'"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.towMargin" label="TOW Margin" [edit]="false" [clickable]="false" [caution]="_flight.limitingWeight == 'TOW'"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.ldwMargin" label="LWT Margin" [edit]="false" [clickable]="false" [caution]="_flight.limitingWeight == 'LDW'"></app-number>
+            </div>
+        </div>
+    </div>
+</div>

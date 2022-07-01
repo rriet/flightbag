@@ -1,0 +1,46 @@
+<div class="container techlog-pop p-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="btnUnit" id="liters" [checked]="_flight.fuelUpliftUnit === 'LTS'"
+                (click)="setUnit('LTS')">
+                <label class="btn btn-outline-primary" for="liters">Liters</label>
+
+                <input type="radio" class="btn-check" name="btnUnit" id="gallons" [checked]="_flight.fuelUpliftUnit === 'USG'"
+                (click)="setUnit('USG')">
+                <label class="btn btn-outline-primary" for="gallons">Gallons</label>
+            </div>
+        </div>
+        <div class="col-4">
+            <button type="button" class="btn btn-secondary" aria-label="Close"
+                (click)="addFuel()">+</button>
+        </div>
+    </div>
+    <form [formGroup]="fuelFormGroup">
+        <div *ngFor="let group of fuelArray.controls; let i = index;" formArrayName="fuels">
+            <div [formGroupName]='i'>
+                <div class="row fuel-input-row">
+                    <div class="col-10">
+                        <div class="form-floating mb-3">
+                            <app-number [int]="true" [label]="'Departure'" formControlName="fuelAmount" #value onfocus="this.select()"
+                            [sufixIcon]="'content_copy.svg'" (sufixClick)="copyFuelValue(value.value)"></app-number>
+                          </div>
+                    </div>
+                    <div class="col-2 uplift-input" *ngIf="i!=0">
+                        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="removeFuel(i)">-</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary dialog-button" aria-label="Close"
+                (click)="save(); _activeModal.dismiss()" [disabled]="!fuelFormGroup?.valid">Use</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-secondary dialog-button" aria-label="Close"
+                (click)="_activeModal.dismiss()">Cancel</button>
+        </div>
+    </div>
+</div>

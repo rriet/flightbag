@@ -1,0 +1,101 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Departure
+            </div>
+            <div class="col" *ngIf="_flight.etops">
+                <button type="button" class="btn btn-outline-warning btn-sm btn-flat">
+                    ETOPS
+                </button>
+            </div>
+            <div class="col" *ngIf="_flight.mel">
+                <button type="button" class="btn btn-outline-warning btn-flat btn-flat">
+                    MEL
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-date [dateInt]="_flight.dateStandardDeparture" label="Scheduled Date" [edit]="false"></app-date>
+            </div>
+            <div class="col">
+                <app-text [value]="_flight.number" label="Flight Number" [center]="true" [edit]="false"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [time]="_flight.timeStd" label="STD" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeStdLocal" label="STD Local" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="depDelay" [label]="delayed?'Delay':'To Go'" [edit]="false"></app-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-text [value]="_flight.from" [label]="'From'" [edit]="false"></app-text>
+            </div>
+            <div class="col">
+                <app-text [value]="_flight.to" [label]="'To'" [edit]="false"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [time]="_flight.timeBlock" label="Block time" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeTrip" label="Flight Time" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.highestLevel" [center]="true" label="Highest FL"></app-text>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Notes
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-danger btn-sm" [disabled]="_flight.depNotesCount === 1"
+                    (click)="_flight.removeDepNote()">
+                    <img src="assets/img/delete.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-success btn-sm"
+                    (click)="_flight.addDepNote()">
+                    <img src="assets/img/add.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="_flight.currentDepNote === 1"
+                    (click)="_flight.currentDepNote = _flight.currentDepNote - 1">
+                    <img src="assets/img/skip_previous.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                    [disabled]="_flight.currentDepNote === _flight.depNotesCount"
+                    (click)="_flight.currentDepNote = _flight.currentDepNote + 1">
+                    <img src="assets/img/skip_next.svg" height="20px" width="30px">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-textarea [label]="'Note #'+_flight.currentDepNote" [(value)]="_flight.selectedDepNoteText"
+                    [rows]="10"></app-textarea>
+            </div>
+        </div>
+    </div>
+</div>

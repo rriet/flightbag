@@ -1,0 +1,16 @@
+<fieldset class="input-field" [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution"
+    [class.warning]="warning" [class.input-display-readonly]="!edit && !req">
+    <legend>{{label}}<span *ngIf="req">*</span></legend>
+
+    <input class="form-control input-display" readonly [footerTemplate]="footerTemplate" placeholder="{{hint}}"
+        [(ngModel)]="dateInt" (ngModelChange)="changed()" ngbDatepicker #d="ngbDatepicker" (click)="clicked(d)">
+</fieldset>
+
+<ng-template #footerTemplate>
+    <hr class="my-0">
+    <div style="text-align: center;">
+        <button class="btn btn-primary btn-sm m-2 float-start" (click)="setToday(); d.close()">Today</button>
+    <button class="btn btn-primary btn-sm m-2" *ngIf="!req" (click)="dateInt = null; changed(); d.close()">Clear</button>
+    <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Close</button>
+    </div>
+</ng-template>

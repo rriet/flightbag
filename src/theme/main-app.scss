@@ -1,0 +1,115 @@
+// Disable Zoom on IOS
+body {
+    touch-action: none;
+}
+
+.toast-mgs {
+    position: absolute;
+    width: 60vw;
+    left: 10vw;
+    top: 2vh;
+    z-index: 100000000;
+
+    /* Key design for very small screen */
+    @media only screen and (max-width : 768px) {
+        width: 80vw;
+        left: 5vw;
+    }
+}
+
+.page {
+    width: 100wh;
+    margin-right: 10px;
+
+    // height: 50vh;
+
+    .nav-bar {
+        height: 45px;
+
+        .side-menu-button {
+            position: relative;
+            top: -10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .app-title {
+            position: relative;
+            top: -10px;
+            font-size: 2rem;
+        }
+
+        .btn-meter {
+            position: relative;
+            top: -10px;
+            width: 55px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    }
+
+    .content {
+        min-height: calc(100vh - 45px);
+        margin-top: 45px;
+        width: 100vw;
+        overflow-y: auto;
+
+        .side-menu {
+            min-height: calc(100vh - 45px);
+
+            .menu-item {
+                white-space: nowrap;
+                margin: 2px;
+                cursor: pointer;
+            }
+
+            /* Key design for very small screen */
+            @media only screen and (max-width : 768px) {
+                position: absolute;
+                z-index: 800;
+            }
+
+        }
+
+        .main-content {
+            text-align: justify;
+            min-height: calc(100vh - 45px);
+            padding: 0px;
+        }
+
+        .no-gutter {
+            padding-right: 0;
+            padding-left: 0;
+
+            [class*='col'] {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+        }
+
+        // ipad screen //
+        @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+            min-height: calc(100vh - 120px);
+
+            .side-menu {
+                min-height: calc(100vh - 117px);
+            }
+
+            .main-content {
+                min-height: calc(100vh - 117px);
+            }
+
+            .meter-content {
+                min-height: calc(100vh - 117px);
+            }
+
+            .no-gutter {
+                [class*='col'] {
+                    padding-right: 3px;
+                    padding-left: 3px;
+                }
+            }
+        }
+    }
+}

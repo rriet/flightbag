@@ -1,0 +1,105 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Arrival
+            </div>
+            <div class="col">
+                {{_flight.to}}
+            </div>
+            <div class="col">
+                LT: {{arrivalTimeNow|toHours}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-date [dateInt]="_flight.dateArrivalLocal" label="Arrival Date (Loca)" [edit]="false"></app-date>
+            </div>
+            <div class="col">
+                <app-text [value]="_flight.number" label="Flight Number" [center]="true" [edit]="false"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [(time)]="_flight.timeEta" label="ETA"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeEtaLocal" label="ETA (Local)" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeEtaDelay" [label]="_flight.isDelayedEta?'Delay':'Before STA'" [edit]="false"></app-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="_flight.mlwt" label="MLWT" [int]=true [req]="true"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.elwt" label="LWT" [edit]="false"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-text [(value)]="_flight.atisInfo" label="ATIS" [upper]="true"></app-text>
+            </div>
+            <div class="col">
+                <app-number [(value)]="_flight.temperature" label="Temp (C|F)" [sufix]="_flight.temperatureF"></app-number>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.parkingStand" label="Parking Stand"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <app-text [(value)]="_flight.dispatchName" label="Dispatch Name"></app-text>
+            </div>
+            <div class="col-4">
+                <app-text [(value)]="_flight.dispatchFreq" label="Frequency" [center]="true"></app-text>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Notes
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-danger btn-sm" [disabled]="_flight.arrNotesCount === 1"
+                    (click)="_flight.removeArrNote()">
+                    <img src="assets/img/delete.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-success btn-sm"
+                    (click)="_flight.addArrNote()">
+                    <img src="assets/img/add.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="_flight.currentArrNote === 1"
+                    (click)="_flight.currentArrNote = _flight.currentArrNote - 1">
+                    <img src="assets/img/skip_previous.svg" height="20px" width="30px">
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                    [disabled]="_flight.currentArrNote === _flight.arrNotesCount"
+                    (click)="_flight.currentArrNote = _flight.currentArrNote + 1">
+                    <img src="assets/img/skip_next.svg" height="20px" width="30px">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-textarea [label]="'Note #'+_flight.currentArrNote" [(value)]="_flight.selectedArrNoteText"
+                    [rows]="8"></app-textarea>
+            </div>
+        </div>
+    </div>
+</div>

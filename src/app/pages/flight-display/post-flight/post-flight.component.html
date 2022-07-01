@@ -1,0 +1,90 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Times
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-date [dateInt]="_flight.dateActualDeparture" label="Departure Date" [edit]="false"></app-date>
+            </div>
+            <div class="col">
+                <app-text [value]="_flight.number" label="Flight Number" [center]="true" [edit]="false"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [(time)]="_flight.timeAta" label="Chocks-On"></app-time>
+            </div>
+            <div class="col">
+                <app-time [(time)]="_flight.timeLdg" label="Landing"></app-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [(time)]="_flight.timeAtd" label="Chocks-Off"></app-time>
+            </div>
+            <div class="col">
+                <app-time [(time)]="_flight.timeTakeoff" label="Take-Off"></app-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [time]="_flight.timeBlockActual" label="Block Time" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeFlightActual" label="Flight Time" [edit]="false"></app-time>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-time [(time)]="_flight.timeBlock" label="FPL Block" [edit]="false"></app-time>
+            </div>
+            <div class="col">
+                <app-time [time]="_flight.timeFplTrip" label="FPL Time" [edit]="false"></app-time>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Fuel
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-number [tons]=true [(value)]="_flight.fuelDeparture" label="Departure Fuel" [round]="100" #fuelDeparture
+                    [sufixIcon]="'content_copy.svg'" (sufixClick)="copyFuelValue(fuelDeparture.value)" [req]="true">
+                </app-number>
+            </div>
+            <div class="col">
+                <app-number [tons]=true [(value)]="_flight.fuelArrivalAfterFlight" label="Arrival Fuel" [round]="100" #fuelArrivalAfterFlight
+                    [sufixIcon]="'content_copy.svg'" (sufixClick)="copyFuelValue(fuelArrivalAfterFlight.value)" [req]="true">
+                </app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [value]="_flight.fuelMeteredUplift" [edit]=false label="Metered Uplift (LTS)"></app-number>
+            </div>
+            <div class="col">
+                <app-number [(value)]="_flight.fuelSg" [int]=true [maxLen]="3" [prefix]="'0.'" [req]=true
+                    label="SG (Kg/L) | (Lb/Gl)" [sufix]="_flight.fuelSgLgG"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" *ngFor="let fuelUplift of _flight.fuelUplifts; let i = index;">
+                <app-number [value]="fuelUplift" [edit]=false #value
+                    [label]="'Uplift #' + (i+1) + ' (' + _flight.fuelUpliftUnit + ')'" [sufixIcon]="'content_copy.svg'"
+                    (sufixClick)="copyFuelValue(value.value)"></app-number>
+            </div>
+        </div>
+    </div>
+</div>

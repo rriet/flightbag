@@ -1,0 +1,144 @@
+/** Ionic CSS Variables **/
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --item-background: #ffffff;
+  --card-background: #d7d7de;
+
+  --toolbar-background: #03005e;
+  --toolbar-text-color: #ffffff;
+  --toolbar-border-color: #8b87fc;
+
+  --side-menu-background: #03005e;
+  --side-menu-item-background: #4743c2;
+  --side-menu-text-color: #ffffff;
+  --side-menu-item-text-color: #ffffff;
+  --side-menu-item-hover-background: #03005e;
+  --side-menu-text-hover-color: #ffffff;
+  --side-menu-border-color: #8b87fc;
+
+  /** primary **/
+  --color-primary: #3880ff;
+  --color-primary-contrast: #ffffff;
+  --color-primary-shade: #3171e0;
+  --color-primary-tint: #4c8dff;
+
+  /** secondary **/
+  --color-secondary: #3dc2ff;
+  --color-secondary-contrast: #ffffff;
+  --color-secondary-shade: #36abe0;
+  --color-secondary-tint: #50c8ff;
+
+  /** tertiary **/
+  --color-tertiary: #5260ff;
+  --color-tertiary-contrast: #ffffff;
+  --color-tertiary-shade: #4854e0;
+  --color-tertiary-tint: #6370ff;
+
+  /** success **/
+  --color-success: #2dd36f;
+  --color-success-contrast: #ffffff;
+  --color-success-shade: #28ba62;
+  --color-success-tint: #42d77d;
+
+  /** warning **/
+  --color-warning: #ffc409;
+  --color-warning-contrast: #000000;
+  --color-warning-shade: #e0ac08;
+  --color-warning-tint: #ffca22;
+
+  /** danger **/
+  --color-danger: #eb445a;
+  --color-danger-contrast: #ffffff;
+  --color-danger-shade: #cf3c4f;
+  --color-danger-tint: #ed576b;
+
+  /** dark **/
+  --color-dark: #222428;
+  --color-dark-contrast: #ffffff;
+  --color-dark-shade: #1e2023;
+  --color-dark-tint: #383a3e;
+
+  /** medium **/
+  --color-medium: #92949c;
+  --color-medium-contrast: #ffffff;
+  --color-medium-shade: #808289;
+  --color-medium-tint: #9d9fa6;
+
+  /** light **/
+  --color-light: #f4f5f8;
+  --color-light-contrast: #000000;
+  --color-light-shade: #d7d8da;
+  --color-light-tint: #f5f6f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  /*
+   * Dark Colors
+   * -------------------------------------------
+   */
+
+  :root {
+    --background-color: #000000;
+    --text-color: #ffffff;
+    --item-background: #000000;
+    --card-background: #1c1c1d;
+
+    --toolbar-background: #49494e;
+    --toolbar-text-color: #ffffff;
+    --toolbar-border-color: #404040;
+
+    --side-menu-background: #232325;
+    --side-menu-item-background: #49494e;
+    --side-menu-text-color: #ffffff;
+    --side-menu-item-text-color: #ffffff;
+    --side-menu-item-hover-background: #232325;
+    --side-menu-text-hover-color: #fde428;
+    --side-menu-border-color: #ffffff;
+
+    --color-primary: #428cff;
+    --color-primary-contrast: #ffffff;
+    --color-primary-shade: #3a7be0;
+    --color-primary-tint: #5598ff;
+
+    --color-secondary: #50c8ff;
+    --color-secondary-contrast: #ffffff;
+    --color-secondary-shade: #46b0e0;
+    --color-secondary-tint: #62ceff;
+
+    --color-tertiary: #6a64ff;
+    --color-tertiary-contrast: #ffffff;
+    --color-tertiary-shade: #5d58e0;
+    --color-tertiary-tint: #7974ff;
+
+    --color-success: #2fdf75;
+    --color-success-contrast: #000000;
+    --color-success-shade: #29c467;
+    --color-success-tint: #44e283;
+
+    --color-warning: #ffd534;
+    --color-warning-contrast: #000000;
+    --color-warning-shade: #e0bb2e;
+    --color-warning-tint: #ffd948;
+
+    --color-danger: #ff4961;
+    --color-danger-contrast: #ffffff;
+    --color-danger-shade: #e04055;
+    --color-danger-tint: #ff5b71;
+
+    --color-dark: #f4f5f8;
+    --color-dark-contrast: #000000;
+    --color-dark-shade: #d7d8da;
+    --color-dark-tint: #f5f6f9;
+
+    --color-medium: #989aa2;
+    --color-medium-contrast: #000000;
+    --color-medium-shade: #86888f;
+    --color-medium-tint: #a2a4ab;
+
+    --color-light: #222428;
+    --color-light-contrast: #ffffff;
+    --color-light-shade: #1e2023;
+    --color-light-tint: #383a3e;
+  }
+}

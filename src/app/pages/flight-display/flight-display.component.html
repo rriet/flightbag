@@ -1,0 +1,39 @@
+<div class="page-header">
+    <div class="page-title">Flight Display</div>
+</div>
+<div class="container flight-display">
+    <ul ngbNav #displayNav="ngbNav" [(activeId)]="_flight.activeDisplay" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink><img src="assets/img/weight.svg"></a>
+            <ng-template ngbNavContent>
+                <app-weight-fuel></app-weight-fuel>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink><img src="assets/img/takeoff.svg"></a>
+            <ng-template ngbNavContent>
+                <app-departure></app-departure>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink><img src="assets/img/flight.svg"></a>
+            <ng-template ngbNavContent>
+                <app-cruise></app-cruise>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="4">
+            <a ngbNavLink><img src="assets/img/land.svg"></a>
+            <ng-template ngbNavContent>
+                <app-approach></app-approach>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="5">
+            <a ngbNavLink><img src="assets/img/book.svg"></a>
+            <ng-template ngbNavContent>
+                <app-post-flight></app-post-flight>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="displayNav" class="mt-2"></div>
+</div>

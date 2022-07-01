@@ -1,0 +1,33 @@
+<div class="show-dg-container">
+    <div class="card mb-3">
+        <div class="card-header">
+            {{dangerousGood.primaryHazard.number}} - {{dangerousGood.primaryHazard.title}}
+            <button type="button" class="btn-close" aria-label="Close" (click)="_activeModal.dismiss('Cross click')"></button>
+        </div>
+        <div class="card-body">
+            <b>Inherent Hazard</b>
+            <br>
+            {{dangerousGood.primaryHazard.hazard}}
+            <hr>
+            <b>Hazard To Aircraft</b>
+            <br>
+            {{dangerousGood.primaryHazard.toAircraft}}
+            <hr>
+            <b>Hazard To Occupants</b>
+            <br>
+            {{dangerousGood.primaryHazard.toOccupants}}
+            <hr>
+            <b>Spill Or Leak Procedure</b>
+            <br>
+            {{dangerousGood.primaryHazard.spillProcedure}}
+            <hr>
+            <b>Firefighting Procedure</b>
+            <br>
+            {{dangerousGood.primaryHazard.firefighting}}
+            <hr>
+            <b>Additional Considerations</b>
+            <br>
+            {{dangerousGood.primaryHazard.aditional}}
+        </div>
+    </div>
+</div>

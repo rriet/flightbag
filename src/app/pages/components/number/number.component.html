@@ -1,0 +1,15 @@
+<fieldset class="input-field" [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution"
+    [class.warning]="warning" [class.input-display-readonly]="!edit && !req">
+    <legend>{{label}}<span *ngIf="req">*</span></legend>
+
+    <div class="input-group">
+        <span class="input-group-text input-display-prefix" *ngIf="prefix" (click)="clicked()">{{prefix}}</span>
+        <input class="form-control number input-display" [class.has-prefix]="prefix" placeholder="{{hint}}"
+            [(ngModel)]="formattedNumber" (ngModelChange)="changed()" (keypress)="keypress($event)" [readonly]="!edit"
+            (click)="clicked()" (focus)="focused($event)" type="tel" (blur)="blured()" maxlength="{{_maxLen}}">
+        <span class="input-group-text input-display-sufix" *ngIf="sufix || sufixIcon" (click)="sufixClicked()">
+            {{sufix}}
+            <img *ngIf="sufixIcon" src="assets/img/{{sufixIcon}}">
+        </span>
+    </div>
+</fieldset>

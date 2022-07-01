@@ -1,0 +1,226 @@
+// Components
+
+.select {
+    margin-top: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+// Main page //
+.nav-bar {
+    background-color: var(--toolbar-background);
+    color: var(--toolbar-text-color);
+
+    .side-menu-button {
+        background-color: var(--background-color);
+        color: var(--toolbar-text-color);
+    }
+
+    .btn-meter {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+}
+
+.side-menu {
+    background-color: var(--side-menu-background);
+    color: var(--side-menu-text-color);
+
+    .menu-item {
+        background-color: var(--side-menu-item-background);
+        color: var(--side-menu-item-text-color);
+    }
+}
+
+.main-content {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.meter-table-container {
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+    .btn-meter-close {
+        @media (prefers-color-scheme: dark) {
+            filter: invert(100%);
+        }
+    }
+
+    tr:nth-child(even) {
+        background-color: var(--color-light-tint);
+        color: var(--text-color);
+        border-color: var(--color-light-tint);
+    }
+
+    tr:nth-child(odd) {
+        color: var(--text-color);
+    }
+
+    .cell {
+        border-color: var(--color-light-shade);
+    }
+
+    .border-left {
+        border-color: var(--color-light-shade);
+    }
+}
+
+.show-meter-dialog {
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+    .show-meter-table {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+}
+
+.show-dg-container {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.dg-pop {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+// Main page End //
+
+// General Pages //
+
+
+.page-header {
+    background-color: var(--color-light-shade);
+}
+
+// Tech Log //
+.techlog-pop {
+    background-color: var(--background-color);
+
+}
+
+// Bootstrap components //
+
+.nav-tabs {
+    background-color: var(--background-color);
+    .nav-link.active {   
+        background-color: var(--color-light-shade);
+        color: var(--text-color);
+    }
+    .nav-link {   
+        color: var(--text-color);
+    }
+}
+
+.card {
+    .card-header {
+        background-color: var(--color-light-tint);
+    }
+
+    background-color: var(--background-color);
+    border-color: var(--color-light-tint);
+
+    .card-footer {
+        background-color: var(--color-light-tint);
+    }
+}
+
+.table {
+    color: var(--text-color);
+}
+
+.list-group-item {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--color-light-tint);
+}
+
+// Custom Components //
+.input-field {
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+    legend {
+        background-color: var(--background-color);
+    }
+}
+
+.input-display {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.input-display:read-only {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.input-display:focus {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.input-display-prefix {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.input-display-sufix {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.input-display-readonly {
+    legend {
+        color: var(--color-success);
+    }
+}
+
+.caution {
+    color: var(--color-warning);
+
+    input {
+        border-color: var(--color-warning);
+    }
+
+    span {
+        border-color: var(--color-warning);
+    }
+}
+
+.warning {
+    animation: animate 1s linear infinite;
+
+    input {
+        border-color: var(--color-danger);
+    }
+
+    span {
+        border-color: var(--color-danger);
+    }
+}
+
+@keyframes animate {
+    0% {
+        color: var(--color-warning);
+    }
+
+    100% {
+        color: var(--color-danger);
+    }
+}
+
+// Components End //
+
+// Images inverse color on dark media
+@media (prefers-color-scheme: dark) {
+    img {
+        filter: invert(80%);
+    }
+
+    .btn-close {
+        filter: invert(80%);
+    }
+}
