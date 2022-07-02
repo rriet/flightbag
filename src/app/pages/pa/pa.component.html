@@ -1,0 +1,60 @@
+<div class="page-header">
+    <div class="page-title">PA Guide</div>
+</div>
+<div class="container flight-init">
+    <div class="card mb-3">
+        <ul ngbNav #restNav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1" class="nav-tabs-item">
+                <a ngbNavLink>PA</a>
+                <ng-template ngbNavContent>
+                    <div class="row">
+                        <div class="col">
+                            <app-textarea label="PA"
+                                [(value)]="_flight.selectedDepNoteText" [rows]="10"></app-textarea>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Config</a>
+                <ng-template ngbNavContent>
+                    <div class="row">
+                        <div class="col">
+                            <app-textarea label="PA Template"
+                                [(value)]="_flight.selectedDepNoteText" [rows]="10"></app-textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Instructions</a>
+                <ng-template ngbNavContent>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Instructions:</h3>
+                            <p>
+                                The above text will be used as a template for the PA. The following 
+                                strings will be replaced by the respective information.
+                            </p>
+                            <ul>
+                                <li>
+                                    [morning...] => morning / afternoon / evening
+                                </li>
+                                <li>
+                                    [morning...] => morning / afternoon / evening
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="restNav" class="mt-2"></div>
+    </div>
+</div>

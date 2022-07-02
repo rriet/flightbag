@@ -63,6 +63,7 @@ export class AppComponent {
 
   public appPages = [
     { title: 'Inflight Display', url: '/flight-display', icon: "airplane" },
+    // { title: 'PA Guide', url: '/pa', icon: "book" },
     { title: 'TechLog', url: '/techlog', icon: "book" },
     { title: 'Inflight Rest', url: '/inflight-rest', icon: "bed" },
     { title: 'dangerous goods', url: '/dangerous-goods', icon: "warning" },

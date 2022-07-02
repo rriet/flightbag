@@ -29,6 +29,7 @@ import { CruiseComponent } from './pages/flight-display/cruise/cruise.component'
 import { ApproachComponent } from './pages/flight-display/approach/approach.component';
 import { PostFlightComponent } from './pages/flight-display/post-flight/post-flight.component';
 import { WaypointComponent } from './pages/flight-display/cruise/waypoint/waypoint.component';
+import { PaComponent } from './pages/pa/pa.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { WaypointComponent } from './pages/flight-display/cruise/waypoint/waypoi
     ApproachComponent,
     PostFlightComponent,
     WaypointComponent,
+    PaComponent,
   ],
   imports: [
     BrowserModule,

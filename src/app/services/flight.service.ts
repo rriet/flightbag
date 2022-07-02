@@ -322,7 +322,7 @@ export class FlightService {
 
   @Input()
   get timeStdLocal(): number | null {
-    return this.timeStd + this.fromTimeZone;
+    return this.getLocalTime(this.timeStd, this.fromTimeZone)
   }
 
   @Input()
@@ -387,11 +387,7 @@ export class FlightService {
 
   @Input()
   get timeEtaLocal(): number | null {
-    if (this.timeEta && this.toTimeZone) {
-      let etaLocal = this.timeEta + this.toTimeZone;
-      return (etaLocal >= 0) ? etaLocal : etaLocal + (24 * 60);
-    }
-    return null;
+    return this.getLocalTime(this.timeEta, this.toTimeZone)
   }
 
   @Input()
@@ -433,11 +429,7 @@ export class FlightService {
 
   @Input()
   get timeBlockActual(): number | null {
-    if (this.flight.timeAtd !== null && this.flight.timeAta !== null) {
-      let block = this.flight.timeAta - this.flight.timeAtd;
-      return (block > 0) ? block : block + (60 * 24)
-    }
-    return null;
+    return this.subtractTimes(this.flight.timeAta, this.flight.timeAtd);
   }
 
   @Input()
@@ -453,11 +445,7 @@ export class FlightService {
 
   @Input()
   get timeFlightActual(): number | null {
-    if (this.flight.timeTakeoff !== null && this.flight.timeLdg !== null) {
-      let block = this.flight.timeLdg - this.flight.timeTakeoff;
-      return (block > 0) ? block : block + (60 * 24)
-    }
-    return null;
+    return this.subtractTimes(this.flight.timeLdg, this.flight.timeTakeoff);
   }
 
   @Input()
@@ -910,7 +898,7 @@ export class FlightService {
       return this.flight.restEnd;
     }
     if (this.timeEta) {
-      return (this.timeEta - this._prefs.timeAfterRest < 0) ? this.timeEta - this._prefs.timeAfterRest + (24*60) : this.timeEta - this._prefs.timeAfterRest;
+      return (this.timeEta - this._prefs.timeAfterRest < 0) ? this.timeEta - this._prefs.timeAfterRest + (24 * 60) : this.timeEta - this._prefs.timeAfterRest;
     }
     return null;
   }
@@ -1013,6 +1001,20 @@ export class FlightService {
         first = first + (24 * 60);
       }
       return first - second;
+    }
+    return null;
+  }
+
+  getLocalTime(time: number | null, timeZone: number | null): number | null {
+    if (time !== null && timeZone !== null) {
+      let localTime = time + timeZone;
+      if (localTime > (24*60)) {
+        return localTime - (24*60);
+      } else if(localTime < 0) {
+        return localTime + (24*60);
+      } else {
+        return localTime;
+      }
     }
     return null;
   }
