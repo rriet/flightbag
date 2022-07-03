@@ -886,13 +886,10 @@ export class FlightService {
     this.saveFlight();
   }
   get restStart(): number | null {
-    if (this.restReference === 'start-end' && this.flight.restStart) {
+    if (this.restReference === 'start-end' && this.flight.restStart !== null) {
       return this.flight.restStart;
     }
-    if (this.timeTakeoff) {
-      return this.timeTakeoff + this._prefs.timeBeforeRest;
-    }
-    return null;
+    return this.addTimes(this.timeTakeoff, this._prefs.timeBeforeRest);
   }
 
   @Input()
@@ -901,13 +898,11 @@ export class FlightService {
     this.saveFlight();
   }
   get restEnd(): number | null {
-    if (this.restReference === 'start-end' && this.flight.restEnd) {
+    if (this.restReference === 'start-end' && this.flight.restEnd !== null) {
       return this.flight.restEnd;
     }
-    if (this.timeEta) {
-      return (this.timeEta - this._prefs.timeAfterRest < 0) ? this.timeEta - this._prefs.timeAfterRest + (24 * 60) : this.timeEta - this._prefs.timeAfterRest;
-    }
-    return null;
+    
+    return this.subtractTimes(this.timeEta, this._prefs.timeAfterRest);
   }
 
   @Input()

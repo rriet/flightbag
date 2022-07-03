@@ -3,7 +3,7 @@
 ng build --base-href "https://rriet.github.io/flightbag/"
 
 # Deploy pages
-npx angular-cli-ghpages --dir=dist/eflight/
+npx angular-cli-ghpages --dir=dist/eflight/ --no-silent
 
 # Deploy master source code
 git init
