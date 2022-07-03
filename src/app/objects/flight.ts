@@ -80,11 +80,7 @@ export interface Flight {
 
 
     // Crew
-    nCrew: number | null;
-    nPax: number | null;
-
-    // names Array
-    crew: Crew[];
+    pob: number | null;
 
     depNotes: string[];
     selectedDepNote: number;

@@ -53,3 +53,11 @@ export class PreferencesService {
     return this.prefs.timeAfterRest;
   }
 }
+
+// Good morning / afternoon / evening ladies and gentlemen.
+// This is your Captain speaking. My name is [NAME]. On behalf of Qatar Airways and all the crew, I would like to welcome you on board this [TYPE], flight QR [NUMBER] to [DESTINATION].
+// Beside me here on the Flight Deck is (Senior) First Officer [NAME]. And looking after your safety and comfort in the cabin today are CSD / CS Mr / Ms [NAME], and our award-winning team.
+// Our flight time today is [DURATION], and we will be cruising at an altitude of [NUMBER] feet.
+// We’re expecting generally good weather en route. (However, we may experience some light turbulence after departure / during the flight). For your safety, please keep your seatbelt fastened at all times – even when the seatbelt signs are switched off.
+// Before we begin our descent into [DESTINATION], I’ll update you with the latest weather and arrival information. Until then, please make yourself comfortable and enjoy our world-class service.
+// I wish you a very pleasant journey on board this Qatar Airways flight. Thank you.

@@ -80,9 +80,7 @@ export class FlightService {
       fuelArrivalAfterFlight: null,
       fuelEstimatedArrival: null,
 
-      nCrew: this._prefs.prefs.nCrewP,
-      nPax: 0,
-      crew: [],
+      pob: null,
 
       depNotes: [''],
       selectedDepNote: 1,
@@ -820,6 +818,15 @@ export class FlightService {
 
   //#region Dispatch Freq, ATIS, Parking
   @Input()
+  set pob(value: number | null) {
+    this.flight.pob = value;
+    this.saveFlight();
+  }
+  get pob(): number | null {
+    return this.flight.pob;
+  }
+
+  @Input()
   set dispatchName(value: string) {
     this.flight.dispatchName = value;
     this.saveFlight();
@@ -1008,10 +1015,10 @@ export class FlightService {
   getLocalTime(time: number | null, timeZone: number | null): number | null {
     if (time !== null && timeZone !== null) {
       let localTime = time + timeZone;
-      if (localTime > (24*60)) {
-        return localTime - (24*60);
-      } else if(localTime < 0) {
-        return localTime + (24*60);
+      if (localTime > (24 * 60)) {
+        return localTime - (24 * 60);
+      } else if (localTime < 0) {
+        return localTime + (24 * 60);
       } else {
         return localTime;
       }
