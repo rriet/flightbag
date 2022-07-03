@@ -16,6 +16,6 @@
         <button class="btn btn-primary btn-sm m-2" (click)="setNow()">Now</button>
         <button class="btn btn-primary btn-sm m-2" *ngIf="!req"
             (click)="time = null; changed(); p.close()">Clear</button>
-        <button class="btn btn-secondary btn-sm m-2" (click)="changed(); p.close()">Close</button>
+        <button class="btn btn-secondary btn-sm m-2" (click)="changed(); p.close()">Set</button>
     </div>
 </ng-template>

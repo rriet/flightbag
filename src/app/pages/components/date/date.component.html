@@ -11,6 +11,6 @@
     <div style="text-align: center;">
         <button class="btn btn-primary btn-sm m-2 float-start" (click)="setToday(); d.close()">Today</button>
     <button class="btn btn-primary btn-sm m-2" *ngIf="!req" (click)="dateInt = null; changed(); d.close()">Clear</button>
-    <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Close</button>
+    <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Set</button>
     </div>
 </ng-template>
