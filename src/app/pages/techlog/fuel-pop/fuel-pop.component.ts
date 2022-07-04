@@ -57,7 +57,7 @@ export class FuelPopComponent implements OnInit {
       fuelAmount: new FormControl(fuelAmount, {
         validators: [
           Validators.required,
-          // Validators.min(1),
+          Validators.min(1),
           Validators.max(600000)
         ],
         updateOn: 'change'
