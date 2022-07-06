@@ -1,5 +1,6 @@
 import { Injectable, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Airport } from '../objects/airport';
+import { Crew } from '../objects/crew';
 import { DangerousGood } from '../objects/dangerous-goods';
 import { Flight } from '../objects/flight';
 import { Rest } from '../objects/rest';
@@ -81,6 +82,8 @@ export class FlightService {
       fuelEstimatedArrival: null,
 
       pob: null,
+      fdCrew: 'Senior First Officer ...',
+      csdName: '',
 
       depNotes: [''],
       selectedDepNote: 1,
@@ -448,7 +451,6 @@ export class FlightService {
 
   @Input()
   get timeFplTrip(): number | null {
-    // If revised trip time is set, return it, else return standard trip time
     return this.flight.timeTrip;
   }
 
@@ -816,7 +818,7 @@ export class FlightService {
   }
   //#endregion
 
-  //#region Dispatch Freq, ATIS, Parking
+  //#region POB, Crew, Dispatch Freq, ATIS, Parking
   @Input()
   set pob(value: number | null) {
     this.flight.pob = value;
@@ -824,6 +826,24 @@ export class FlightService {
   }
   get pob(): number | null {
     return this.flight.pob;
+  }
+
+  @Input()
+  set fdCrew(value: string) {
+    this.flight.fdCrew = value;
+    this.saveFlight();
+  }
+  get fdCrew(): string {
+    return this.flight.fdCrew;
+  }
+
+  @Input()
+  set csdName(value: string) {
+    this.flight.csdName = value;
+    this.saveFlight();
+  }
+  get csdName(): string {
+    return this.flight.csdName;
   }
 
   @Input()
@@ -901,7 +921,7 @@ export class FlightService {
     if (this.restReference === 'start-end' && this.flight.restEnd !== null) {
       return this.flight.restEnd;
     }
-    
+
     return this.subtractTimes(this.timeEta, this._prefs.timeAfterRest);
   }
 

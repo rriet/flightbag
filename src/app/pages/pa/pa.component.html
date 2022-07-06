@@ -1,34 +1,68 @@
 <div class="page-header">
     <div class="page-title">PA Guide</div>
 </div>
-<div class="container flight-init">
+<div class="container pa">
     <div class="card mb-3">
-        <ul ngbNav #restNav="ngbNav" class="nav-tabs">
+        <ul ngbNav #restNav="ngbNav" [(activeId)]="active" class="nav-tabs">
             <li [ngbNavItem]="1" class="nav-tabs-item">
-                <a ngbNavLink>PA</a>
+                <a ngbNavLink>Departure</a>
                 <ng-template ngbNavContent>
                     <div class="row">
                         <div class="col">
-                            <app-textarea label="PA"
-                                [(value)]="_flight.selectedDepNoteText" [rows]="10"></app-textarea>
+                            <app-textarea label="Departure PA Template" [(value)]="_prefs.departurePaTemplate"
+                                [rows]="10"></app-textarea>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-text [(value)]="_prefs.myname" label="My Name"></app-text>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-text [(value)]="_flight.fdCrew" label="Flight Deck Crew"></app-text>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-text [(value)]="_flight.csdName" label="CSD Name"></app-text>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="generateDepPa()">Generate PA</button>
                 </ng-template>
             </li>
-            <li [ngbNavItem]="2">
-                <a ngbNavLink>Config</a>
+            <li [ngbNavItem]="2" class="nav-tabs-item">
+                <a ngbNavLink>Arrival</a>
                 <ng-template ngbNavContent>
                     <div class="row">
                         <div class="col">
-                            <app-textarea label="PA Template"
-                                [(value)]="_flight.selectedDepNoteText" [rows]="10"></app-textarea>
+                            <app-textarea label="Arrival PA Template" [(value)]="_prefs.arrivalPaTemplate" [rows]="10">
+                            </app-textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            
+                            <app-number [(value)]="_flight.temperature" label="Temp (C|F)"
+                                [sufix]="_flight.temperatureF"></app-number>
                         </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-secondary me-2" placement="top"
+                                [ngbPopover]="popContent" popoverClass="over-flow" [autoClose]="'outside'">
+                                Select Weather
+                            </button>
+                        </div>
+                        <ng-template #popContent>
+                            <div>
+                                <ul class="list-group">
+                                    <li class="list-group-item" *ngFor="let item of categoryList">
+                                        <input type="checkbox" [(ngModel)]="item.isSelected" />
+                                        {{item.value}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-template>
                     </div>
+                    <button type="button" class="btn btn-primary" (click)="generateArrPa()">Generate PA</button>
                 </ng-template>
             </li>
             <li [ngbNavItem]="3">
@@ -38,17 +72,59 @@
                         <div class="col">
                             <h3>Instructions:</h3>
                             <p>
-                                The above text will be used as a template for the PA. The following 
-                                strings will be replaced by the respective information.
+                                The following strings will be replaced by the respective information.
                             </p>
                             <ul>
                                 <li>
-                                    [morning...] => morning / afternoon / evening
+                                    [MORNING] => morning, afternoon or evening (depending on the departure/ arrival time)
                                 </li>
                                 <li>
-                                    [morning...] => morning / afternoon / evening
+                                    [MYNAME] => value of field "My Name"
                                 </li>
+                                <li>
+                                    [NUMBER] => flight number
+                                </li>
+                                <li>
+                                    [DESTINATION] => destination ICAO/IATA codes
+                                </li>
+                                <li>
+                                    [FDCREW] => value of field "Flight Deck Crew"
+                                </li>
+                                <li>
+                                    [CSDNAME] => value of field "CSD Name"
+                                </li>
+                                <li>
+                                    [DURATION] => flight time
+                                </li>
+                                <li>
+                                    [FL] => highest altitude in thousands
+                                </li>
+                                <li>
+                                    [WEATHER] => all the selectrd weather conditions, separated by commas
+                                </li>
+                                <li>
+                                    [TEMPC] => temperature in celsius
+                                </li>
+                                <li>
+                                    [TEMPF] => temperature in farenheight
+                                </li>
+                                <li>
+                                    [TIME_NOW] => local time now at the destination (12H format)
+                                </li>
+                                <li>
+                                    [TIME_TO_GO] => minutes to the ETA
+                                </li>
+                                
                             </ul>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <ng-template ngbNavContent>
+                    <div class="row">
+                        <div class="col">
+                            <app-textarea label="PA" [(value)]="pa" [rows]="22" [edit]="false"></app-textarea>
                         </div>
                     </div>
                 </ng-template>

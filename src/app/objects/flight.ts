@@ -81,6 +81,8 @@ export interface Flight {
 
     // Crew
     pob: number | null;
+    fdCrew: string;
+    csdName: string;
 
     depNotes: string[];
     selectedDepNote: number;
