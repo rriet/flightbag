@@ -91,10 +91,10 @@ export const DEP_PA: string = "Good [MORNING] ladies and gentlemen.\n\n" +
         "I would like to welcome you on board this Boeing 777, flight [NUMBER] to [DESTINATION].\n\n" +
         "Beside me here on the Flight Deck is [FDCREW]. And looking after your " +
         "safety and comfort in the cabin today are CSD / CS [CSDNAME], and our award - winning team.\n\n" +
-        "Our flight time today is [DURATION], and we will be cruising at an altitude of [FL] feet." +
+        "Our flight time today is [DURATION], and we will be cruising at an altitude of [FL] feet. " +
         "We’re expecting generally good weather en route. (However, we may experience some light " +
         "turbulence after departure / during the flight).\n\nFor your safety, please keep your seatbelt " +
-        "fastened at all times – even when the seatbelt signs are switched off.\n\n" +
+        "fastened at all times, even when the seatbelt signs are switched off.\n\n" +
         "Before we begin our descent into [DESTINATION], I’ll update you with the latest weather " +
         "and arrival information.\n\nUntil then, please make yourself comfortable and enjoy our world - class service.\n\n" +
         "I wish you a very pleasant journey on board this Qatar Airways flight. Thank you.";
