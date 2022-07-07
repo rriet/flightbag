@@ -17,6 +17,14 @@
         </div>
         <div class="row">
             <div class="col">
+                <app-text [value]="_flight.from" [label]="'From'" [edit]="false"></app-text>
+            </div>
+            <div class="col">
+                <app-text [value]="_flight.to" [label]="'To'" [edit]="false"></app-text>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <app-time [(time)]="_flight.timeAta" label="Chocks-On"></app-time>
             </div>
             <div class="col">
