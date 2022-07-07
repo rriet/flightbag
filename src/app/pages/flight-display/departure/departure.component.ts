@@ -25,7 +25,7 @@ export class DepartureComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // stop interval loop
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   }
 
   // interval loop variable.
@@ -77,6 +77,13 @@ export class DepartureComponent implements OnInit, OnDestroy {
     } else {
       this.depDelay = newDelay * -1;
       this.delayed = true;
+    }
+  }
+
+  atdChanged() {
+    if (this._flight.timeAtd !== null) {
+      clearInterval(this.interval)
+      this.calculateFinalDelay()
     }
   }
 
