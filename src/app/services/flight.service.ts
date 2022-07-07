@@ -22,7 +22,9 @@ export class FlightService {
       number: '',
       callsign: '',
       etops: false,
+      etopsChecked: false,
       mel: false,
+      melChecked: false,
       tailNumber: '',
       type: '',
       from: '',
@@ -90,11 +92,14 @@ export class FlightService {
       arrNotes: [''],
       selectedArrNote: 1,
 
+      atisDepInfo: '',
+      rwyDeparture: '',
+      rwyIntercection: '',
 
       dispatchName: '',
       dispatchFreq: '',
       parkingStand: '',
-      atisInfo: '',
+      atisArrInfo: '',
       temperature: 15,
       restStart: null,
       restEnd: null,
@@ -161,12 +166,30 @@ export class FlightService {
   }
 
   @Input()
+  set etopsChecked(value: boolean) {
+    this.flight.etopsChecked = value;
+    this.saveFlight();
+  }
+  get etopsChecked(): boolean {
+    return this.flight.etopsChecked;
+  }
+
+  @Input()
   set mel(value: boolean) {
     this.flight.mel = value;
     this.saveFlight();
   }
   get mel(): boolean {
     return this.flight.mel;
+  }
+
+  @Input()
+  set melChecked(value: boolean) {
+    this.flight.melChecked = value;
+    this.saveFlight();
+  }
+  get melChecked(): boolean {
+    return this.flight.melChecked;
   }
 
   @Input()
@@ -847,6 +870,33 @@ export class FlightService {
   }
 
   @Input()
+  set atisDepInfo(value: string) {
+    this.flight.atisDepInfo = value;
+    this.saveFlight();
+  }
+  get atisDepInfo(): string {
+    return this.flight.atisDepInfo;
+  }
+
+  @Input()
+  set rwyDeparture(value: string) {
+    this.flight.rwyDeparture = value;
+    this.saveFlight();
+  }
+  get rwyDeparture(): string {
+    return this.flight.rwyDeparture;
+  }
+
+  @Input()
+  set rwyIntercection(value: string) {
+    this.flight.rwyIntercection = value;
+    this.saveFlight();
+  }
+  get rwyIntercection(): string {
+    return this.flight.rwyIntercection;
+  }
+
+  @Input()
   set dispatchName(value: string) {
     this.flight.dispatchName = value;
     this.saveFlight();
@@ -865,12 +915,12 @@ export class FlightService {
   }
 
   @Input()
-  set atisInfo(value: string) {
-    this.flight.atisInfo = value;
+  set atisArrInfo(value: string) {
+    this.flight.atisArrInfo = value;
     this.saveFlight();
   }
-  get atisInfo(): string {
-    return this.flight.atisInfo;
+  get atisArrInfo(): string {
+    return this.flight.atisArrInfo;
   }
 
   @Input()

@@ -45,7 +45,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <app-text [(value)]="_flight.atisInfo" label="ATIS" [upper]="true"></app-text>
+                <app-text [(value)]="_flight.atisArrInfo" label="ATIS" [upper]="true"></app-text>
             </div>
             <div class="col">
                 <app-number [(value)]="_flight.temperature" label="Temp (C|F)" [sufix]="_flight.temperatureF"></app-number>
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col">
                 <app-textarea [label]="'Note #'+_flight.currentArrNote" [(value)]="_flight.selectedArrNoteText"
-                    [rows]="8"></app-textarea>
+                    [rows]="9"></app-textarea>
             </div>
         </div>
     </div>

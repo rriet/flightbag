@@ -8,7 +8,9 @@ export interface Flight {
     number: string;
     callsign: string;
     etops: boolean;
+    etopsChecked: boolean;
     mel: boolean;
+    melChecked: boolean;
 
     // Aircraft
     tailNumber: string;
@@ -89,9 +91,13 @@ export interface Flight {
     arrNotes: string[];
     selectedArrNote: number;
 
+    atisDepInfo: string;
+    rwyDeparture: string;
+    rwyIntercection: string;
+
     dispatchName: string;
     dispatchFreq: string;
-    atisInfo: string;
+    atisArrInfo: string;
     temperature: number;
     parkingStand: string;
 

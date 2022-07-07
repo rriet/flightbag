@@ -6,12 +6,19 @@
             </div>
             <div class="col" *ngIf="_flight.etops">
                 <button type="button" class="btn btn-outline-warning btn-sm btn-flat">
-                    ETOPS
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"  [(ngModel)]="_flight.etopsChecked">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        &nbsp; ETOPS
+                    </label>
+
                 </button>
             </div>
             <div class="col" *ngIf="_flight.mel">
                 <button type="button" class="btn btn-outline-warning btn-flat btn-flat">
-                    MEL
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="_flight.melChecked">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        &nbsp; MEL
+                    </label>
                 </button>
             </div>
         </div>
@@ -66,7 +73,17 @@
                 <app-number [(value)]="_flight.pob" label="POB"></app-number>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="col">
+                <app-text [(value)]="_flight.atisDepInfo" label="ATIS" [upper]="true"></app-text>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.rwyDeparture" label="RWY" [upper]="true"></app-text>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.rwyIntercection" label="INTX" [upper]="true"></app-text>
+            </div>
+        </div>
     </div>
 </div>
 <div class="card mb-3">
@@ -82,8 +99,7 @@
                 </button>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-outline-success btn-sm"
-                    (click)="_flight.addDepNote()">
+                <button type="button" class="btn btn-outline-success btn-sm" (click)="_flight.addDepNote()">
                     <img src="assets/img/add.svg" height="20px" width="30px">
                 </button>
             </div>
@@ -106,7 +122,7 @@
         <div class="row">
             <div class="col">
                 <app-textarea [label]="'Note #'+_flight.currentDepNote" [(value)]="_flight.selectedDepNoteText"
-                    [rows]="8"></app-textarea>
+                    [rows]="7"></app-textarea>
             </div>
         </div>
     </div>
