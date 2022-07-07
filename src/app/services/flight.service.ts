@@ -647,7 +647,9 @@ export class FlightService {
 
   @Input()
   get fuelDiscrepancy(): number | null {
-    return this.fuelUpliftKg && this.flight.fuelDeparture && this.flight.fuelArrivalBeforeRefuel && this.fuelUsedOnGround ?
+    console.log(this.fuelUpliftKg +" - "+ this.flight.fuelDeparture +" - "+ this.flight.fuelArrivalBeforeRefuel +" - "+ this.fuelUsedOnGround)
+    return this.fuelUpliftKg !== null && this.flight.fuelDeparture !== null && 
+      this.flight.fuelArrivalBeforeRefuel !== null && this.fuelUsedOnGround !== null ?
       Math.round(this.fuelUpliftKg - (this.flight.fuelDeparture - this.flight.fuelArrivalBeforeRefuel) - this.fuelUsedOnGround) : null
   }
 
