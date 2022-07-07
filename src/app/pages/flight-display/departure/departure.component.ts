@@ -81,9 +81,11 @@ export class DepartureComponent implements OnInit, OnDestroy {
   }
 
   atdChanged() {
+    clearInterval(this.interval);
     if (this._flight.timeAtd !== null) {
-      clearInterval(this.interval)
       this.calculateFinalDelay()
+    } else {
+      this.startTimer();
     }
   }
 

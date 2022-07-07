@@ -5,20 +5,15 @@
                 Departure
             </div>
             <div class="col" *ngIf="_flight.etops">
-                <button type="button" class="btn btn-outline-warning btn-sm btn-flat">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="_flight.etopsChecked">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        &nbsp; ETOPS
-                    </label>
-
+                <button type="button" class="btn btn-sm" [class.btn-warning]="!_flight.etopsChecked"
+                    [class.btn-success]="_flight.etopsChecked" (click)="_flight.etopsChecked = !_flight.etopsChecked">
+                    ETOPS
                 </button>
             </div>
             <div class="col" *ngIf="_flight.mel">
-                <button type="button" class="btn btn-outline-warning btn-flat btn-flat">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="_flight.melChecked">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        &nbsp; MEL
-                    </label>
+                <button type="button" class="btn btn-sm" [class.btn-warning]="!_flight.melChecked"
+                    [class.btn-success]="_flight.melChecked" (click)="_flight.melChecked = !_flight.melChecked">
+                        MEL
                 </button>
             </div>
         </div>
