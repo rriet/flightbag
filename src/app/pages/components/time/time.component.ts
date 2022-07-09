@@ -48,6 +48,7 @@ export class TimeComponent implements OnInit {
   @Input() caution: boolean = false;
   @Input() warning: boolean = false;
   @Input() time!: number | null;
+
   @Output() timeChange: EventEmitter<number | null> = new EventEmitter<number | null>();
 
   clicked(d:any){

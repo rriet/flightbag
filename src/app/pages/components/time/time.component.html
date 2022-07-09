@@ -1,10 +1,10 @@
 <div class="input-field">
-    <fieldset  [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution"
-    [class.warning]="warning" (click)="clicked(p)" [class.input-display-readonly]="!edit && !req">
-    <legend>{{label}}<span *ngIf="req">*</span></legend>
-    <input class="form-control input-display" [value]="getTime()" readonly placeholder="{{hint}}">
-</fieldset>
-<div [ngbPopover]="popContent" [autoClose]="'outside'" #p="ngbPopover" popoverClass="time-pop"></div>
+    <fieldset [style.width]="width" [style.min-width]="minWidth" [class.caution]="caution" [class.warning]="warning"
+        (click)="clicked(p)" [class.input-display-readonly]="!edit && !req">
+        <legend>{{label}}<span *ngIf="req">*</span></legend>
+        <input class="form-control input-display" [value]="getTime()" readonly placeholder="{{hint}}">
+    </fieldset>
+    <div [ngbPopover]="popContent" [autoClose]="'outside'" #p="ngbPopover" popoverClass="time-pop"></div>
 </div>
 
 <ng-template #popContent>

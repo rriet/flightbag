@@ -12,10 +12,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <app-time [(time)]="_flight.timeTakeoff" label="Take-off"></app-time>
+                <app-time [(time)]="_flight.timeTakeoff" label="Take-off" (click)="stopTimmer()"></app-time>
             </div>
             <div class="col">
-                <app-time [(time)]="_flight.timeTrip" label="Flight Time"></app-time>
+                <app-time [(time)]="_flight.timeTrip" label="Flight Time" (click)="stopTimmer()"></app-time>
             </div>
             <div class="col">
                 <app-time [time]="_flight.timeTod" label="TOD" [edit]="false"></app-time>
@@ -26,7 +26,7 @@
                 <app-time [time]="_flight.timeSta" label="STA" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-time [(time)]="_flight.timeEta" label="ETA"></app-time>
+                <app-time [(time)]="_flight.timeEta" label="ETA" (click)="stopTimmer()"></app-time>
             </div>
             <div class="col">
                 <app-time [time]="_flight.timeEtaLocal" label="ETA (Local)" [edit]="false"></app-time>
@@ -42,7 +42,8 @@
             </div>
             <div class="col-3">
                 <div class="input-group input-group-sm">
-                    <input type="text" [(ngModel)]="waypointName" class="form-control input-upper" placeholder="WAYPOINT" >
+                    <input type="text" [(ngModel)]="waypointName" class="form-control input-upper" placeholder="WAYPOINT" 
+                    (focus)="stopTimmer()" (keyup.enter)="searchWaypoint()">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchWaypoint()"
                     [disabled]="this.waypointName.length < 2">Search</button>
                   </div>
