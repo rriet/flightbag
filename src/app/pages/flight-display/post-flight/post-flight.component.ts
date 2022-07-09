@@ -20,14 +20,14 @@ export class PostFlightComponent implements OnInit {
 
   get chocksOffLabel(): string {
     if (this._flight.isDepDelayed && this._flight.timeAtd !== null) {
-      return "Chocks-Off (Delay: " + this._flight.timeDepDiff + " min)"
+      return "Chocks-Off (+" + this._flight.timeDepDiff + ")"
     }
     return "Chocks-Off"
   }
 
   get chocksOnLabel(): string {
     if (this._flight.isArrDelayed && this._flight.timeAta !== null) {
-      return "Chocks-On (Delay: " + this._flight.timeArrDiff + " min)"
+      return "Chocks-On (+" + this._flight.timeArrDiff + ")"
     }
     return "Chocks-On"
   }
