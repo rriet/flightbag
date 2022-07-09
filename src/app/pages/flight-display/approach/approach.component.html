@@ -29,7 +29,8 @@
                 <app-time [time]="_flight.timeEtaLocal" label="ETA (Local)" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeEtaDelay" [label]="_flight.isDelayedEta?'Delay':'Before STA'" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeArrDiff" [label]="_flight.isArrDelayed?'Delay':'Before STA'"
+                    [edit]="false"></app-time>
             </div>
         </div>
         <div class="row">
@@ -37,10 +38,12 @@
                 <app-time [time]="_flight.timeSta" label="STA" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-number [(value)]="_flight.mlwt" label="MLWT" [int]=true [req]="true"></app-number>
+                <app-number [(value)]="_flight.mlwt" label="MLWT" [int]=true [req]="true" [clickable]="false"
+                    [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
             </div>
             <div class="col">
-                <app-number [value]="_flight.elwt" label="LWT" [edit]="false"></app-number>
+                <app-number [value]="_flight.elwt" label="LWT" [edit]="false" [clickable]="false"
+                    [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
             </div>
         </div>
         <div class="row">
@@ -48,7 +51,8 @@
                 <app-text [(value)]="_flight.atisArrInfo" label="ATIS" [upper]="true"></app-text>
             </div>
             <div class="col">
-                <app-number [(value)]="_flight.temperature" label="Temp (C|F)" [sufix]="_flight.temperatureF"></app-number>
+                <app-number [(value)]="_flight.temperature" label="Temp (C|F)" [sufix]="_flight.temperatureF">
+                </app-number>
             </div>
             <div class="col">
                 <app-text [(value)]="_flight.parkingStand" label="Parking Stand"></app-text>
@@ -77,8 +81,7 @@
                 </button>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-outline-success btn-sm"
-                    (click)="_flight.addArrNote()">
+                <button type="button" class="btn btn-outline-success btn-sm" (click)="_flight.addArrNote()">
                     <img src="assets/img/add.svg" height="20px" width="30px">
                 </button>
             </div>

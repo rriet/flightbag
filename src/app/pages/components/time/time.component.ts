@@ -44,13 +44,14 @@ export class TimeComponent implements OnInit {
   @Input() hint!: string;
   @Input() req: boolean = false;
   @Input() edit: boolean = true;
+  @Input() clickable: boolean = true;
   @Input() caution: boolean = false;
   @Input() warning: boolean = false;
   @Input() time!: number | null;
   @Output() timeChange: EventEmitter<number | null> = new EventEmitter<number | null>();
 
   clicked(d:any){
-    if (this.caution || this.warning) {
+    if (this.clickable && (this.caution || this.warning)) {
       this.caution = false;
       this.warning = false;
     }

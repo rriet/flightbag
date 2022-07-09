@@ -39,7 +39,6 @@ export class FlightService {
       waypoints: [],
 
       dateStandardDeparture: new Date().setHours(0, 0, 0, 0) / 60000 - new Date().getTimezoneOffset(),
-      dateActualDeparture: null,
 
       timeStd: 0,
       timeAtd: null,
@@ -79,7 +78,7 @@ export class FlightService {
       fuelUpliftUnit: 'LTS',  // USG or LTS
       fuelUpliftVal: [0],
       fuelSg: 777,
-      fuelDeparture: 0,
+      fuelDeparture: null,
       fuelArrivalAfterFlight: null,
       fuelEstimatedArrival: null,
 
@@ -138,7 +137,7 @@ export class FlightService {
   }
 
   //#region FlightInfo
-  @Input()
+  
   set number(value: string) {
     this.flight.number = value;
     this.saveFlight();
@@ -147,7 +146,7 @@ export class FlightService {
     return this.flight.number;
   }
 
-  @Input()
+  
   set callsign(value: string) {
     this.flight.callsign = value;
     this.saveFlight();
@@ -156,7 +155,7 @@ export class FlightService {
     return this.flight.callsign;
   }
 
-  @Input()
+  
   set etops(value: boolean) {
     this.flight.etops = value;
     this.saveFlight();
@@ -165,7 +164,7 @@ export class FlightService {
     return this.flight.etops;
   }
 
-  @Input()
+  
   set etopsChecked(value: boolean) {
     this.flight.etopsChecked = value;
     this.saveFlight();
@@ -174,7 +173,7 @@ export class FlightService {
     return this.flight.etopsChecked;
   }
 
-  @Input()
+  
   set mel(value: boolean) {
     this.flight.mel = value;
     this.saveFlight();
@@ -183,7 +182,7 @@ export class FlightService {
     return this.flight.mel;
   }
 
-  @Input()
+  
   set melChecked(value: boolean) {
     this.flight.melChecked = value;
     this.saveFlight();
@@ -192,7 +191,7 @@ export class FlightService {
     return this.flight.melChecked;
   }
 
-  @Input()
+  
   set tailNumber(value: string) {
     this.flight.tailNumber = value;
     this.saveFlight();
@@ -201,7 +200,7 @@ export class FlightService {
     return this.flight.tailNumber;
   }
 
-  @Input()
+  
   set type(value: string) {
     this.flight.type = value;
     this.saveFlight();
@@ -210,7 +209,7 @@ export class FlightService {
     return this.flight.type;
   }
 
-  @Input()
+  
   set from(value: string) {
     this.flight.from = value;
     this.saveFlight();
@@ -219,12 +218,12 @@ export class FlightService {
     return this.flight.from;
   }
 
-  @Input()
+  
   get fromTimeZone(): number {
     return this.flight.fromTimeZone;
   }
 
-  @Input()
+  
   set to(value: string) {
     this.flight.to = value;
     this.saveFlight();
@@ -233,12 +232,12 @@ export class FlightService {
     return this.flight.to;
   }
 
-  @Input()
+  
   get toTimeZone(): number {
     return this.flight.toTimeZone;
   }
 
-  @Input()
+  
   set route(value: string) {
     this.flight.route = value;
     this.saveFlight();
@@ -247,7 +246,7 @@ export class FlightService {
     return this.flight.route;
   }
 
-  @Input()
+  
   set levels(value: string[]) {
     this.flight.levels = value;
     this.saveFlight();
@@ -256,7 +255,7 @@ export class FlightService {
     return this.flight.levels;
   }
 
-  @Input()
+  
   set highestLevel(value: string) {
     this.flight.highestLevel = value;
     this.saveFlight();
@@ -265,7 +264,7 @@ export class FlightService {
     return this.flight.highestLevel;
   }
 
-  @Input()
+  
   set alternates(value: Airport[]) {
     this.flight.alternates = value;
     this.saveFlight();
@@ -274,7 +273,7 @@ export class FlightService {
     return this.flight.alternates;
   }
 
-  @Input()
+  
   set alternateList(value: string) {
     this.flight.alternateList = value;
     this.saveFlight();
@@ -283,7 +282,7 @@ export class FlightService {
     return this.flight.alternateList;
   }
 
-  @Input()
+  
   set waypoints(value: Waypoint[]) {
     this.flight.waypoints = value;
     this.saveFlight();
@@ -295,42 +294,60 @@ export class FlightService {
   //#endregion
 
   //#region Date and Times
-  @Input()
-  set dateStandardDeparture(value: number) {
-    this.flight.dateStandardDeparture = value;
-    this.saveFlight();
+  
+  // Return minutes from midnight UTC
+  get timeOfDayMinUTC(): number {
+    var date = new Date(new Date());
+    return date.getUTCHours() * 60 + date.getUTCMinutes();
   }
+
+  // Return departure date in Min from EPOCH UTC
   get dateStandardDeparture(): number {
     return this.flight.dateStandardDeparture;
   }
 
-  @Input()
-  set dateActualDeparture(value: number | null) {
-    this.flight.dateActualDeparture = value;
-    this.saveFlight();
-  }
-  get dateActualDeparture(): number | null {
-    return this.flight.dateActualDeparture;
+  // Return ACTUAL departure date in Min from EPOCH UTC
+  // If ATD is not set, uses the time now to determine if the dep will be next day from Standard.
+  get dateActualDeparture(): number {
+    // Uses the ATD if exist, or NOW UTC
+    let time = (this.timeAtd !== null) ? this.timeAtd : this.timeOfDayMinUTC;
+
+    // if the time is less than 4 hours early.... it's next day
+    if (time < this.timeStd - 4 * 60) {
+      return this.dateStandardDeparture + (24 * 60);
+
+    // if more than 20hs delay....  it's previous day.
+    } else if (time > this.timeStd + 20 * 60) {
+      return this.dateStandardDeparture - (24 * 60);
+    } else {
+      return this.dateStandardDeparture;
+    }
   }
 
-  @Input()
-  get dateArrival(): number | null {
-    if (this.timeEta !== null) {
-      if (this.timeEta < this.timeStd) {
+  // Return standard arrival date in Min from EPOCH UTC
+  get dateStandardArrival(): number {
+    return (this.timeStd < this.timeSta) ? this.flight.dateStandardDeparture : this.flight.dateStandardDeparture + (24 * 60);
+  }
+
+  // Return Arrival date in Min from EPOCH UTC
+  get dateArrival(): number {
+    if (this.timeArrival !== null && this.timeAtd != null) {
+      // If arrival time less than departure time, arrival date is next day.
+      if (this.timeArrival < this.timeAtd) {
         return this.dateStandardDeparture + (24 * 60);
       } else {
         return this.dateStandardDeparture;
       }
     }
-    return null;
+    return this.dateStandardArrival;
   }
 
-  @Input()
+  // Return Arrival date in Min from EPOCH Local
   get dateArrivalLocal(): number | null {
     if (this.dateArrival !== null && this.timeEta !== null) {
       if (this.timeEta + this.toTimeZone < 0) {
         return this.dateArrival - (24 * 60);
-      } if (this.timeEta + this.toTimeZone < 0) {
+      } if (this.timeEta + this.toTimeZone > (24 * 60)) {
         return this.dateArrival + (24 * 60);
       } else {
         return this.dateArrival;
@@ -339,48 +356,41 @@ export class FlightService {
     return null;
   }
 
-  @Input()
+  // Return STD form Flight Plan
   get timeStd(): number {
     return this.flight.timeStd;
   }
 
-  @Input()
+  // Return STD Local form Flight Plan
   get timeStdLocal(): number | null {
     return this.getLocalTime(this.timeStd, this.fromTimeZone)
   }
 
-  @Input()
+  // SET and Return ATD
   set timeAtd(value: number | null) {
     this.flight.timeAtd = value;
-
-    // 
-    if (value != null && this.dateStandardDeparture != null && this.timeStd != null) {
-      // if the time is less than 2 hours early.... it's next day
-      if (value < this.timeStd - 2 * 60) {
-        this.dateActualDeparture = this.dateStandardDeparture + (24 * 60);
-      } else {
-        this.dateActualDeparture = this.dateStandardDeparture;
-      }
-
-    } else {
-      // if ATD OR STD are null....  set dateActualDeparture to Null
-      this.dateActualDeparture = null;
-    }
-
     this.saveFlight();
   }
   get timeAtd(): number | null {
     return this.flight.timeAtd;
   }
 
-  // Reveives a time (min) and compares to STD
-  // If early OR (value OR STD null) return true.
-  // Input time is haead of Departure time if it's less AND if it's more than 2 hours less.
-  isAheadOfTime(value: number | null): boolean {
-    return (value && this.timeStd) ? value < this.timeStd && value > (this.timeStd - 2 * 60) : true;
+  // Returns true if NOW or ATD greater than STD....
+  get isDepDelayed(): boolean {
+    // Uses the ATD if exist, or NOW UTC
+    let time = (this.timeAtd !== null) ? this.timeAtd : this.timeOfDayMinUTC;
+
+    return time + this.dateActualDeparture > this.timeStd + this.dateStandardDeparture;
   }
 
-  @Input()
+  // tekes value from ATD or NOW and compares with STD.
+  // Return the the number of minutes between times (Always positive)
+  get timeDepDiff(): number {
+    let time = (this.timeAtd !== null) ? this.timeAtd : this.timeOfDayMinUTC;
+    return Math.abs((time + this.dateActualDeparture) - (this.timeStd + this.dateStandardDeparture));
+  }
+
+  // SET and Return Take-off time
   set timeTakeoff(value: number | null) {
     this.flight.timeTakeoff = value;
     // this.calculateTimes();
@@ -389,18 +399,14 @@ export class FlightService {
   get timeTakeoff(): number | null {
     return this.flight.timeTakeoff;
   }
-
-  @Input()
-  get timeTod(): number | null {
-    return this.subtractTimes(this.timeEta, 30);
-  }
-
-  @Input()
-  get timeSta(): number | null {
+  
+  // Return STA from flight plan
+  get timeSta(): number {
     return this.flight.timeSta;
   }
-
-  @Input()
+  
+  // Set -> modify Trip time to get the desired ETA
+  // Get ETA by adding trip time and take-off time
   set timeEta(value: number | null) {
     // If value and takeoff are not null, calculate Revised Trip Time
     this.timeTrip = this.subtractTimes(value, this.timeTakeoff);
@@ -409,22 +415,36 @@ export class FlightService {
     return this.addTimes(this.timeTakeoff, this.timeTrip);
   }
 
-  @Input()
+  // Return ETA - 30 min (TOD)
+  get timeTod(): number | null {
+    return this.subtractTimes(this.timeEta, 30);
+  }
+
+  // Return ATA or ETA if ATA is null.
+  get timeArrival(): number | null {
+    return (this.timeAta !== null) ? this.timeAta : this.timeEta;
+  }
+
+  // get ETA Local
   get timeEtaLocal(): number | null {
     return this.getLocalTime(this.timeEta, this.toTimeZone)
   }
 
-  @Input()
-  get timeEtaDelay(): number | null {
-    return (this.timeEta && this.timeSta) ? Math.abs(this.timeEta - this.timeSta) : null;
+  // tekes value from ArrivalTime (ETA or ATA) and compares with STA.
+  // Return the the number of minutes between times (Always positive)
+  get timeArrDiff(): number | null {
+    if (this.timeArrival) {
+      return Math.abs((this.timeArrival + this.dateArrival) - (this.timeSta + this.dateStandardArrival));
+    }
+    return null;
   }
 
-  @Input()
-  get isDelayedEta(): boolean {
-    return (this.timeEta && this.timeSta) ? this.timeEta > this.timeSta : false;
+  // Return true if flight is delayed
+  get isArrDelayed(): boolean {
+    return (this.timeArrival && this.timeSta) ? this.timeArrival + this.dateArrival > this.timeSta + this.dateStandardArrival : false;
   }
 
-  @Input()
+  // Set and Get Actual Landing time
   set timeLdg(value: number | null) {
     this.flight.timeLdg = value;
     this.saveFlight();
@@ -433,7 +453,7 @@ export class FlightService {
     return this.flight.timeLdg;
   }
 
-  @Input()
+  // Set and Get ATA
   set timeAta(value: number | null) {
     this.flight.timeAta = value;
     this.saveFlight();
@@ -442,45 +462,51 @@ export class FlightService {
     return this.flight.timeAta;
   }
 
-  @Input()
-  set timeBlock(value: number | null) {
-    this.flight.timeBlock = value;
-    this.saveFlight();
-  }
-  get timeBlock(): number | null {
+  // Get Block time from Flight Plan
+  get timeBlock(): number {
     return this.flight.timeBlock;
   }
 
-  @Input()
+  // Return calculated actual Block time
   get timeBlockActual(): number | null {
     return this.subtractTimes(this.flight.timeAta, this.flight.timeAtd);
   }
 
-  @Input()
+  // Set revised Trip Time
+  // Get Trip time from Flight Plan OR Revised.
   set timeTrip(value: number | null) {
     this.flight.timeRevisedTrip = value;
     // this.calculateTimes();
     this.saveFlight();
   }
-  get timeTrip(): number | null {
+  get timeTrip(): number {
     // If revised trip time is set, return it, else return standard trip time
     return this.flight.timeRevisedTrip ? this.flight.timeRevisedTrip : this.flight.timeTrip;
   }
 
-  @Input()
+  // Get calculated actual Flight Time
   get timeFlightActual(): number | null {
     return this.subtractTimes(this.flight.timeLdg, this.flight.timeTakeoff);
   }
 
-  @Input()
+  // Get Flight Time from Flight Plan
   get timeFplTrip(): number | null {
     return this.flight.timeTrip;
+  }
+
+  // Get number of minutes since TakeOff
+  get timeFlightElapsed(): number | null {
+    if (this.timeTakeoff !== null) {
+      let elapsed = this.timeOfDayMinUTC - this.timeTakeoff;
+      return elapsed >= 0 ? elapsed : elapsed + (24 * 60);
+    }
+    return null;
   }
 
   //#endregion
 
   //#region Fuel
-  @Input()
+  
   set fuelTaxi(value: number | null) {
     this.flight.fuelTaxiRevised = value;
     this.saveFlight();
@@ -489,7 +515,7 @@ export class FlightService {
     return this.flight.fuelTaxiRevised ? this.flight.fuelTaxiRevised : this.flight.fuelTaxi;
   }
 
-  @Input()
+  
   set fuelTrip(value: number | null) {
     this.flight.fuelTripRevised = value;
     this.saveFlight();
@@ -498,7 +524,7 @@ export class FlightService {
     return this.flight.fuelTripRevised ? this.flight.fuelTripRevised : this.flight.fuelTrip;
   }
 
-  @Input()
+  
   set fuelContigency(value: number | null) {
     this.flight.fuelContigencyRevised = value;
     this.saveFlight();
@@ -509,7 +535,7 @@ export class FlightService {
 
 
 
-  @Input()
+  
   set fuelAlternate(value: number | null) {
     this.flight.fuelAlternateRevised = value;
     this.saveFlight();
@@ -518,7 +544,7 @@ export class FlightService {
     return this.flight.fuelAlternateRevised ? this.flight.fuelAlternateRevised : this.flight.fuelAlternate;
   }
 
-  @Input()
+  
   set fuelFinal(value: number | null) {
     this.flight.fuelFinalRamp = value;
     this.saveFlight();
@@ -527,7 +553,7 @@ export class FlightService {
     return this.flight.fuelFinalRamp ? this.flight.fuelFinalRamp : this.flight.fuelFinal;
   }
 
-  @Input()
+  
   set fuelMinReq(value: number | null) {
     this.flight.fuelMinReqRevised = value;
     this.saveFlight();
@@ -536,7 +562,7 @@ export class FlightService {
     return this.flight.fuelMinReqRevised ? this.flight.fuelMinReqRevised : this.flight.fuelMinReq;
   }
 
-  @Input()
+  
   set fuelRamp(value: number | null) {
     this.flight.fuelRampRevised = value;
     this.saveFlight();
@@ -545,7 +571,7 @@ export class FlightService {
     return this.flight.fuelRampRevised ? this.flight.fuelRampRevised : this.flight.fuelRamp;
   }
 
-  @Input()
+  
   set fuelFinalRamp(value: number | null) {
     this.flight.fuelFinalRamp = value;
     this.saveFlight();
@@ -554,7 +580,7 @@ export class FlightService {
     return this.flight.fuelFinalRamp !== null ? this.flight.fuelFinalRamp : this.flight.fuelRamp;
   }
 
-  @Input()
+  
   set fuelBefore(value: number | null) {
     this.flight.fuelBefore = value;
     this.saveFlight();
@@ -563,7 +589,7 @@ export class FlightService {
     return this.flight.fuelBefore;
   }
 
-  @Input()
+  
   set fuelArrivalBeforeRefuel(value: number | null) {
     this.flight.fuelArrivalBeforeRefuel = value;
     this.saveFlight();
@@ -572,7 +598,7 @@ export class FlightService {
     return this.flight.fuelArrivalBeforeRefuel;
   }
 
-  @Input()
+  
   set fuelSg(value: number | null) {
     this.flight.fuelSg = value;
     this.saveFlight();
@@ -581,22 +607,22 @@ export class FlightService {
     return this.flight.fuelSg;
   }
 
-  @Input()
+  
   get fuelReqUplift(): number | null {
     return this.flight.fuelBefore !== null ? this.fuelFinalRamp - this.flight.fuelBefore : null;
   }
 
-  @Input()
+  
   get fuelUsedOnGround(): number | null {
     return this.flight.fuelArrivalBeforeRefuel !== null && this.flight.fuelBefore !== null ? this.flight.fuelArrivalBeforeRefuel - this.flight.fuelBefore : null;
   }
 
-  @Input()
+  
   get fuelSgLgG(): string {
     return this.flight.fuelSg !== null ? String(Math.round((this.flight.fuelSg / 10) / 0.11982643) / 100).padEnd(4, '0') : '0.00';
   }
 
-  @Input()
+  
   get fuelMeteredUplift(): number | null {
     let uplift = this.flight.fuelUpliftVal.reduce(function (x, y) { return x = x + y });
 
@@ -608,7 +634,7 @@ export class FlightService {
     return uplift;
   }
 
-  @Input()
+  
   set fuelUpliftUnit(value: string) {
     this.flight.fuelUpliftUnit = value;
     this.saveFlight();
@@ -617,21 +643,26 @@ export class FlightService {
     return this.flight.fuelUpliftUnit;
   }
 
-  @Input()
+  
   get fuelUplifts(): number[] {
     return this.flight.fuelUpliftVal;
   }
 
-  @Input()
+  
   set fuelDeparture(value: number | null) {
     this.flight.fuelDeparture = value;
     this.saveFlight();
   }
   get fuelDeparture(): number {
-    return this.flight.fuelDeparture ? this.flight.fuelDeparture : this.fuelFinalRamp;
+    return this.flight.fuelDeparture !== null ? this.flight.fuelDeparture : this.fuelFinalRamp;
   }
 
-  @Input()
+  
+  get hasFuelDeparture(): boolean {
+    return this.flight.fuelDeparture !== null
+  }
+
+  
   set fuelArrivalAfterFlight(value: number | null) {
     this.flight.fuelArrivalAfterFlight = value;
     this.saveFlight();
@@ -640,20 +671,19 @@ export class FlightService {
     return this.flight.fuelArrivalAfterFlight;
   }
 
-  @Input()
+  
   get fuelUpliftKg(): number | null {
     return this.fuelMeteredUplift && this.fuelSg ? Math.round(this.fuelMeteredUplift * this.fuelSg / 1000) : null;
   }
 
-  @Input()
+  
   get fuelDiscrepancy(): number | null {
-    console.log(this.fuelUpliftKg +" - "+ this.flight.fuelDeparture +" - "+ this.flight.fuelArrivalBeforeRefuel +" - "+ this.fuelUsedOnGround)
-    return this.fuelUpliftKg !== null && this.flight.fuelDeparture !== null && 
+    return this.fuelUpliftKg !== null && this.fuelDeparture !== null &&
       this.flight.fuelArrivalBeforeRefuel !== null && this.fuelUsedOnGround !== null ?
-      Math.round(this.fuelUpliftKg - (this.flight.fuelDeparture - this.flight.fuelArrivalBeforeRefuel) - this.fuelUsedOnGround) : null
+      Math.round(this.fuelUpliftKg - (this.fuelDeparture - this.flight.fuelArrivalBeforeRefuel) - this.fuelUsedOnGround) : null
   }
 
-  @Input()
+  
   set fuelCrewExtra(value: number | null) {
     if (value != null && this.fuelFinalRamp != null) {
       this.flight.fuelFinalRamp = value + this.flight.fuelRamp
@@ -664,12 +694,12 @@ export class FlightService {
     return (this.fuelFinalRamp != null && this.fuelRamp != null) ? this.fuelFinalRamp - this.fuelRamp : null;
   }
 
-  @Input()
+  
   get fuelRefuelExtra(): number | null {
     return (this.fuelFinalRamp != null && this.fuelDeparture != null) ? this.fuelDeparture - this.fuelFinalRamp : null;
   }
 
-  @Input()
+  
   set fuelEstimatedArrival(value: number | null) {
     this.flight.fuelEstimatedArrival = value;
     this.saveFlight();
@@ -680,7 +710,7 @@ export class FlightService {
   //#endregion
 
   //#region Weight
-  @Input()
+  
   set ezfw(value: number | null) {
     this.flight.azfw = value;
     this.saveFlight();
@@ -689,17 +719,17 @@ export class FlightService {
     return this.flight.azfw ? this.flight.azfw : this.flight.ezfw;
   }
 
-  @Input()
+  
   get etow(): number {
     return this.fuelDeparture + this.ezfw - this.fuelTaxi;
   }
 
-  @Input()
+  
   get elwt(): number {
     return this.fuelEstimatedArrival + this.ezfw;
   }
 
-  @Input()
+  
   set mzfw(value: number | null) {
     value ? this.flight.mzfw = value : '';
     this.saveFlight();
@@ -708,7 +738,7 @@ export class FlightService {
     return this.flight.mzfw;
   }
 
-  @Input()
+  
   set mtow(value: number | null) {
     value ? this.flight.mtow = value : '';
     this.saveFlight();
@@ -717,7 +747,7 @@ export class FlightService {
     return this.flight.mtow;
   }
 
-  @Input()
+  
   set mlwt(value: number | null) {
     value ? this.flight.mlwt = value : '';
     this.saveFlight();
@@ -726,22 +756,22 @@ export class FlightService {
     return this.flight.mlwt;
   }
 
-  @Input()
+  
   get zfwMargin(): number {
     return this.mzfw - this.ezfw;
   }
 
-  @Input()
+  
   get towMargin(): number {
     return this.mtow - this.etow;
   }
 
-  @Input()
+  
   get ldwMargin(): number {
     return this.mlwt - this.elwt;
   }
 
-  @Input()
+  
   get limitingWeight(): string {
     if (this.zfwMargin < this.towMargin && this.zfwMargin < this.ldwMargin) {
       return "ZFW";
@@ -755,7 +785,7 @@ export class FlightService {
   //#endregion
 
   //#region Dangerous Goods
-  @Input()
+  
   get dgs(): DangerousGood[] {
     return this.flight.dgs;
   }
@@ -771,7 +801,7 @@ export class FlightService {
   //#endregion
 
   //#region Notes
-  @Input()
+  
   set selectedDepNoteText(value: string) {
     this.flight.depNotes[this.flight.selectedDepNote - 1] = value;
     this.saveFlight();
@@ -781,12 +811,12 @@ export class FlightService {
     return this.flight.depNotes[this.flight.selectedDepNote - 1];
   }
 
-  @Input()
+  
   get depNotesCount(): number {
     return this.flight.depNotes.length;
   }
 
-  @Input()
+  
   set currentDepNote(value: number) {
     this.flight.selectedDepNote = value;
     this.saveFlight();
@@ -807,7 +837,7 @@ export class FlightService {
     this.flight.selectedDepNote = this.flight.depNotes.length;
   }
 
-  @Input()
+  
   set selectedArrNoteText(value: string) {
     this.flight.arrNotes[this.flight.selectedArrNote - 1] = value;
     this.saveFlight();
@@ -816,12 +846,12 @@ export class FlightService {
     return this.flight.arrNotes[this.flight.selectedArrNote - 1];
   }
 
-  @Input()
+  
   get arrNotesCount(): number {
     return this.flight.arrNotes.length;
   }
 
-  @Input()
+  
   set currentArrNote(value: number) {
     this.flight.selectedArrNote = value;
     this.saveFlight();
@@ -844,7 +874,7 @@ export class FlightService {
   //#endregion
 
   //#region POB, Crew, Dispatch Freq, ATIS, Parking
-  @Input()
+  
   set pob(value: number | null) {
     this.flight.pob = value;
     this.saveFlight();
@@ -853,7 +883,7 @@ export class FlightService {
     return this.flight.pob;
   }
 
-  @Input()
+  
   set fdCrew(value: string) {
     this.flight.fdCrew = value;
     this.saveFlight();
@@ -862,7 +892,7 @@ export class FlightService {
     return this.flight.fdCrew;
   }
 
-  @Input()
+  
   set csdName(value: string) {
     this.flight.csdName = value;
     this.saveFlight();
@@ -871,7 +901,7 @@ export class FlightService {
     return this.flight.csdName;
   }
 
-  @Input()
+  
   set atisDepInfo(value: string) {
     this.flight.atisDepInfo = value;
     this.saveFlight();
@@ -880,7 +910,7 @@ export class FlightService {
     return this.flight.atisDepInfo;
   }
 
-  @Input()
+  
   set rwyDeparture(value: string) {
     this.flight.rwyDeparture = value;
     this.saveFlight();
@@ -889,7 +919,7 @@ export class FlightService {
     return this.flight.rwyDeparture;
   }
 
-  @Input()
+  
   set rwyIntercection(value: string) {
     this.flight.rwyIntercection = value;
     this.saveFlight();
@@ -898,7 +928,7 @@ export class FlightService {
     return this.flight.rwyIntercection;
   }
 
-  @Input()
+  
   set dispatchName(value: string) {
     this.flight.dispatchName = value;
     this.saveFlight();
@@ -907,7 +937,7 @@ export class FlightService {
     return this.flight.dispatchName;
   }
 
-  @Input()
+  
   set dispatchFreq(value: string) {
     this.flight.dispatchFreq = value;
     this.saveFlight();
@@ -916,7 +946,7 @@ export class FlightService {
     return this.flight.dispatchFreq;
   }
 
-  @Input()
+  
   set atisArrInfo(value: string) {
     this.flight.atisArrInfo = value;
     this.saveFlight();
@@ -925,7 +955,7 @@ export class FlightService {
     return this.flight.atisArrInfo;
   }
 
-  @Input()
+  
   set temperature(value: number | null) {
     value ? this.flight.temperature = value : '';
     this.saveFlight();
@@ -934,12 +964,12 @@ export class FlightService {
     return this.flight.temperature;
   }
 
-  @Input()
+  
   get temperatureF(): string {
     return String(Math.round(this.flight.temperature * 1.8 + 32));
   }
 
-  @Input()
+  
   set parkingStand(value: string) {
     this.flight.parkingStand = value;
     this.saveFlight();
@@ -952,7 +982,7 @@ export class FlightService {
   //#endregion
 
   //#region Rest Times
-  @Input()
+  
   set restStart(value: number | null) {
     this.flight.restStart = value;
     this.saveFlight();
@@ -964,7 +994,7 @@ export class FlightService {
     return this.addTimes(this.timeTakeoff, this._prefs.timeBeforeRest);
   }
 
-  @Input()
+  
   set restEnd(value: number | null) {
     this.flight.restEnd = value;
     this.saveFlight();
@@ -977,7 +1007,7 @@ export class FlightService {
     return this.subtractTimes(this.timeEta, this._prefs.timeAfterRest);
   }
 
-  @Input()
+  
   set restType(value: string) {
     this.flight.restType = value;
     this.saveFlight();
@@ -986,7 +1016,7 @@ export class FlightService {
     return this.flight.restType;
   }
 
-  @Input()
+  
   set restReference(value: string) {
     this.flight.restReference = value;
     this.saveFlight();
@@ -995,7 +1025,7 @@ export class FlightService {
     return this.flight.restReference;
   }
 
-  @Input()
+  
   get rests(): Rest[] | null {
     let restList: Rest[] = []
 
@@ -1044,7 +1074,7 @@ export class FlightService {
     return restList;
   }
 
-  @Input()
+  
   getRestTimeMin(numberOf1R: number, numberOfBrakes: number): number {
     // Time of total rest (end - start) minus time between rests.
     let totalRestTime: number = (this.restEnd || 0) - (this.restStart || 0) - (this._prefs.prefs.timeBetweenRest * numberOfBrakes);
@@ -1093,7 +1123,7 @@ export class FlightService {
     return null;
   }
 
-  @Input()
+  
   set activeDisplay(value: number) {
     value ? this.flight.activeDisplay = value : '';
     this.saveFlight();

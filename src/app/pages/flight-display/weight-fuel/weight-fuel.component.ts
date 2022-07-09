@@ -8,8 +8,26 @@ import { FlightService } from 'src/app/services/flight.service';
 export class WeightFuelComponent implements OnInit {
 
   constructor(
-    public _flight:FlightService,
+    public _flight: FlightService,
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  setDepFuel() {
+    if (!this._flight.hasFuelDeparture) {
+      this._flight.fuelDeparture = this._flight.fuelFinal;
+    }
+  }
+
+  zfwMarginLabel(): string {
+    return this._flight.limitingWeight === 'ZFW' ? 'ZFW Diff (L)' : 'ZFW Diff';
+  }
+
+  towMarginLabel(): string {
+    return this._flight.limitingWeight === 'TOW' ? 'TOW Diff (L)' : 'TOW Diff';
+  }
+
+  ldgMarginLabel(): string {
+    return this._flight.limitingWeight === 'LDW' ? 'LDW Diff (L)' : 'LDW Diff';
+  }
 }

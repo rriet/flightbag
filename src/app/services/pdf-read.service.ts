@@ -158,10 +158,6 @@ export class PdfReadService {
         // Get Ramp fuel ROUNDED UP
         this._flight.flight.fuelRamp = Math.ceil(this.getValue(page, 'RAMP FUEL') / 100) * 100;
 
-        // Copy the value of the required to the departure, to help fill the fuel form
-        this._flight.flight.fuelDeparture = this._flight.flight.fuelRamp;
-
-
         /////  Weights ////
         this._flight.flight.mzfw = this.getValue(page, 'MZFW');
         this._flight.flight.ezfw = this.getValue(page, 'EZFW');

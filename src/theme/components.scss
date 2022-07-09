@@ -112,11 +112,15 @@
 .select {
     width: 100%;
     height: 35px;
-    margin-top: 5px;
+    margin-top: 8px;
     margin-bottom: 5px;
     border-radius: 10px;
     font-size: 1rem;
     padding-left: 20px;
+}
+
+.input-upper {
+    text-transform: uppercase;
 }
 
 .time-pop {

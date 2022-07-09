@@ -37,10 +37,14 @@
         </div>
         <div class="row">
             <div class="col">
-                <app-time [time]="_flight.timeBlock" label="Block time" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeBlock" label="Block time" [edit]="false" [clickable]="false"
+                [caution]="_flight.timeBlock - _flight.timeTrip < 20" [warning]="_flight.timeBlock - _flight.timeTrip < 10"
+                ></app-time>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeTrip" label="Flight Time" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeTrip" label="Flight Time" [edit]="false" [clickable]="false"
+                [caution]="_flight.timeBlock - _flight.timeTrip < 20" [warning]="_flight.timeBlock - _flight.timeTrip < 10"
+                ></app-time>
             </div>
             <div class="col">
                 <app-text [(value)]="_flight.highestLevel" [center]="true" label="Highest FL"></app-text>
@@ -54,7 +58,7 @@
                 <app-time [time]="_flight.timeStdLocal" label="STD Local" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-time [time]="depDelay" [label]="delayed?'Delay':'To Go'" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeDepDiff" [label]="_flight.isDepDelayed ?'Delay':'To Go'" [edit]="false"></app-time>
             </div>
         </div>
         <div class="row">

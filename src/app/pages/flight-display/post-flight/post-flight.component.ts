@@ -10,12 +10,26 @@ import { ToastService } from 'src/app/services/toast-service';
 export class PostFlightComponent implements OnInit {
 
   constructor(
-    public _flight:FlightService,
+    public _flight: FlightService,
     private _clipboard: ClipboardService,
     public _toastService: ToastService,
   ) { }
 
   ngOnInit(): void {
+  }
+
+  get chocksOffLabel(): string {
+    if (this._flight.isDepDelayed && this._flight.timeAtd !== null) {
+      return "Chocks-Off (Delay: " + this._flight.timeDepDiff + " min)"
+    }
+    return "Chocks-Off"
+  }
+
+  get chocksOnLabel(): string {
+    if (this._flight.isArrDelayed && this._flight.timeAta !== null) {
+      return "Chocks-On (Delay: " + this._flight.timeArrDiff + " min)"
+    }
+    return "Chocks-On"
   }
 
   copyFuelValue(selectedValue: number | null) {

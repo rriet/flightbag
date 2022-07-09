@@ -32,7 +32,6 @@ export interface Flight {
 
     // Times and date
     dateStandardDeparture: number;
-    dateActualDeparture: number | null;
 
     timeStd: number;
     timeAtd: number | null;
@@ -40,8 +39,8 @@ export interface Flight {
     timeSta: number;
     timeLdg: number | null;
     timeAta: number | null;
-    timeBlock: number | null;
-    timeTrip: number | null;
+    timeBlock: number;
+    timeTrip: number;
     timeRevisedTrip: number | null;
 
     // weight

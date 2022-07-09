@@ -1,7 +1,11 @@
 // Components
 
 .select {
-    margin-top: 8px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.form-control, .form-control:focus {
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -35,6 +39,11 @@
 .main-content {
     background-color: var(--background-color);
     color: var(--text-color);
+}
+
+.toast-wrn {
+    background-color: var(--color-danger-shade);
+    color: var(--color-danger-contrast);
 }
 
 .meter-table-container {

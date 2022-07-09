@@ -37,9 +37,26 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col">
+            <div class="col-2">
                 Navigation
             </div>
+            <div class="col-3">
+                <div class="input-group input-group-sm">
+                    <input type="text" [(ngModel)]="waypointName" class="form-control input-upper" placeholder="WAYPOINT" >
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchWaypoint()"
+                    [disabled]="this.waypointName.length < 2">Search</button>
+                  </div>
+            </div>
+            <div class="col-1">
+
+            </div>
+            <div class="col-6 text-right">
+                <button type="button" class="btn btn-sm" [class.btn-danger]="!interval"
+                    [class.btn-success]="interval" (click)="toggleInterval()">
+                        Auto
+                </button>
+            </div>
+            
         </div>
     </div>
     <div class="card-body">
@@ -47,7 +64,8 @@
             <div class="col">
                 <div class="scroll-navigation">
                     <ul class="list-group">
-                        <app-waypoint *ngFor="let waypoint of _flight.waypoints; let i = index;" [waypoint]="waypoint"></app-waypoint>
+                        <app-waypoint *ngFor="let waypoint of _flight.waypoints; let i = index;" [waypoint]="waypoint"
+                            (click)="showWaypoint(waypoint)" id="{{waypoint.ctm}}"></app-waypoint>
                     </ul>
                 </div>
             </div>
