@@ -37,19 +37,13 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col-2">
-                Navigation
-            </div>
-            <div class="col-3">
+            <div class="col-6">
                 <div class="input-group input-group-sm">
                     <input type="text" [(ngModel)]="waypointName" class="form-control input-upper" placeholder="WAYPOINT" 
                     (focus)="stopTimmer()" (keyup.enter)="searchWaypoint()">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchWaypoint()"
                     [disabled]="this.waypointName.length < 2">Search</button>
                   </div>
-            </div>
-            <div class="col-1">
-
             </div>
             <div class="col-6 text-right">
                 <button type="button" class="btn btn-sm" [class.btn-danger]="!interval"
