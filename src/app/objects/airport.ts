@@ -6,6 +6,5 @@ export interface Airport {
     country?: string;
     latitude?: number;
     longitude?: number;
-    timezone?:number;
-    altitude?:number;
+    elevation?:number;
 }

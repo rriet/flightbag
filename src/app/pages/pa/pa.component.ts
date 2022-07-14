@@ -60,9 +60,9 @@ export class PaComponent implements OnInit {
       .replace(/\[MYNAME\]/gi, this._prefs.myname)
       .replace(/\[NUMBER\]/gi, this._flight.number)
       .replace(/\[DESTINATION\]/gi, this._flight.to)
-      .replace(/\[CSDNAME\]/gi, this._flight.csdName)
+      .replace(/\[CSDNAME\]/gi, this._prefs.csdName)
       .replace(/\[FL\]/gi, this._flight.highestLevel + '00')
-      .replace(/\[FDCREW\]/gi, this._flight.fdCrew);
+      .replace(/\[FDCREW\]/gi, this._prefs.fdCrew);
 
     if (this._flight.timeTrip) {
       let hours: number = Math.floor(this._flight.timeTrip / 60);

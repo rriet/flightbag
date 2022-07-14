@@ -96,6 +96,7 @@
     .card-header {
         padding-top: 3px !important;
         padding-bottom: 3px !important;
+        font-size: 0.9rem;
     }
 
     .card-body {
@@ -119,6 +120,12 @@
     padding-left: 20px;
 }
 
+.time-picker-component,
+.time-pop {
+    margin: -15px;
+
+}
+
 .input-upper {
     text-transform: uppercase;
 }
@@ -134,5 +141,24 @@
 
     .time-picker-buttons {
         text-align: center;
+    }
+}
+
+.waypoint-display {
+    .day-icon {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+    }
+}
+.waypoint-pop {
+    .value-diff {
+        font-size: 0.7rem;
+    }
+    .time-display {
+        font-size: 0.9rem;
+    }
+    .fuel-display {
+        font-size: 0.9rem;
     }
 }

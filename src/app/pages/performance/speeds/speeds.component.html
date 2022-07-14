@@ -1,0 +1,82 @@
+<div class="card mb-3">
+    <div class="card-header">Speed Check</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="_flight.perfToVref30" label="VREF30" [req]="true" [int]=true [negative]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="minClean" label="Minimum Clean" [edit]="false" [caution]="(minClean || 0) > 250"></app-number>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="_prefs.tireLimitSpeed" label="Tire Speed" [req]="true" [int]=true [negative]="false"></app-number>
+            </div>
+            <div class="col m-1">
+                <button type="button" class="btn btn-primary btn-sm w-100 mt-1" (click)="performanceUpload.click()">Load OPT</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="_flight.fromAirportElevation" label="Elevation" [req]="true" [int]=true></app-number>
+            </div>
+            <div class="col">
+                <app-number [(value)]="_flight.perfToQnh" label="QNH (HPa)" [req]="true" [int]=true [formatted]="false" [negative]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [(value)]="_flight.perfToTemp" label="Temp (°C)" [req]="true" [int]=true></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [(value)]="this._flight.perfToVr" label="VR (kts)" [req]="true" [int]=true [negative]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.rwyDeparture" label="RWY" [upper]="true" [right]="true" 
+                [caution]="runwayHeading === null"></app-text>
+            </div>
+            <div class="col">
+                <app-text [(value)]="_flight.prefToWind" label="Wind" [upper]="true" [right]="true"
+                [caution]="windSpeed === null"></app-text>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <app-number [value]="isaTemperature | roundNumber" label="ISA (°C)" [edit]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="isaDeviation | roundNumber" label="ISA Deviation (°C)" [edit]="false"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-number [value]="pressureAltitude" label="Pressure Altitude (ft)" [edit]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="densityAltitude" label="Density Altitude (ft)" [edit]="false"></app-number>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-text [value]="windComponents" label="Wind Components" [edit]="false" [right]="true"></app-text>
+            </div>
+            <div class="col">
+                <app-number [value]="tas" label="VR TAS" [edit]="false"></app-number>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col">
+                <app-number [value]="groundSpeed" label="V2 Ground Speed" [edit]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="tireMargin" label="Tire Margin (kts)" [edit]="false"
+                [caution]="(tireMargin || 0) < 15" [warning]="(tireMargin || 0) < 10"></app-number>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="file" class="hidden-input form-control" (change)="extractPerformance($event);" #performanceUpload>

@@ -13,12 +13,6 @@ export class WeightFuelComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  setDepFuel() {
-    if (!this._flight.hasFuelDeparture) {
-      this._flight.fuelDeparture = this._flight.fuelFinal;
-    }
-  }
-
   zfwMarginLabel(): string {
     return this._flight.limitingWeight === 'ZFW' ? 'ZFW Diff (L)' : 'ZFW Diff';
   }

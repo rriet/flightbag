@@ -5,7 +5,45 @@
     color: var(--text-color);
 }
 
-.form-control, .form-control:focus {
+.date-picker-pop {
+    background-color: var(--toolbar-background);
+    color: var(--toolbar-text-color);
+
+    .form-select {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    .btn-light, .btn-light:hover {
+        background-color: var(--toolbar-background);
+        color: var(--toolbar-text-color);
+    }
+
+    .ngb-dp-header {
+        background-color: var(--toolbar-background);
+        color: var(--toolbar-text-color);
+    }
+
+    .ngb-dp-week {
+        background-color: var(--toolbar-background);
+        color: var(--toolbar-text-color);
+    }
+}
+
+.time-picker-component,
+.time-pop {
+    background-color: var(--toolbar-background);
+    color: var(--toolbar-text-color);
+
+    .form-control,
+    .form-control:focus {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+}
+
+.input-color,
+.input-color:focus {
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -107,18 +145,24 @@
 // Tech Log //
 .techlog-pop {
     background-color: var(--background-color);
+}
 
+.waypoint-pop {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 // Bootstrap components //
 
 .nav-tabs {
     background-color: var(--background-color);
-    .nav-link.active {   
+
+    .nav-link.active {
         background-color: var(--color-light-shade);
         color: var(--text-color);
     }
-    .nav-link {   
+
+    .nav-link {
         color: var(--text-color);
     }
 }

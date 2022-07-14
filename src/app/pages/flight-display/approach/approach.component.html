@@ -1,10 +1,10 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="row">
-            <div class="col">
+            <div class="col-3">
                 Arrival
             </div>
-            <div class="col">
+            <div class="col-6">
                 {{_flight.to}}
             </div>
             <div class="col">
@@ -15,14 +15,6 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <app-date [dateInt]="_flight.dateArrivalLocal" label="Arrival Date (Loca)" [edit]="false"></app-date>
-            </div>
-            <div class="col">
-                <app-text [value]="_flight.number" label="Flight Number" [center]="true" [edit]="false"></app-text>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
                 <app-time [(time)]="_flight.timeEta" label="ETA"></app-time>
             </div>
             <div class="col">
@@ -31,19 +23,6 @@
             <div class="col">
                 <app-time [time]="_flight.timeArrDiff" [label]="_flight.isArrDelayed?'Delay':'Before STA'"
                     [edit]="false"></app-time>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <app-time [time]="_flight.timeSta" label="STA" [edit]="false"></app-time>
-            </div>
-            <div class="col">
-                <app-number [(value)]="_flight.mlwt" label="MLWT" [int]=true [req]="true" [clickable]="false"
-                    [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
-            </div>
-            <div class="col">
-                <app-number [value]="_flight.elwt" label="LWT" [edit]="false" [clickable]="false"
-                    [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
             </div>
         </div>
         <div class="row">
@@ -104,7 +83,7 @@
         <div class="row">
             <div class="col">
                 <app-textarea [label]="'Note #'+_flight.currentArrNote" [(value)]="_flight.selectedArrNoteText"
-                    [rows]="8"></app-textarea>
+                    [rows]="12"></app-textarea>
             </div>
         </div>
     </div>

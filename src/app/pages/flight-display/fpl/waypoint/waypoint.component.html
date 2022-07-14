@@ -1,0 +1,134 @@
+<div class="waypoint-display">
+    <li class="list-group-item" *ngIf="waypoint.type === 'WPT' || waypoint.type === 'STA'" (click)="open(content)">
+        <div class="row">
+            <div class="col">
+                <h4>{{name()}}</h4>
+            </div>
+            <div class="col">
+                FL{{inputFl}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{waypointTime().text}}
+            </div>
+            <div class="col">
+                {{fuelOnboard().text}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div [class.caution]="isOverweight()">Weight: {{weightNow | numToTons}}</div>
+            </div>
+        </div>
+
+        <div class="day-icon" *ngIf="waypoint.isDay === true"><img src="assets/img/day.svg"></div>
+        <div class="day-icon" *ngIf="waypoint.isDay === false"><img src="assets/img/night.svg"></div>
+    </li>
+    <li class="list-group-item" *ngIf="waypoint.type === 'ETOPS'">
+        <div class="row">
+            <div class="col">
+                <h4>{{name()}}</h4>
+            </div>
+            <div class="col">
+                {{waypointTime().text}}
+            </div>
+            <div class="col">
+                {{fuelOnboard().text}}
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item" *ngIf="waypoint.type === 'TOC' || waypoint.type === 'TOD'">
+        <div class="row">
+            <div class="col">
+                <h4>{{name()}}</h4>
+            </div>
+            <div class="col">
+                {{waypointTime().text}}
+            </div>
+            <div class="col">
+                {{fuelOnboard().text}}
+            </div>
+        </div>
+    </li>
+</div>
+<ng-template #content let-modal>
+    <div class="waypoint-pop">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col">
+                    <h4 class="modal-title">{{name()}}</h4>
+                </div>
+                <div class="col">
+                    <app-number [(value)]="inputFl" [label]="'Planed FL' + planFl()" [int]="true">
+                    </app-number>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        TIME
+                    </div>
+                    <div class="col">
+                        FUEL
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col p-0">
+                        <div style=" White-space: nowrap;">
+                            <span class="time-display">ETA: {{wptEta | toHours}}</span>
+                            <span class="value-diff" *ngIf="inputEtaDiff">&nbsp;{{inputEtaDiff | numDiff}}</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div style=" White-space: nowrap;">
+                            <span class="fuel-display">FPL: {{fplFuel}}</span>
+                            <span class="value-diff" *ngIf="inputFplFuelDiff"
+                            [class.caution]="inputFplFuelDiff < 0">&nbsp;{{inputFplFuelDiff | tonDiff}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-0">
+                        <div style=" White-space: nowrap;">
+                            <span class="time-display">RTA: {{wptRta | toHours}}</span>
+                            <span class="value-diff" *ngIf="inputRtaDiff">&nbsp;{{inputRtaDiff | numDiff}}</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div style=" White-space: nowrap;">
+                            <span class="fuel-display">REQ: {{fplRemFuel}}</span> 
+                            <span class="value-diff" *ngIf="inputFplRemFuelDiff"
+                            [class.warning]="inputFplRemFuelDiff < 0">&nbsp;{{inputFplRemFuelDiff | tonDiff}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <app-time [(time)]="inputTime" [label]="'ATA: '" [req]="true"></app-time>
+                    </div>
+                    <div class="col">
+                        <app-number [(value)]="inputFuel" label="FOB" [req]="true" [tons]="true" [negative]="false">
+                        </app-number>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-primary dialog-button" aria-label="Close"
+                        (click)="saveWaypoint(); modal.dismiss()">Save</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-secondary dialog-button pl-2" aria-label="Close"
+                        (click)="modal.dismiss()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

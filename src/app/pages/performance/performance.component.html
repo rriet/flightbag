@@ -1,0 +1,18 @@
+<div class="container flight-display">
+    <ul ngbNav #displayNav="ngbNav"  [(activeId)]="_flight.activePerformanceDisplay" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink><img src="assets/img/weight.svg"></a>
+            <ng-template ngbNavContent>
+                <app-weight-fuel></app-weight-fuel>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink><img src="assets/img/speed.svg"></a>
+            <ng-template ngbNavContent>
+                <app-speeds></app-speeds>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="displayNav" class="mt-2"></div>
+</div>

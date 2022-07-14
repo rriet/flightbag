@@ -1,0 +1,32 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-7">
+                <div class="input-group input-group-sm">
+                    <input type="text" [(ngModel)]="waypointName" class="form-control input-color input-upper" placeholder="WAYPOINT" 
+                    (focus)="stopTimmer()" (keyup.enter)="searchWaypoint()">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="searchWaypoint()"
+                    [disabled]="this.waypointName.length < 2">Search</button>
+                  </div>
+            </div>
+            <div class="col-5 ps-4">
+                <button type="button" class="btn btn-sm" [class.btn-danger]="!interval"
+                    [class.btn-success]="interval" (click)="toggleInterval()">
+                        Auto
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <div class="scroll-navigation">
+                    <ul class="list-group">
+                        <app-waypoint *ngFor="let waypoint of _flight.waypoints; let i = index;" [waypoint]="waypoint"
+                            id="{{timeOverWaypoint(waypoint)}}" (refresh)="refresh($event)"></app-waypoint>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

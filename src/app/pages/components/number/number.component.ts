@@ -22,8 +22,9 @@ export class NumberComponent implements OnInit {
     if (this.round > 0 && this.value) {
       this.value = Math.ceil(this.value / this.round) * this.round;
     }
-
-    //this.formattedNumber = this.formatNumber(this.value);
+    
+    // Format initial number according to 'formatted' Input value
+    this.formattedNumber = this.formatNumber(this.value);
   }
 
   @Input() label: string = "Number";
@@ -74,6 +75,8 @@ export class NumberComponent implements OnInit {
   }
 
   deformatNumber(numStr: string): number | null {
+    // don't try to format if the input is just '-'
+    if (numStr === '-') return null;
     return numStr != '' && numStr != undefined ? Number(numStr.replace(/,/g, '')) : null;
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard'
 import { FlightService } from 'src/app/services/flight.service';
+import { PerformanceSevice } from 'src/app/services/performance.service';
 import { PdfReadService } from 'src/app/services/pdf-read.service';
 import { saveAs } from 'file-saver';
 import { ToastService } from 'src/app/services/toast-service';
@@ -14,6 +15,7 @@ export class FlightInitComponent implements OnInit {
   constructor(
     private _pdf: PdfReadService,
     public _flight: FlightService,
+    public _performance: PerformanceSevice,
     private _clipboard: ClipboardService,
     public _toastService: ToastService,
   ) { }
@@ -22,21 +24,24 @@ export class FlightInitComponent implements OnInit {
   }
 
   extractText(event: any) {
-    // First clear flight information 
-    this._flight.clearFligh()
-
-    // get file path
     var file = event.target.files[0];
+    if (file !== undefined) {
+      // First clear flight information 
+      this._flight.clearFligh()
 
-    // create new file
-    var fileReader = new FileReader();
+      // get file path
 
 
-    fileReader.onload = (e: any) => {
-      this._pdf.readPdf(e);
-    };
-    //Step 3:Read the file as ArrayBuffer
-    fileReader.readAsArrayBuffer(file);
+      // create new file
+      var fileReader = new FileReader();
+
+
+      fileReader.onload = (e: any) => {
+        this._pdf.readPdf(e);
+      };
+      //Step 3:Read the file as ArrayBuffer
+      fileReader.readAsArrayBuffer(file);
+    }
   }
 
   fileName(): string {
@@ -50,19 +55,23 @@ export class FlightInitComponent implements OnInit {
   }
 
   restoreBackup(event: any) {
-    // First clear flight information 
-    this._flight.clearFligh()
-
     // get file path
     var file = event.target.files[0];
 
-    // Read file
-    var reader = new FileReader();
+    if (file !== undefined) {
+      // First clear flight information 
+      this._flight.clearFligh()
 
-    reader.readAsText(file);
-    reader.onload = (e: any) => {
-      // Restore Json
-      this._flight.restore(String(reader.result));
+
+
+      // Read file
+      var reader = new FileReader();
+
+      reader.readAsText(file);
+      reader.onload = (e: any) => {
+        // Restore Json
+        this._flight.restore(String(reader.result));
+      }
     }
   }
 

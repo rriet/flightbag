@@ -7,6 +7,7 @@ import { InflightRestComponent } from './pages/inflight-rest/inflight-rest.compo
 import { MainComponent } from './pages/main/main.component';
 import { MeterTableComponent } from './pages/meter-table/meter-table.component';
 import { PaComponent } from './pages/pa/pa.component';
+import { PerformanceComponent } from './pages/performance/performance.component';
 import { TechlogComponent } from './pages/techlog/techlog.component';
 import { ToolsComponent } from './pages/tools/tools.component';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'flight-init', component: FlightInitComponent },
   {path: 'inflight-rest', component: InflightRestComponent },
   {path: 'pa', component: PaComponent },
+  {path: 'performance', component: PerformanceComponent },
   { path: '', component: MainComponent },
   {path: 'meter-table', component: MeterTableComponent },
   {path: 'techlog', component: TechlogComponent },

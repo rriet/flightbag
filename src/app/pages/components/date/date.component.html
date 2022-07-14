@@ -2,15 +2,18 @@
     [class.warning]="warning" [class.input-display-readonly]="!edit && !req">
     <legend>{{label}}<span *ngIf="req">*</span></legend>
 
-    <input class="form-control input-display" readonly [footerTemplate]="footerTemplate" placeholder="{{hint}}"
+    <input class="form-control input-display" readonly [footerTemplate]="footerTemplate" datepickerClass="date-picker-pop" placeholder="{{hint}}"
         [(ngModel)]="dateInt" (ngModelChange)="changed()" ngbDatepicker #d="ngbDatepicker" (click)="clicked(d)">
 </fieldset>
 
 <ng-template #footerTemplate>
-    <hr class="my-0">
-    <div style="text-align: center;">
-        <button class="btn btn-primary btn-sm m-2 float-start" (click)="setToday(); d.close()">Today</button>
-    <button class="btn btn-primary btn-sm m-2" *ngIf="!req" (click)="dateInt = null; changed(); d.close()">Clear</button>
-    <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Set</button>
+    <div>
+        <hr class="my-0">
+        <div style="text-align: center;">
+            <button class="btn btn-primary btn-sm m-2 float-start" (click)="setToday(); d.close()">Today</button>
+            <button class="btn btn-primary btn-sm m-2" *ngIf="!req"
+                (click)="dateInt = null; changed(); d.close()">Clear</button>
+            <button class="btn btn-secondary btn-sm m-2 float-end" (click)="d.close()">Set</button>
+        </div>
     </div>
 </ng-template>

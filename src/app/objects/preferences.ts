@@ -1,5 +1,6 @@
 export interface Prefs {
-    nCrewP: number;
+    
+    autoScrollFpl: boolean;
 
     timeBeforeRest: number;
     timeBetweenRest: number;
@@ -8,5 +9,10 @@ export interface Prefs {
     departurePaTemplate: string;
     arrivalPaTemplate: string;
 
+    tireLimitSpeed: number;
+
+    nCrewP: number;
     myname: string;
+    fdCrew: string;
+    csdName: string;
 }

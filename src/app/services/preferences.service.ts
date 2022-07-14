@@ -9,7 +9,8 @@ export class PreferencesService {
   constructor() { }
 
   prefs: Prefs = {
-    nCrewP: 2,
+    
+    autoScrollFpl: true,
 
     timeBeforeRest: 15,
     timeBetweenRest: 0,
@@ -18,7 +19,12 @@ export class PreferencesService {
     departurePaTemplate: DEP_PA,
     arrivalPaTemplate: ARR_PA,
 
+    tireLimitSpeed: 204,
+
+    nCrewP: 2,
     myname: '',
+    fdCrew: 'Senior First Officer ...',
+    csdName: '',
   }
 
   loadPrefs() {
@@ -29,6 +35,15 @@ export class PreferencesService {
 
   savePrefs() {
     localStorage.setItem('preferences', JSON.stringify(this.prefs));
+  }
+
+  @Input()
+  set autoScrollFpl(value: boolean) {
+    this.prefs.autoScrollFpl = value;
+    this.savePrefs();
+  }
+  get autoScrollFpl(): boolean {
+    return this.prefs.autoScrollFpl;
   }
 
   @Input()
@@ -84,25 +99,51 @@ export class PreferencesService {
   get myname(): string {
     return this.prefs.myname;
   }
+
+  set fdCrew(value: string) {
+    this.prefs.fdCrew = value;
+    this.savePrefs();
+  }
+  get fdCrew(): string {
+    return this.prefs.fdCrew;
+  }
+
+
+  set csdName(value: string) {
+    this.prefs.csdName = value;
+    this.savePrefs();
+  }
+  get csdName(): string {
+    return this.prefs.csdName;
+  }
+
+  @Input()
+  set tireLimitSpeed(value: number | null) {
+    value ? this.prefs.tireLimitSpeed = value : this.prefs.tireLimitSpeed = 204;
+    this.savePrefs();
+  }
+  get tireLimitSpeed(): number {
+    return this.prefs.tireLimitSpeed;
+  }
 }
 
 export const DEP_PA: string = "Good [MORNING] ladies and gentlemen.\n\n" +
-        "This is your Captain speaking. My name is [MYNAME]. On behalf of Qatar Airways and all the crew, " +
-        "I would like to welcome you on board this Boeing 777, flight [NUMBER] to [DESTINATION].\n\n" +
-        "Beside me here on the Flight Deck is [FDCREW]. And looking after your " +
-        "safety and comfort in the cabin today are CSD / CS [CSDNAME], and our award - winning team.\n\n" +
-        "Our flight time today is [DURATION], and we will be cruising at an altitude of [FL] feet. " +
-        "We’re expecting generally good weather en route. (However, we may experience some light " +
-        "turbulence after departure / during the flight).\n\nFor your safety, please keep your seatbelt " +
-        "fastened at all times, even when the seatbelt signs are switched off.\n\n" +
-        "Before we begin our descent into [DESTINATION], I’ll update you with the latest weather " +
-        "and arrival information.\n\nUntil then, please make yourself comfortable and enjoy our world - class service.\n\n" +
-        "I wish you a very pleasant journey on board this Qatar Airways flight. Thank you.";
+  "This is your Captain speaking. My name is [MYNAME]. On behalf of Qatar Airways and all the crew, " +
+  "I would like to welcome you on board this Boeing 777, flight [NUMBER] to [DESTINATION].\n\n" +
+  "Beside me here on the Flight Deck is [FDCREW]. And looking after your " +
+  "safety and comfort in the cabin today are CSD / CS [CSDNAME], and our award - winning team.\n\n" +
+  "Our flight time today is [DURATION], and we will be cruising at an altitude of [FL] feet. " +
+  "We’re expecting generally good weather en route. (However, we may experience some light " +
+  "turbulence after departure / during the flight).\n\nFor your safety, please keep your seatbelt " +
+  "fastened at all times, even when the seatbelt signs are switched off.\n\n" +
+  "Before we begin our descent into [DESTINATION], I’ll update you with the latest weather " +
+  "and arrival information.\n\nUntil then, please make yourself comfortable and enjoy our world - class service.\n\n" +
+  "I wish you a very pleasant journey on board this Qatar Airways flight. Thank you.";
 
 export const ARR_PA: string = "Good [MORNING] ladies and gentlemen. This is your Captain speaking.\n\n" +
-        "We trust you’re having a pleasant flight with us today.\n\n" +
-        "We’ll be starting our descent into [DESTINATION] shortly, and should be landing in [TIME_TO_GO] minutes, approximately [ETA_LOCAL].\n\n"+
-        "It’s a [WEATHER] day today, with a temperature of [TEMPC] Celsius / [TEMPF] Fahrenheit.\n\n" +
-        "The local time now is [TIME_NOW].\n\n" +
-        "On behalf of all the crew, we wish you a very pleasant stay in [DESTINATION], or a smooth onward journey.\n\n" +
-        "It’s been our pleasure having you on board today.\n\nThank you for choosing the award-winning Qatar Airways.";
+  "We trust you’re having a pleasant flight with us today.\n\n" +
+  "We’ll be starting our descent into [DESTINATION] shortly, and should be landing in [TIME_TO_GO] minutes, approximately [ETA_LOCAL].\n\n" +
+  "It’s a [WEATHER] day today, with a temperature of [TEMPC] Celsius / [TEMPF] Fahrenheit.\n\n" +
+  "The local time now is [TIME_NOW].\n\n" +
+  "On behalf of all the crew, we wish you a very pleasant stay in [DESTINATION], or a smooth onward journey.\n\n" +
+  "It’s been our pleasure having you on board today.\n\nThank you for choosing the award-winning Qatar Airways.";

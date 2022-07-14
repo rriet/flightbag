@@ -17,18 +17,19 @@ export interface Flight {
     type: string;
 
     // Airports
-    from: string;
+    from: Airport;
     fromTimeZone: number;
-    to: string;
+    to: Airport;
     toTimeZone: number;
 
     // Route
     route: string;
-    levels: string[];
     highestLevel: string;
     alternates: Airport[];
     alternateList: string;
     waypoints: Waypoint[];
+
+    sunRiseSet: { time: number, lat: number, lon: number, isDay: boolean }[]
 
     // Times and date
     dateStandardDeparture: number;
@@ -42,6 +43,7 @@ export interface Flight {
     timeBlock: number;
     timeTrip: number;
     timeRevisedTrip: number | null;
+    timeEnrouteDelay: number; // number of minutes delay in the last waypoint entry (Positive = delay)
 
     // weight
     ezfw: number;
@@ -52,9 +54,12 @@ export interface Flight {
     mtow: number;
     mlwt: number;
     // actual ZFW
-    azfw: number | null;
+    rzfw: number | null;
+    fzfw: number | null;
 
     // fuel
+    fuelPlusAdjustment: number;
+    fuelMinusAdjustment: number;
     fuelTaxi: number;
     fuelTaxiRevised: number | null;
     fuelTrip: number;
@@ -63,7 +68,7 @@ export interface Flight {
     fuelContigencyRevised: number | null;
     fuelAlternate: number;
     fuelAlternateRevised: number | null;
-    fuelFinal: number;
+    fuelFinal: number;                          // 30 Min hold
     fuelFinalRevised: number | null;
     fuelMinReq: number;
     fuelMinReqRevised: number | null;
@@ -79,11 +84,8 @@ export interface Flight {
     fuelArrivalAfterFlight: number | null;
     fuelEstimatedArrival: number | null;
 
-
-    // Crew
+    // POB
     pob: number | null;
-    fdCrew: string;
-    csdName: string;
 
     depNotes: string[];
     selectedDepNote: number;
@@ -108,5 +110,24 @@ export interface Flight {
 
     dgs: DangerousGood[];
 
-    activeDisplay: number;
+    activePerformanceDisplay: number;
+    activeFlightDisplay: number;
+
+
+    // Take-off Performance
+    prefToWind: string | null;
+    perfToTemp: number | null;
+    perfToQnh: number | null;
+    perfToWeight: number | null;
+    perfToMfrh: number | null;
+    perfToFlaps: number | null;
+    perfToRating: string | null;
+    perfToAssumedTemp: string | null;
+    perfToN1: string | null;
+    perfToV1: number | null;
+    perfToVr: number | null;
+    perfToV2: number | null;
+    perfToVref30: number | null;
+    perfToEosid: string | null;
+
 }

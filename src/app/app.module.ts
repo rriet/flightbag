@@ -23,13 +23,24 @@ import { ToastComponent } from './pages/components/toast/toast.component';
 import { ShowDgPopComponent } from './pages/dangerous-goods/show-dg-pop/show-dg-pop.component';
 import { InflightRestComponent } from './pages/inflight-rest/inflight-rest.component';
 import { MinutesToHoursPipe } from './pipes/minutes-to-hours.pipe';
-import { WeightFuelComponent } from './pages/flight-display/weight-fuel/weight-fuel.component';
+import { WeightFuelComponent } from './pages/performance/weight-fuel/weight-fuel.component';
 import { DepartureComponent } from './pages/flight-display/departure/departure.component';
 import { CruiseComponent } from './pages/flight-display/cruise/cruise.component';
 import { ApproachComponent } from './pages/flight-display/approach/approach.component';
 import { PostFlightComponent } from './pages/flight-display/post-flight/post-flight.component';
-import { WaypointComponent } from './pages/flight-display/cruise/waypoint/waypoint.component';
+import { WaypointComponent } from './pages/flight-display/fpl/waypoint/waypoint.component';
 import { PaComponent } from './pages/pa/pa.component';
+import { PerformanceComponent } from './pages/performance/performance.component';
+import { SpeedsComponent } from './pages/performance/speeds/speeds.component';
+import { FplComponent } from './pages/flight-display/fpl/fpl.component';
+import { LatitudeToString } from './pipes/latitude-to-string.pipe';
+import { LongitudeToString } from './pipes/longitude-to-string.pipe';
+import { SelectComponent } from './pages/components/select/select.component';
+import { RoundNumber } from './pipes/roundNumber.pipe';
+import { EditWaypointComponent } from './pages/flight-display/fpl/edit-waypoint/edit-waypoint.component';
+import { NumDiffPipe } from './pipes/num-diff.pipe';
+import { TonDiffPipe } from './pipes/ton-diff.pipe';
+import { NumToTonsPipe } from './pipes/num-ton.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +61,8 @@ import { PaComponent } from './pages/pa/pa.component';
     ShowDgPopComponent,
     InflightRestComponent,
     MinutesToHoursPipe,
+    LatitudeToString,
+    LongitudeToString,
     WeightFuelComponent,
     DepartureComponent,
     CruiseComponent,
@@ -57,6 +70,15 @@ import { PaComponent } from './pages/pa/pa.component';
     PostFlightComponent,
     WaypointComponent,
     PaComponent,
+    PerformanceComponent,
+    SpeedsComponent,
+    FplComponent,
+    SelectComponent,
+    RoundNumber,
+    EditWaypointComponent,
+    NumDiffPipe,
+    TonDiffPipe,
+    NumToTonsPipe,
   ],
   imports: [
     BrowserModule,

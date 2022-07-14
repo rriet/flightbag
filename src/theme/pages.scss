@@ -18,7 +18,7 @@
         top: 5px;
         right: 10px;
         border-radius: 50px;
-        z-index: 999;
+        z-index: 500;
         height: 40px;
         width: 40px;
 
@@ -52,7 +52,7 @@
 
 .flight-display {
     .scroll-navigation {
-        height: 360px;
+        height: 450px;
         overflow-y: scroll;
     }
 
@@ -127,6 +127,7 @@
 }
 
 .show-dg-container {
+    overflow-y: scroll;
     .btn-close {
         position: absolute;
         top: 8px;
@@ -144,6 +145,8 @@
         padding-right: 10px;
     }
 }
+
+
 
 .dialog-button {
     width: 120px;

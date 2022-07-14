@@ -13,7 +13,7 @@
             <div class="col" *ngIf="_flight.mel">
                 <button type="button" class="btn btn-sm" [class.btn-warning]="!_flight.melChecked"
                     [class.btn-success]="_flight.melChecked" (click)="_flight.melChecked = !_flight.melChecked">
-                        MEL
+                    MEL
                 </button>
             </div>
         </div>
@@ -38,13 +38,13 @@
         <div class="row">
             <div class="col">
                 <app-time [time]="_flight.timeBlock" label="Block time" [edit]="false" [clickable]="false"
-                [caution]="_flight.timeBlock - _flight.timeTrip < 20" [warning]="_flight.timeBlock - _flight.timeTrip < 10"
-                ></app-time>
+                    [caution]="_flight.timeBlock - _flight.timeTrip < 20"
+                    [warning]="_flight.timeBlock - _flight.timeTrip < 10"></app-time>
             </div>
             <div class="col">
                 <app-time [time]="_flight.timeTrip" label="Flight Time" [edit]="false" [clickable]="false"
-                [caution]="_flight.timeBlock - _flight.timeTrip < 20" [warning]="_flight.timeBlock - _flight.timeTrip < 10"
-                ></app-time>
+                    [caution]="_flight.timeBlock - _flight.timeTrip < 20"
+                    [warning]="_flight.timeBlock - _flight.timeTrip < 10"></app-time>
             </div>
             <div class="col">
                 <app-text [(value)]="_flight.highestLevel" [center]="true" label="Highest FL"></app-text>
@@ -55,21 +55,24 @@
                 <app-time [time]="_flight.timeStd" label="STD" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeStdLocal" label="STD Local" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeDepDiff" [label]="_flight.isDepDelayed ?'Delay':'To Go'" [edit]="false">
+                </app-time>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeDepDiff" [label]="_flight.isDepDelayed ?'Delay':'To Go'" [edit]="false"></app-time>
+                <app-time [(time)]="_flight.timeAtd" label="Chocks-Off" (timeChange)="atdChanged()"></app-time>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <app-time [(time)]="_flight.timeAtd" label="ATD" (timeChange)="atdChanged()"></app-time>
+                <app-number [(value)]="_flight.fzfw" label="Final ZFW" [tons]="true" [req]="true"></app-number>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeSta" label="STA" [edit]="false"></app-time>
+                <app-number [value]="_flight.tow" label="TOW" [caution]="_flight.mtow - _flight.tow < 1000"
+                    [warning]="_flight.mtow - _flight.tow < 1" [edit]="false"></app-number>
             </div>
             <div class="col">
-                <app-number [(value)]="_flight.pob" label="POB"></app-number>
+                <app-number [value]="_flight.lwt" label="LWT" [caution]="_flight.mlwt - _flight.lwt < 1000"
+                    [warning]="_flight.mlwt - _flight.lwt < 500" [edit]="false"></app-number>
             </div>
         </div>
         <div class="row">

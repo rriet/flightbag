@@ -1,4 +1,4 @@
-import { Component, Injectable, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Injectable, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbCalendar, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 

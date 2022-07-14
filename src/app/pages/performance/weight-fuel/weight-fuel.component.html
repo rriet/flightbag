@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-6 offset-3">
-                <app-number [tons]=true [(value)]="_flight.fuelFinalRamp" label="Final Fuel" [req]="true"></app-number>
+                <app-number [tons]=true [(value)]="_flight.fuelFinalRamp" label="Required Fuel" [req]="true"></app-number>
             </div>
         </div>
         <div class="row">
@@ -70,11 +70,11 @@
             </div>
             <div class="col">
                 <app-number [value]="_flight.towMargin" [label]="towMarginLabel()" [edit]="false" [clickable]="false"
-                    [caution]="_flight.towMargin < 1000" [warning]="_flight.towMargin < 100"></app-number>
+                    [caution]="_flight.towMargin < 1000" [warning]="_flight.towMargin < 500"></app-number>
             </div>
             <div class="col">
                 <app-number [value]="_flight.ldwMargin" [label]="ldgMarginLabel()" [edit]="false" [clickable]="false"
-                [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
+                [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 500"></app-number>
             </div>
         </div>
     </div>
