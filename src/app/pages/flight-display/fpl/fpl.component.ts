@@ -32,13 +32,13 @@ export class FplComponent implements OnInit {
   waypointName: string = '';
 
   // elapsed time to waypoint in minutes
-  timeOverWaypoint(wpt: Waypoint) : number | undefined{
+  timeOverWaypoint(wpt: Waypoint): number | undefined {
     // actual miutes since departure.
     if (wpt.ata !== undefined && this._flight.timeTakeoff !== null) {
       let elapsed = wpt.ata - this._flight.timeTakeoff;
       return elapsed >= 0 ? elapsed : elapsed + (24 * 60);
     }
-    return wpt.ctm ? wpt.ctm + this._flight.timeEnrouteDelay: undefined;
+    return wpt.ctm ? wpt.ctm + this._flight.timeEnrouteDelay : undefined;
   }
 
   startTimer() {
@@ -62,12 +62,17 @@ export class FplComponent implements OnInit {
     }
   }
 
-  refresh(name: string){
+  refresh(name: string) {
     // window.location.reload();
 
     // this.waypointName = name;
     // this.searchWaypoint();
     // this.waypointName = '';
+  }
+
+  pauseAutoScroll() {
+    this.stopTimmer();
+    this._prefs.autoScrollFpl = false;
   }
 
   scrollToWaypoint(): void {

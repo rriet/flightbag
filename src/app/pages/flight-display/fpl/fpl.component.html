@@ -23,7 +23,7 @@
                 <div class="scroll-navigation">
                     <ul class="list-group">
                         <app-waypoint *ngFor="let waypoint of _flight.waypoints; let i = index;" [waypoint]="waypoint"
-                            id="{{timeOverWaypoint(waypoint)}}" (refresh)="refresh($event)"></app-waypoint>
+                            id="{{timeOverWaypoint(waypoint)}}" (refresh)="refresh($event)" (click)="pauseAutoScroll()"></app-waypoint>
                     </ul>
                 </div>
             </div>
