@@ -25,11 +25,16 @@
         <div class="day-icon" *ngIf="waypoint.isDay === true"><img src="assets/img/day.svg"></div>
         <div class="day-icon" *ngIf="waypoint.isDay === false"><img src="assets/img/night.svg"></div>
     </li>
-    <li class="list-group-item" *ngIf="waypoint.type === 'ETOPS'">
+    <li class="list-group-item" *ngIf="waypoint.type === 'ETOPS'" (click)="open(content)">
         <div class="row">
             <div class="col">
                 <h4>{{name()}}</h4>
             </div>
+            <div class="col">
+                FL{{inputFl}}
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 {{waypointTime().text}}
             </div>
@@ -38,11 +43,16 @@
             </div>
         </div>
     </li>
-    <li class="list-group-item" *ngIf="waypoint.type === 'TOC' || waypoint.type === 'TOD'">
+    <li class="list-group-item" *ngIf="waypoint.type === 'TOC' || waypoint.type === 'TOD'" (click)="open(content)">
         <div class="row">
             <div class="col">
                 <h4>{{name()}}</h4>
             </div>
+            <div class="col">
+                FL{{inputFl}}
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 {{waypointTime().text}}
             </div>
@@ -85,9 +95,9 @@
                     </div>
                     <div class="col">
                         <div style=" White-space: nowrap;">
-                            <span class="fuel-display">FPL: {{fplFuel}}</span>
+                            <span class="fuel-display">FPL: {{fplFuel | numToTons}}</span>
                             <span class="value-diff" *ngIf="inputFplFuelDiff"
-                            [class.caution]="inputFplFuelDiff < 0">&nbsp;{{inputFplFuelDiff | tonDiff}}</span>
+                                [class.caution]="inputFplFuelDiff < 0">&nbsp;{{inputFplFuelDiff | tonDiff}}</span>
                         </div>
                     </div>
                 </div>
@@ -100,9 +110,9 @@
                     </div>
                     <div class="col">
                         <div style=" White-space: nowrap;">
-                            <span class="fuel-display">REQ: {{fplRemFuel}}</span> 
+                            <span class="fuel-display">REQ: {{fplRemFuel | numToTons}}</span>
                             <span class="value-diff" *ngIf="inputFplRemFuelDiff"
-                            [class.warning]="inputFplRemFuelDiff < 0">&nbsp;{{inputFplRemFuelDiff | tonDiff}}</span>
+                                [class.warning]="inputFplRemFuelDiff < 0">&nbsp;{{inputFplRemFuelDiff | tonDiff}}</span>
                         </div>
                     </div>
                 </div>

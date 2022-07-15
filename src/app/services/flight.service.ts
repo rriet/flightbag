@@ -484,6 +484,18 @@ export class FlightService {
     return this.addTimes(this.timeTakeoff, this.timeTrip);
   }
 
+  set timeInflightEta(value: number | null) {
+    //this.timeEnrouteDelay = this.subtractTimes(value, this.timeEta);
+
+  }
+  get timeInflightEta(): number | null {
+    return this.addTimes(this.timeEta, this.timeEnrouteDelay);
+  }
+
+  get timeInflightEtaLocal(): number | null {
+    return this.getLocalTime(this.timeInflightEta, this.toTimeZone);
+  }
+
   // Return ETA - 30 min (TOD)
   get timeTod(): number | null {
     return this.subtractTimes(this.timeEta, 30);
@@ -608,6 +620,12 @@ export class FlightService {
   get fuelPlanRemaining(): number {
     return ceilCent(this.flight.fuelFinal + this.flight.fuelAlternate + this.flight.fuelContigency);
   }
+
+  get fuelContigency(): number {
+    return ceilCent(this.flight.fuelContigency);
+  }
+
+
 
   set fuelRamp(value: number | null) {
     this.flight.fuelRampRevised = value;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { roundCent } from 'src/app/modules/math';
 import { Waypoint } from 'src/app/objects/waypoint';
 import { FlightService } from 'src/app/services/flight.service';
@@ -17,13 +17,13 @@ export class WaypointComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.inputFl = this.flightLevel();
-    this.inputFuel = this.revisedFuel;
+    // this.inputFl = this.flightLevel();
+    // this.inputFuel = this.revisedFuel;
     // this.inputTime = this.waypointTime().num;
   }
 
-  inputFl: number | null = 0;
-  inputFuel: number | null = 0;
+  inputFlVar: number | null = 0;
+  inputFuelVar: number | null = 0;
   inputTimeVar: number | null = 0;
 
   @Output() refresh: EventEmitter<string> = new EventEmitter<string>();
@@ -37,11 +37,25 @@ export class WaypointComponent implements OnInit {
     return this.waypoint.name
   }
 
+  set inputFl(value: number | null) {
+    this.inputFlVar = value;
+  }
+  get inputFl(): number {
+    return this.inputFlVar ? this.inputFlVar : this.flightLevel();
+  }
+
   set inputTime(value: number | null) {
     this.inputTimeVar = value;
   }
   get inputTime(): number {
-    return this.inputTimeVar? this.inputTimeVar : this.waypointTime().num;
+    return this.inputTimeVar ? this.inputTimeVar : this.waypointTime().num;
+  }
+
+  set inputFuel(value: number | null) {
+    this.inputFuelVar = value;
+  }
+  get inputFuel(): number {
+    return this.inputFuelVar ? this.inputFuelVar : this.revisedFuel;
   }
 
   get wptEta(): number | undefined {
@@ -127,7 +141,7 @@ export class WaypointComponent implements OnInit {
 
   get fplFuel(): number | null {
     if (this.waypoint.fuelReq !== undefined) {
-      return this._flight.fuelPlanRemaining + this.waypoint.fuelReq;
+      return this._flight.fuelContigency + this.waypoint.fuelReq;
     }
     return null;
   }
@@ -141,7 +155,7 @@ export class WaypointComponent implements OnInit {
 
   get fplRemFuel(): number | null {
     if (this.waypoint.fuelReq !== undefined) {
-      return this._flight.fuelPlanRequired + this.waypoint.fuelReq;
+      return this.waypoint.fuelReq;
     }
     return null;
   }
@@ -155,7 +169,7 @@ export class WaypointComponent implements OnInit {
 
   fuelOnboard(): { text: string, num: number } {
     if (this.waypoint.fuelReq !== undefined) {
-      let estimatedFOB = this._flight.fuelPlanRequired + this.waypoint.fuelReq
+      let estimatedFOB = this.waypoint.fuelReq
 
       if (this.waypoint.fob !== undefined && this.waypoint.ata !== null) {
         let saving: number = this.waypoint.fob - estimatedFOB;
@@ -188,11 +202,15 @@ export class WaypointComponent implements OnInit {
 
     if (this.inputTime !== null) {
       this.waypoint.ata = this.inputTime;
-      this._flight.timeEnrouteDelay = this.inputTime - this.waypointTime().num;
+
+    }
+
+    if (this.inputEtaDiff) {
+      this._flight.timeEnrouteDelay = this.inputEtaDiff;
     }
 
     if (this.inputFuel !== null && this.waypoint.fuelReq !== undefined) {
-      this._flight.fuelEstimatedArrival = this.inputFuel - this.waypoint.fuelReq;
+      this._flight.fuelEstimatedArrival = this.inputFuel - this.waypoint.fuelReq + this._flight.fuelPlanRequired;
       this.waypoint.fob = this.inputFuel;
     }
 
@@ -203,6 +221,9 @@ export class WaypointComponent implements OnInit {
 
     for (let i = wptIndex + 1; i < this._flight.waypoints.length; i++) {
       let thisWpt = this._flight.waypoints[i];
+
+      thisWpt.flightLevelActual = this.inputFl ? this.inputFl : undefined;
+
       if (this.inputFplFuelDiff !== null && thisWpt.fuelReq !== undefined) {
         thisWpt.fuelDiff = this.inputFplFuelDiff;
       }
