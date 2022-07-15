@@ -34,7 +34,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <app-time [time]="_flight.timeSta" label="STA" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeSta" [label]="_flight.revStd ? 'Revised STA' : 'STA'" [edit]="false"></app-time>
             </div>
             <div class="col">
                 <app-time [time]="_flight.timeInflightEta" label="ETA" [edit]="false"></app-time>

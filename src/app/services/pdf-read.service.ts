@@ -113,9 +113,13 @@ export class PdfReadService {
         this._flight.flight.number = numberCallArray[1];
 
         // locate date
-        let date = page.match(/[0-9]{2}(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC){1}/g) || [];
+        let month = (page.match(/[0-9]{2}(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC){1}/g) || [])[0].substring(2);
 
-        this._flight.flight.dateStandardDeparture = new Date(Date.parse(date[0].substring(2) + " " + date[0].substring(0, 2) + ", " + new Date().getFullYear() + ' 00:00:00 GMT')).getTime() / 60000;
+        // new plan date format 'STD 29/0455 T/O........'
+
+        let dayDep = (page.match(/STD [0-9]{2}\/[0-9]{4}/g) || [''])[0].slice(4, -5);
+
+        this._flight.flight.dateStandardDeparture = new Date(Date.parse(month + " " + dayDep + ", " + new Date().getFullYear() + ' 00:00:00 GMT')).getTime() / 60000;
 
         // Matches P0100 and M1000 time format
         let timeZones = page.match(/(P|M){1}[0-9]{4}/g) || [];
@@ -153,7 +157,7 @@ export class PdfReadService {
         // Get Levels
         let allLevels = (page.match(/([A-Z0-9]{1,11}\/)?(FL){1}[0-9]{3}/g) || ['']);
 
-        flightLevels.push({ position: '', level: allLevels[0].replace('FL','') });
+        flightLevels.push({ position: '', level: allLevels[0].replace('FL', '') });
 
         // initially the highest FL is the initial FL
         this._flight.flight.highestLevel = allLevels[0];
@@ -163,7 +167,7 @@ export class PdfReadService {
         for (let i = 1; i < allLevels.length; i++) {
 
           let level = allLevels[i].split('/')
-          flightLevels.push({ position: level[0], level: level[1].replace('FL','') });
+          flightLevels.push({ position: level[0], level: level[1].replace('FL', '') });
 
           let thisLevel: number = Number((allLevels[i].match(/FL[0-9]{3}/g) || [''])[0].replace('FL', ''));
 
@@ -207,10 +211,16 @@ export class PdfReadService {
         this._flight.flight.elwt = this.getValue(page, 'ELWT');
 
         ////  Times ////
-        this._flight.flight.timeStd = this.getTimes(page, 'STD');
-        this._flight.flight.timeBlock = this.getTimes(page, 'BLK');
-        this._flight.flight.timeTrip = this.getTimes(page, 'TRIP');
-        this._flight.flight.timeSta = this.getTimes(page, 'STA');
+        this._flight.flight.timeStd = this.getTimes(page, 'STD') || 0;
+        this._flight.flight.timeRevisedStd = this.getTimes(page, 'ETD/CTOT');
+        this._flight.flight.timeBlock = this.getTimes(page, 'BLK') || 0;
+        this._flight.flight.timeTrip = this.getTimes(page, 'TRIP') || 0;
+        this._flight.flight.timeSta = this.getTimes(page, 'STA') || 0;
+
+        // If Revised STD less than STD, depature next day....
+        if (this._flight.flight.timeRevisedStd !== null && this._flight.flight.timeRevisedStd < this._flight.flight.timeStd) {
+          this._flight.flight.dateStandardDeparture = this._flight.flight.dateStandardDeparture + (24 * 60)
+        }
 
         // END OF First Page
         firstPageFinished = true;
@@ -268,10 +278,10 @@ export class PdfReadService {
             // TOC TOD
             if (waypointName === 'TOC') {
               waypointType = 'TOC'
-              
+
             } else if (waypointName === 'TOD') {
               waypointType = 'TOD';
-              
+
               // ENTRY EXIT and ETP
             } else if (/^((ENTRY)[0-9]{0,1})|^((EXIT)[0-9]{0,1})|^((ETP)\([0-9A-Z]{1,3}\))$/.test(waypointName)) {
               waypointType = "ETOPS";
@@ -297,7 +307,7 @@ export class PdfReadService {
               type: waypointType,
               stationFreq: stationFreq,
               flightLevelPlan: Number(currentFL),
-              fuelReq: Number(fuelReq.replace('.','')+'00'),
+              fuelReq: Number(fuelReq.replace('.', '') + '00'),
               ctm: ctm
             });
           }
@@ -366,16 +376,17 @@ export class PdfReadService {
           // add to alternates
           alts.push({ icao: tempIcao });
           // dont inset the departue and arrival airpors in the list to be copied
-          if ((tempIcao != this._flight.from) && (tempIcao != this._flight.to)) {
+          if ((tempIcao != this._flight.fromAirport.icao) && (tempIcao != this._flight.toAirport.icao)) {
             this._flight.flight.alternateList += tempIcao + ' ';
-          } else {
-
-            // if (tempIcao === this._flight.flight.from) {
-            //   this._flight.flight.from += ' - ' + airport.substring(6, 9);
-            // } else {
-            //   this._flight.flight.to += ' - ' + airport.substring(6, 9);
-            // }
           }
+          // else {
+
+          // if (tempIcao === this._flight.flight.from) {
+          //   this._flight.flight.from += ' - ' + airport.substring(6, 9);
+          // } else {
+          //   this._flight.flight.to += ' - ' + airport.substring(6, 9);
+          // }
+          // }
         });
 
         if (page.includes('AIRPORTLIST ENDED')) {
@@ -419,20 +430,23 @@ export class PdfReadService {
   }
 
   // Get page and title of field, return Int with Minutes from midnight
-  getTimes(page: string, title: string): number {
+  getTimes(page: string, title: string): number | null {
 
     // dont read the top of the page (there are a few 'TRIP' strings before this....)
-    let oneTonStr = page.indexOf('STD ');
+    let oneTonStr = page.indexOf('RAMP FUEL ');
     page = page.substring(oneTonStr);
 
     if (page.includes(title)) {
-      let numberString = (page.match(new RegExp(title + '[ ]{1,10}[A-Z]{0,10}[ ]{0,1}([0-9]{2}/){0,1}[0-9]{1,6}')) || [])[0].match(/[0-9]+$/) || [];
-      let hours: number = Number(numberString[0].substring(0, 2));
-      let minutes: number = Number(numberString[0].substring(2));
-      return hours * 60 + minutes;
-    } else {
-      return 0;
+      let numberString = ((page.match(new RegExp(title + '[ ]([0-9]{2}/)?(([0-9]{4})|(\.{4}))')) || [''])[0].match(/[0-9]+$/) || [''])[0];
+
+      if (numberString) {
+        let hours: number = Number(numberString.substring(0, 2));
+        let minutes: number = Number(numberString.substring(2));
+
+        return hours * 60 + minutes;
+      }
     }
+    return null;
   }
 
   getValue(page: string, title: string): number {

@@ -7,7 +7,6 @@ export interface Waypoint {
     flightLevelPlan?: number;
     flightLevelActual?: number;
     ctm?: number;
-    eta?: number;
     ata?: number;
     rta?: number;
     fuelReq?: number;

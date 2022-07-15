@@ -9,9 +9,10 @@ export class NgbTimeStringAdapter extends NgbTimeAdapter<number> {
     if (value === null) {
       return null;
     }
-    let hours:number = Math.floor(value / 60);
-    let minutes:number = value % 60;
-    
+
+    let hours: number = Math.floor(value / 60);
+    let minutes: number = value % 60;
+
     return {
       hour: hours,
       minute: minutes,
@@ -26,7 +27,7 @@ export class NgbTimeStringAdapter extends NgbTimeAdapter<number> {
 @Component({
   selector: 'app-time',
   templateUrl: './time.component.html',
-  providers: [{provide: NgbTimeAdapter, useClass: NgbTimeStringAdapter}]
+  providers: [{ provide: NgbTimeAdapter, useClass: NgbTimeStringAdapter }]
 })
 export class TimeComponent implements OnInit {
 
@@ -36,6 +37,9 @@ export class TimeComponent implements OnInit {
     if (this.req && (this.time === undefined || this.time === null)) {
       this.setNow();
     }
+
+    // fixes times that are more than 24 hs... (next day)
+    if (this.time !== null && this.time > 24 * 60) this.time = this.time - 24 * 60;
   }
 
   @Input() label: string = "Time";
@@ -51,7 +55,7 @@ export class TimeComponent implements OnInit {
 
   @Output() timeChange: EventEmitter<number | null> = new EventEmitter<number | null>();
 
-  clicked(d:any){
+  clicked(d: any) {
     if (this.clickable && (this.caution || this.warning)) {
       this.caution = false;
       this.warning = false;
@@ -61,9 +65,9 @@ export class TimeComponent implements OnInit {
       d.toggle()
     }
   }
-  
+
   setNow() {
-    let hour:number = new Date().getHours() + (new Date().getTimezoneOffset() / 60);
+    let hour: number = new Date().getHours() + (new Date().getTimezoneOffset() / 60);
     if (hour < 0) {
       hour += 24;
     }
@@ -71,15 +75,15 @@ export class TimeComponent implements OnInit {
     this.changed();
   }
 
-  getTime():string {
+  getTime(): string {
     if (this.time === null) {
       return '';
     }
 
-    let hours:number = Math.floor(this.time / 60);
-    let minutes:number = this.time % 60;
-    
-    return String(hours).padStart(2,'0') + ':' + String(minutes).padStart(2,'0');
+    let hours: number = Math.floor(this.time / 60);
+    let minutes: number = this.time % 60;
+
+    return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
   }
 
   changed() {

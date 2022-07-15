@@ -35,6 +35,7 @@ export interface Flight {
     dateStandardDeparture: number;
 
     timeStd: number;
+    timeRevisedStd: number | null;
     timeAtd: number | null;
     timeTakeoff: number | null;
     timeSta: number;

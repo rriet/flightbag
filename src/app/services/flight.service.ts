@@ -46,6 +46,7 @@ export class FlightService {
       dateStandardDeparture: new Date().setHours(0, 0, 0, 0) / 60000 - new Date().getTimezoneOffset(),
 
       timeStd: 0,
+      timeRevisedStd: null,
       timeAtd: null,
       timeTakeoff: null,
       timeSta: 0,
@@ -383,8 +384,12 @@ export class FlightService {
   }
 
   // Return STD form Flight Plan
+  set timeStd(value: number | null) {
+    this.flight.timeRevisedStd = value;
+    this.saveFlight();
+  }
   get timeStd(): number {
-    return this.flight.timeStd;
+    return this.flight.timeRevisedStd !== null ? this.flight.timeRevisedStd : this.flight.timeStd;
   }
 
   // Return STD Local form Flight Plan
@@ -469,9 +474,16 @@ export class FlightService {
     return this.flight.timeTakeoff;
   }
 
-  // Return STA from flight plan
+  // Recalculate STA....
+  // This takes in consideration Revised STD when computing arrival delay
   get timeSta(): number {
-    return this.flight.timeSta;
+    let sta = this.timeStd + this.timeBlock;
+    return (sta < 24 * 60) ? sta : sta - 24 * 60;
+  }
+
+  // return true if there is a revised STD
+  get revStd(): boolean {
+    return this.flight.timeRevisedStd !== null;
   }
 
   // Set -> modify Trip time to get the desired ETA
@@ -489,7 +501,8 @@ export class FlightService {
 
   }
   get timeInflightEta(): number | null {
-    return this.addTimes(this.timeEta, this.timeEnrouteDelay);
+    let eta = this.addTimes(this.timeEta, this.timeEnrouteDelay)
+    return eta !== null ? (eta >= 0 ? eta : eta + 24 * 60) : null;
   }
 
   get timeInflightEtaLocal(): number | null {
