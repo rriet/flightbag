@@ -38,6 +38,20 @@
             </div>
         </div>
         <div class="row">
+            <div class="col">
+                <app-number [value]="_flight.fuelEstimatedArrival" label="Arr Fuel" [edit]="false"></app-number>
+            </div>
+            <div class="col">
+                <app-number [(value)]="_flight.mlwt" label="MLWT" [int]=true [req]="true" [clickable]="false"
+                    [caution]="_flight.ldwMargin < 1000" [warning]="_flight.ldwMargin < 100"></app-number>
+            </div>
+            <div class="col">
+                <app-number [value]="_flight.lwt" label="LWT" [edit]="false" [clickable]="false"
+                    [caution]="_flight.mlwt - _flight.lwt < 1000" [warning]="_flight.mlwt - _flight.lwt < 500">
+                </app-number>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-8">
                 <app-text [(value)]="_flight.dispatchName" label="Dispatch Name"></app-text>
             </div>
@@ -83,7 +97,7 @@
         <div class="row">
             <div class="col">
                 <app-textarea [label]="'Note #'+_flight.currentArrNote" [(value)]="_flight.selectedArrNoteText"
-                    [rows]="12"></app-textarea>
+                    [rows]="9"></app-textarea>
             </div>
         </div>
     </div>

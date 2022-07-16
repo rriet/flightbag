@@ -94,7 +94,7 @@ export class WaypointComponent implements OnInit {
       // First option ATA
       if (this.waypoint.ata !== undefined) {
         let delay = this.waypoint.ata - this.wptEta;
-        if (delay < -1000)  delay = delay + 24 * 60;
+        if (delay < -1000) delay = delay + 24 * 60;
         let text = 'ATA: ' + minToStr(this.waypoint.ata) + ' ' + numDiff(delay);
         return { text: text, num: this.waypoint.ata };
       }
@@ -102,7 +102,7 @@ export class WaypointComponent implements OnInit {
       // Second Option RTA
       if (this.wptRta !== undefined) {
         let delay = this.wptRta - this.wptEta;
-        if (delay < -1000)  delay = delay + 24 * 60;
+        if (delay < -1000) delay = delay + 24 * 60;
         let text = 'RTA: ' + minToStr(this.wptRta) + ' ' + numDiff(delay);
         return { text: text, num: this.wptRta };
       }
@@ -180,11 +180,18 @@ export class WaypointComponent implements OnInit {
         let saving: number = this.waypoint.fob - estimatedFOB;
 
         let num = this.waypoint.fob;
-        let text = 'AFOB: ' + numToTons(this.waypoint.fob) + ' ' + nunToTonsDiff(saving);
+        let text = 'Actual FOB: ' + numToTons(this.waypoint.fob) + ' ' + nunToTonsDiff(saving);
         return { text: text, num: num };
       }
-      let num = this.waypoint.fuelReq;
-      let text = 'RFOB: ' + numToTons(num);
+
+      if (this.waypoint.fuelDiff !== undefined && this.fplFuel !== null) {
+        let saving: number = this.fplFuel + this.waypoint.fuelDiff - estimatedFOB;
+        let text = 'Estimated FOB: ' + numToTons(this.fplFuel + this.waypoint.fuelDiff) + ' ' + nunToTonsDiff(saving);
+        return { text: text, num: this.fplFuel + this.waypoint.fuelDiff };
+      }
+
+      let num = this.fplFuel || 0;
+      let text = 'Planned FOB: ' + numToTons(num);
       return { text: text, num: num };
     }
     return { text: '', num: 0 };
@@ -209,7 +216,7 @@ export class WaypointComponent implements OnInit {
       this.waypoint.ata = this.inputTime;
     }
 
-    if (this.inputEtaDiff) {
+    if (this.inputEtaDiff !== null) {
       this._flight.timeEnrouteDelay = this.inputEtaDiff;
     }
 
@@ -236,6 +243,5 @@ export class WaypointComponent implements OnInit {
         thisWpt.rta = thisWpt.ctm + this.inputEtaDiff;
       }
     }
-    // this.refresh.emit(this.waypoint.name);
   }
 }

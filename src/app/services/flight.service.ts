@@ -83,6 +83,8 @@ export class FlightService {
       fuelRamp: 0,
       fuelRampRevised: null,
       fuelFinalRamp: null,
+      fuelPlanRequired: 0,
+      fuelPlanRemaining: 0,
       fuelBefore: 0,
       fuelArrivalBeforeRefuel: null,
       fuelUpliftUnit: 'LTS',  // USG or LTS
@@ -626,12 +628,22 @@ export class FlightService {
     return ceilCent(this.flight.fuelTripRevised ? this.flight.fuelTripRevised : this.flight.fuelTrip);
   }
 
+  set fuelPlanRequired(value: number | null) {
+    this.flight.fuelPlanRequired = value || 0;
+    this.saveFlight();
+  }
   get fuelPlanRequired(): number {
-    return ceilCent(this.flight.fuelFinal + this.flight.fuelAlternate);
+    // return ceilCent(this.flight.fuelFinal + this.flight.fuelAlternate);
+    return this.flight.fuelPlanRequired;
   }
 
+  set fuelPlanRemaining(value: number | null) {
+    this.flight.fuelPlanRemaining = value || 0;
+    this.saveFlight();
+  }
   get fuelPlanRemaining(): number {
-    return ceilCent(this.flight.fuelFinal + this.flight.fuelAlternate + this.flight.fuelContigency);
+    // return ceilCent(this.flight.fuelFinal + this.flight.fuelAlternate + this.flight.fuelContigency);
+    return this.flight.fuelPlanRemaining;
   }
 
   get fuelContigency(): number {

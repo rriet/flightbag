@@ -76,6 +76,10 @@ export interface Flight {
     fuelRamp: number;
     fuelRampRevised: number | null;
     fuelFinalRamp: number | null; // With Crew extra
+
+    fuelPlanRequired: number;
+    fuelPlanRemaining: number;
+
     fuelArrivalBeforeRefuel: number | null;
     fuelBefore: number | null;
     fuelUpliftUnit: string;  // USG or LTS

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Waypoint } from 'src/app/objects/waypoint';
 import { FlightService } from 'src/app/services/flight.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ToastService } from 'src/app/services/toast-service';
@@ -32,14 +31,14 @@ export class FplComponent implements OnInit {
   waypointName: string = '';
 
   // elapsed time to waypoint in minutes
-  timeOverWaypoint(wpt: Waypoint): number | undefined {
-    // actual miutes since departure.
-    if (wpt.ata !== undefined && this._flight.timeTakeoff !== null) {
-      let elapsed = wpt.ata - this._flight.timeTakeoff;
-      return elapsed >= 0 ? elapsed : elapsed + (24 * 60);
-    }
-    return wpt.ctm ? wpt.ctm + this._flight.timeEnrouteDelay : undefined;
-  }
+  // timeOverWaypoint(wpt: Waypoint): number | undefined {
+  //   // actual miutes since departure.
+  //   if (wpt.ctm !== undefined && this._flight.timeTakeoff !== null) {
+  //     let elapsed = wpt.ctm - this._flight.timeTakeoff + delay!!!!; 
+  //     return elapsed >= 0 ? elapsed : elapsed + (24 * 60);
+  //   }
+  //   return wpt.ctm ? wpt.ctm + this._flight.timeEnrouteDelay : undefined;
+  // }
 
   startTimer() {
     this.interval = window.setInterval(() => {
@@ -77,29 +76,26 @@ export class FplComponent implements OnInit {
 
   scrollToWaypoint(): void {
     // Get elapsed time since take-off
-    let timeElapsed = this._flight.timeFlightElapsed;
+    let timeElapsed = (this._flight.timeFlightElapsed || 0) - this._flight.timeEnrouteDelay;
 
     // check if elapsed time exist.
     if (timeElapsed !== null) {
-      // Reverse a temporary copy of the flight plan array
-      let tempWpt = this._flight.waypoints.slice().reverse();
 
       // searh for the first (last) occurrence where the 
       // elapsed time is less than flight time now.
-      let waypoint = tempWpt.find(waypoint => {
-        if (timeElapsed !== null) {
-          if (waypoint.ctm !== undefined && waypoint.ctm < timeElapsed) {
-            return true;
-          }
+      let wptId = this._flight.waypoints.findIndex(waypoint => {
+
+        if (waypoint.ctm !== undefined && waypoint.ctm >= timeElapsed) {
+          return true;
         }
         return false;
       })
 
       // if waypoint exists....
-      if (waypoint !== undefined) {
+      if (wptId !== undefined) {
 
         // Get the element ID of the waypont CTM
-        const itemToScrollTo = document.getElementById(String(waypoint.ctm));
+        const itemToScrollTo = document.getElementById('wptId' + String(wptId - 1));
         if (itemToScrollTo) {
           // Scroll to element
           itemToScrollTo.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
@@ -111,12 +107,12 @@ export class FplComponent implements OnInit {
   searchWaypoint() {
     if (this.waypointName.length > 1) {
       this.stopTimmer();
-      let waypoint = this._flight.waypoints.find(waypoint => {
+      let wptId = this._flight.waypoints.findIndex(waypoint => {
         return waypoint.name.toUpperCase() === this.waypointName.toUpperCase();
       });
 
-      if (waypoint !== undefined) {
-        const itemToScrollTo = document.getElementById(String(waypoint.ctm));
+      if (wptId !== undefined) {
+        const itemToScrollTo = document.getElementById('wptId' + String(wptId));
         if (itemToScrollTo) {
           // Scroll to element
           itemToScrollTo.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });

@@ -186,7 +186,7 @@ export class PdfReadService {
 
         // Get Trip fuel
         this._flight.flight.fuelTrip = this.getValue(page, 'TRIP');
-
+        
         // Get Contingency Fuel
         this._flight.flight.fuelContigency = this.getValue(page.replace('3P/C', '').replace('5P/C', '').replace('20MIN', ''), 'CONT');
 
@@ -230,6 +230,11 @@ export class PdfReadService {
       // after finishin the first page and before the wind page
       // Looking for the main FPL
       if (!fplFinished && firstPageFinished) {
+
+        if (this._flight.fuelPlanRemaining === 0 && page.includes('PLAN REM')) {
+          this._flight.fuelPlanRemaining = this.getValue(page, 'PLAN REM') * 1000;
+          this._flight.fuelPlanRequired = this.getValue(page, 'PLAN REQ') * 1000;
+        }
 
         // looking for patterns
         // SOKEN 037 10 331 0004 .... .... 121.2 LAGSA 009 61 0.829 503 / 509 114 0031 .... .... 114.1 
@@ -451,7 +456,8 @@ export class PdfReadService {
 
   getValue(page: string, title: string): number {
     if (page.includes(title)) {
-      let numberString = (page.match(new RegExp(title + '[ ]{1,10}[A-Z]{0,10}[ ]{0,10}[0-9]{1,6}')) || [])[0].match(/[0-9]+$/);
+      let numberString = (page.match(new RegExp(title + '[ ]{1,10}([A-Z]{0,10}[ ])?[0-9\.]{1,6}')) || [])[0].match(/[0-9\.]+$/);
+      
       return Number(numberString);
     } else {
       return 0;
