@@ -513,12 +513,12 @@ export class FlightService {
 
   // Return ETA - 30 min (TOD)
   get timeTod(): number | null {
-    return this.subtractTimes(this.timeEta, 30);
+    return this.subtractTimes(this.timeInflightEta, 30);
   }
 
   // Return ATA or ETA if ATA is null.
   get timeArrival(): number | null {
-    return (this.timeAta !== null) ? this.timeAta : this.timeEta;
+    return (this.timeAta !== null) ? this.timeAta : this.timeInflightEta;
   }
 
   // get ETA Local

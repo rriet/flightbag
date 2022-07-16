@@ -15,10 +15,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <app-time [(time)]="_flight.timeEta" label="ETA"></app-time>
+                <app-time [time]="_flight.timeInflightEta" label="ETA" [edit]="false"></app-time>
             </div>
             <div class="col">
-                <app-time [time]="_flight.timeEtaLocal" label="ETA (Local)" [edit]="false"></app-time>
+                <app-time [time]="_flight.timeInflightEtaLocal" label="ETA (Local)" [edit]="false"></app-time>
             </div>
             <div class="col">
                 <app-time [time]="_flight.timeArrDiff" [label]="_flight.isArrDelayed?'Delay':'Before STA'"

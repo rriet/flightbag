@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist'; // <-- installation (npm i pdfjs-dist)
 import { Airport } from '../objects/airport';
-import { Waypoint } from '../objects/waypoint';
 import { AirportService } from './airport.service';
 import { FlightCalculationService } from './flight-calculation.service';
 import { FlightService } from './flight.service';
@@ -58,12 +57,12 @@ export class PdfReadService {
 
   extractFlightInfo(pages: string[]) {
 
-    // mark first page as read
+    // Page control....
     let dispatchReleaseFinished: boolean = false;
     let firstPageFinished: boolean = false;
-
-    // looking for waypoints on the flightplan
     let fplFinished: boolean = false;
+    let windsPage: boolean = false;
+    let weatherPage: boolean = false;
 
     // Avoid inserting the FlightPlan to alternate
     // Time from TO to Waypoint. If next Waypont is less, it's the plan to alternate
@@ -73,12 +72,12 @@ export class PdfReadService {
     let flightLevels: { position: string, level: string }[] = [];
     let currentFL: string = '';
 
-    // look for the climb wind until descent wind
-    let windsPage: boolean = false;
-
-    // look for alternates from WX FORECAST to AIRPORTLIST ENDED
-    let weatherPage: boolean = false;
     let alts: Airport[] = [];
+
+    // Flight PLANNED ON TRACK
+    let natTrakLetter: string = '';
+    let natEntry: string = '';
+    let natExit: string = '';
 
     pages.forEach(page => {
 
@@ -154,6 +153,14 @@ export class PdfReadService {
         let arr2 = page.indexOf(this._flight.toAirport.icao, 120);
         this._flight.flight.route = page.substring(dep2, arr2);
 
+        let randomSegment = (this._flight.flight.route.match(new RegExp('[ ][A-Z]{5}[ ][A-Z][ ][A-Z]{5}[ ]')) || [''])[0];
+
+        if (randomSegment !== '') {
+          natEntry = randomSegment.split(' ')[1];
+          natTrakLetter = randomSegment.split(' ')[2];
+          natExit = randomSegment.split(' ')[3];
+        }
+
         // Get Levels
         let allLevels = (page.match(/([A-Z0-9]{1,11}\/)?(FL){1}[0-9]{3}/g) || ['']);
 
@@ -186,7 +193,7 @@ export class PdfReadService {
 
         // Get Trip fuel
         this._flight.flight.fuelTrip = this.getValue(page, 'TRIP');
-        
+
         // Get Contingency Fuel
         this._flight.flight.fuelContigency = this.getValue(page.replace('3P/C', '').replace('5P/C', '').replace('20MIN', ''), 'CONT');
 
@@ -364,6 +371,17 @@ export class PdfReadService {
         }
       }
 
+      // Look for the NAT TRAKS if its in the route....
+      if (natTrakLetter !== '' && page.includes(natTrakLetter + ' ' + natEntry)) {
+        let track = (page.match(new RegExp(natTrakLetter + '[ ]' + natEntry + '.*' + natExit)) || [''])[0];
+
+        // remove the letter....
+        track = track.slice(2);
+
+        // Replace the track in the route
+        this._flight.flight.route = this._flight.flight.route.replace(natEntry + ' ' + natTrakLetter + ' ' + natExit , track);
+      }
+
       // // Looking for selcal SEL/ADGS
       // if (page.includes('ATC Flight Plan')) {
       //   let selcal:string = (page.match(/(SEL\/){1}[A-Z]{4}/g)||[])[0];
@@ -457,7 +475,7 @@ export class PdfReadService {
   getValue(page: string, title: string): number {
     if (page.includes(title)) {
       let numberString = (page.match(new RegExp(title + '[ ]{1,10}([A-Z]{0,10}[ ])?[0-9\.]{1,6}')) || [])[0].match(/[0-9\.]+$/);
-      
+
       return Number(numberString);
     } else {
       return 0;
