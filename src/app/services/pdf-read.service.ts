@@ -379,7 +379,15 @@ export class PdfReadService {
         track = track.slice(2);
 
         // Replace the track in the route
-        this._flight.flight.route = this._flight.flight.route.replace(natEntry + ' ' + natTrakLetter + ' ' + natExit , track);
+        this._flight.flight.route = this._flight.flight.route.replace(natEntry + ' ' + natTrakLetter + ' ' + natExit, track);
+
+        // if current note is already in use, create a new one.
+        if (this._flight.selectedDepNoteText !== '' && this._flight.selectedDepNoteText !== this._flight.perfToEosid) {
+          this._flight.addDepNote();
+        }
+
+        // Add EOSID to notes
+        this._flight.selectedDepNoteText = "NAT TRACK '" + natTrakLetter + "' added to the route.\n\n" + track;
       }
 
       // // Looking for selcal SEL/ADGS
