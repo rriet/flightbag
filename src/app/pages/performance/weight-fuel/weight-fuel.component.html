@@ -21,8 +21,7 @@
         </div>
         <div class="row">
             <div class="col-6 offset-3">
-                <app-number [int]=true [(value)]="_flight.fuelCrewExtra" label="Crew Extra Fuel" [round]="100"
-                    [req]="true"></app-number>
+                <app-number [value]="_flight.fuelCrewExtra" label="Crew Extra Fuel"  [edit]="false"></app-number>
             </div>
         </div>
         <div class="row">

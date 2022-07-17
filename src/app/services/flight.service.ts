@@ -625,7 +625,7 @@ export class FlightService {
     this.saveFlight();
   }
   get fuelTrip(): number {
-    return ceilCent(this.flight.fuelTripRevised ? this.flight.fuelTripRevised : this.flight.fuelTrip);
+    return floorCent(this.flight.fuelTripRevised ? this.flight.fuelTripRevised : this.flight.fuelTrip);
   }
 
   set fuelPlanRequired(value: number | null) {
@@ -654,6 +654,9 @@ export class FlightService {
 
   set fuelRamp(value: number | null) {
     this.flight.fuelRampRevised = value;
+    if (value !== null && this.flight.fuelFinalRamp !== null && this.flight.fuelFinalRamp < value) {
+      this.flight.fuelFinalRamp = value;
+    }
     this.saveFlight();
   }
   get fuelRamp(): number {
@@ -763,13 +766,6 @@ export class FlightService {
       Math.round(this.fuelUpliftKg - (this.fuelDeparture - this.flight.fuelArrivalBeforeRefuel) - this.fuelUsedOnGround) : null
   }
 
-
-  set fuelCrewExtra(value: number | null) {
-    if (value != null && this.fuelFinalRamp != null) {
-      this.flight.fuelFinalRamp = value + this.flight.fuelRamp
-    }
-    this.saveFlight();
-  }
   get fuelCrewExtra(): number | null {
     return (this.fuelFinalRamp != null && this.fuelRamp != null) ? this.fuelFinalRamp - this.fuelRamp : null;
   }
