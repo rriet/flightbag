@@ -72,6 +72,6 @@ export class AppComponent {
     
     //{ title: 'Toolbox', url: '/tools', icon: "hammer" },
     
-    { title: 'About', url: '', icon: "home" },
+    { title: 'About', url: '/main', icon: "home" },
   ];
 }

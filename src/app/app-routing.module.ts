@@ -13,16 +13,17 @@ import { ToolsComponent } from './pages/tools/tools.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '', pathMatch: 'full' },
-  {path: 'dangerous-goods', component: DangerousGoodsComponent },
-  {path: 'flight-display', component: FlightDisplayComponent },
-  {path: 'flight-init', component: FlightInitComponent },
-  {path: 'inflight-rest', component: InflightRestComponent },
-  {path: 'pa', component: PaComponent },
-  {path: 'performance', component: PerformanceComponent },
+  { path: 'dangerous-goods', component: DangerousGoodsComponent },
+  { path: 'flight-display', component: FlightDisplayComponent },
+  { path: 'flight-init', component: FlightInitComponent },
+  { path: 'inflight-rest', component: InflightRestComponent },
+  { path: 'pa', component: PaComponent },
+  { path: 'performance', component: PerformanceComponent },
   { path: '', component: MainComponent },
-  {path: 'meter-table', component: MeterTableComponent },
-  {path: 'techlog', component: TechlogComponent },
-  {path: 'tools', component: ToolsComponent },
+  { path: 'main', component: MainComponent },
+  { path: 'meter-table', component: MeterTableComponent },
+  { path: 'techlog', component: TechlogComponent },
+  { path: 'tools', component: ToolsComponent },
   { path: '**', redirectTo: 'main' },
 ];
 
