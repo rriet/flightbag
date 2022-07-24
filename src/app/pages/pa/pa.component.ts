@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { minTo12hStr } from 'src/app/modules/conversion';
+import { getLocalTime, minNowUTC } from 'src/app/modules/time';
 import { FlightService } from 'src/app/services/flight.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 
@@ -46,6 +48,8 @@ export class PaComponent implements OnInit {
   generateDepPa() {
     this.pa = this._prefs.departurePaTemplate;
 
+    this.pa = this.pa.replace(/\[/gi, '<span class="pa-highlight">[').replace(/\]/gi, ']</span>');
+
     if (this._flight.timeStdLocal === null) {
       this.pa = this.pa.replace(/\[MORNING\]/gi, 'morning / afternoon / evening');
     } else if (this._flight.timeStdLocal < (12 * 60)) {
@@ -61,7 +65,7 @@ export class PaComponent implements OnInit {
       .replace(/\[NUMBER\]/gi, this._flight.number)
       .replace(/\[DESTINATION\]/gi, this._flight.to)
       .replace(/\[CSDNAME\]/gi, this._prefs.csdName)
-      .replace(/\[FL\]/gi, this._flight.highestLevel + '00')
+      .replace(/\[FL\]/gi, this._flight.highestLevel.slice(2,-1) + ',000')
       .replace(/\[FDCREW\]/gi, this._prefs.fdCrew);
 
     if (this._flight.timeTrip) {
@@ -76,6 +80,8 @@ export class PaComponent implements OnInit {
   generateArrPa() {
     this.pa = this._prefs.arrivalPaTemplate;
 
+    this.pa = this.pa.replace(/\[/gi, '<span class="pa-highlight">[').replace(/\]/gi, ']</span>');
+
     if (this._flight.timeEtaLocal === null) {
       this.pa = this.pa.replace(/\[MORNING\]/gi, 'morning / afternoon / evening');
     } else if (this._flight.timeEtaLocal < (12 * 60)) {
@@ -87,13 +93,13 @@ export class PaComponent implements OnInit {
     }
 
     var date = new Date(new Date());
-    let timeNow: number = Math.floor((date.getTime() - date.setHours(0, 0, 0, 0)) / 60 / 1000)
+    let timeNow: number = minNowUTC();
 
     this.pa = this.pa
       .replace(/\[DESTINATION\]/gi, this._flight.to)
       .replace(/\[TEMPC\]/gi, String(this._flight.temperature))
       .replace(/\[TEMPF\]/gi, String(this._flight.temperatureF))
-      .replace(/\[ETA_LOCAL\]/gi, this.getTimeString(this._flight.timeEtaLocal));
+      .replace(/\[ETA_LOCAL\]/gi, minTo12hStr(this._flight.timeInflightEtaLocal));
 
 
     if (this._flight.timeEta === null) {
@@ -115,27 +121,12 @@ export class PaComponent implements OnInit {
 
 
 
-    let timeNowLocal: number = timeNow + this._flight.toTimeZone;
+    let timeNowLocal: number|null = getLocalTime(timeNow, this._flight.toTimeZone);
 
-    let timeString = this.getTimeString(timeNowLocal);
+    let timeString = minTo12hStr(timeNowLocal);
 
     this.pa = this.pa.replace(/\[TIME_NOW\]/gi, timeString)
 
-
     this.active = 4;
   }
-
-  getTimeString(inputMinutes: number | null): string {
-    if (inputMinutes === null) return '';
-    
-    let amPm: string = ' AM';
-    let hours: number = Math.floor(inputMinutes / 60);
-    if (hours > 12) {
-      hours -= 12;
-      amPm = ' PM';
-    }
-    let minutes: number = inputMinutes % 60;
-    return hours + ":" + String(minutes).padStart(2, '0') + amPm;
-  }
-
 }

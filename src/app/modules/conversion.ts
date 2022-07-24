@@ -1,3 +1,9 @@
+/**  
+ * eFlightBag - A complete electronic flight bag solution  
+ * @author Ricardo Correa 
+ * @date 2022
+ **/
+
 /**
 * Convert Latitude Number to Human readable String.
 * @param {number | null} lat latitude in degrees
@@ -51,6 +57,19 @@ export function minToStr(setMinutes: number | null = 0): string {
         return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
     }
     return '00:00';
+}
+
+export function minTo12hStr(inputMinutes: number | null): string {
+    if (inputMinutes === null) return '';
+
+    let amPm: string = ' AM';
+    let hours: number = Math.floor(inputMinutes / 60);
+    if (hours > 12) {
+        hours -= 12;
+        amPm = ' PM';
+    }
+    let minutes: number = inputMinutes % 60;
+    return hours + ":" + String(minutes).padStart(2, '0') + amPm;
 }
 
 /**

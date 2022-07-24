@@ -28,6 +28,7 @@
                             <app-text [(value)]="_prefs.csdName" label="CSD Name"></app-text>
                         </div>
                     </div>
+                    <br>
                     <button type="button" class="btn btn-primary" (click)="generateDepPa()">Generate PA</button>
                 </ng-template>
             </li>
@@ -124,13 +125,13 @@
                 <ng-template ngbNavContent>
                     <div class="row">
                         <div class="col">
-                            <app-textarea label="PA" [(value)]="pa" [rows]="22" [edit]="false"></app-textarea>
+                            <div class="pa-display" [innerHTML]="pa | nl2br">
+                            </div>
                         </div>
                     </div>
                 </ng-template>
             </li>
         </ul>
-
         <div [ngbNavOutlet]="restNav" class="mt-2"></div>
     </div>
 </div>

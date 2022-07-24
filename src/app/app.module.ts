@@ -41,6 +41,7 @@ import { EditWaypointComponent } from './pages/flight-display/fpl/edit-waypoint/
 import { NumDiffPipe } from './pipes/num-diff.pipe';
 import { TonDiffPipe } from './pipes/ton-diff.pipe';
 import { NumToTonsPipe } from './pipes/num-ton.pipe';
+import { nl2brPipe } from './pipes/nl2br.pipe';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { NumToTonsPipe } from './pipes/num-ton.pipe';
     NumDiffPipe,
     TonDiffPipe,
     NumToTonsPipe,
+    nl2brPipe,
   ],
   imports: [
     BrowserModule,

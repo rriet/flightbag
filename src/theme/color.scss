@@ -14,7 +14,8 @@
         color: var(--text-color);
     }
 
-    .btn-light, .btn-light:hover {
+    .btn-light,
+    .btn-light:hover {
         background-color: var(--toolbar-background);
         color: var(--toolbar-text-color);
     }
@@ -188,6 +189,11 @@
     background-color: var(--background-color);
     color: var(--text-color);
     border-color: var(--color-light-tint);
+}
+
+// PA
+.pa-highlight {
+    color: var(--color-success-shade);
 }
 
 // Custom Components //
