@@ -148,8 +148,12 @@ export class PdfReadService {
 
         // Get Route
         // Locate the SECOND occurance of the departure airport (after 120 chars shoud be enogh)
-        let dep2 = page.indexOf(this._flight.fromAirport.icao, 120);
-        dep2 = page.indexOf(' ', dep2 + 5); // remove the runway identification "OTHH 34R " (get location of firs space after the ICAO + ' ')
+        let dep1 = page.indexOf(this._flight.fromAirport.icao, 120);
+        let dep2 = page.indexOf(' ', dep1 + 5); // remove the runway identification "OTHH 34R " (get location of firs space after the ICAO + ' ')
+
+        // runway is between DEP1 and DEP2
+        this._flight.rwyDeparture = page.substring(dep1 + 5, dep2);
+
         let arr2 = page.indexOf(this._flight.toAirport.icao, 120);
         this._flight.flight.route = page.substring(dep2, arr2);
 

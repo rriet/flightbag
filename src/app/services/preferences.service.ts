@@ -23,7 +23,7 @@ export class PreferencesService {
 
     nCrewP: 2,
     myname: '',
-    fdCrew: 'Senior First Officer ...',
+    fdCrew: 'SFO ...',
     csdName: '',
   }
 
