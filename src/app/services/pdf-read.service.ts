@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist'; // <-- installation (npm i pdfjs-dist)
-import { floorCent } from '../modules/math';
+import { ceilCent, floorCent } from '../modules/math';
 import { Airport } from '../objects/airport';
 import { AirportService } from './airport.service';
 import { FlightCalculationService } from './flight-calculation.service';
@@ -209,10 +209,10 @@ export class PdfReadService {
         this._flight.flight.fuelFinal = this.getValue(page.replace('I/R', ''), 'FINL');
 
         // Get Min fuel Required
-        this._flight.flight.fuelMinReq = this.getValue(page, 'MIN FUEL REQ');
+        this._flight.flight.fuelMinReq = ceilCent(this.getValue(page, 'MIN FUEL REQ'));
 
         // Get Ramp fuel ROUNDED UP
-        this._flight.flight.fuelRamp = Math.ceil(this.getValue(page, 'RAMP FUEL') / 100) * 100;
+        this._flight.flight.fuelRamp = ceilCent(this.getValue(page, 'RAMP FUEL'));
 
         /////  Weights ////
         this._flight.flight.mzfw = this.getValue(page, 'MZFW');

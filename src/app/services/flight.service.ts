@@ -620,12 +620,22 @@ export class FlightService {
     return this.flight.fuelTaxiRevised !== null ? this.flight.fuelTaxiRevised : this.flight.fuelTaxi;
   }
 
+  resetFuelTaxi() {
+    this.flight.fuelTaxiRevised = null;
+    this.saveFlight();
+  }
+
   set fuelTrip(value: number | null) {
     this.flight.fuelTripRevised = value;
     this.saveFlight();
   }
   get fuelTrip(): number {
     return this.flight.fuelTripRevised !== null ? this.flight.fuelTripRevised : this.flight.fuelTrip;
+  }
+
+  resetFuelTrip() {
+    this.flight.fuelTripRevised = null;
+    this.saveFlight();
   }
 
   set fuelPlanRequired(value: number | null) {
@@ -660,7 +670,12 @@ export class FlightService {
     this.saveFlight();
   }
   get fuelRamp(): number {
-    return this.flight.fuelRampRevised ? this.flight.fuelRampRevised : this.flight.fuelRamp;
+    return this.flight.fuelRampRevised !== null ? this.flight.fuelRampRevised : this.flight.fuelRamp;
+  }
+
+  resetFuelRamp() {
+    this.flight.fuelRampRevised = null;
+    this.saveFlight();
   }
 
   set fuelFinalRamp(value: number | null) {
@@ -669,6 +684,11 @@ export class FlightService {
   }
   get fuelFinalRamp(): number {
     return this.flight.fuelFinalRamp !== null ? this.flight.fuelFinalRamp : this.flight.fuelRamp;
+  }
+
+  resetFuelFinalRamp () {
+    this.flight.fuelFinalRamp = null;
+    this.saveFlight();
   }
 
   set fuelBefore(value: number | null) {
@@ -741,6 +761,11 @@ export class FlightService {
     return this.flight.fuelDeparture !== null ? this.flight.fuelDeparture : this.fuelFinalRamp;
   }
 
+  resetFuelDeparture () {
+    this.flight.fuelDeparture = null;
+    this.saveFlight();
+  }
+
 
   get hasFuelDeparture(): boolean {
     return this.flight.fuelDeparture !== null
@@ -793,7 +818,12 @@ export class FlightService {
     this.saveFlight();
   }
   get ezfw(): number {
-    return this.flight.rzfw ? this.flight.rzfw : this.flight.ezfw;
+    return this.flight.rzfw !== null ? this.flight.rzfw : this.flight.ezfw;
+  }
+
+  resetFuelEzfw () {
+    this.flight.rzfw = null;
+    this.saveFlight();
   }
 
   set fzfw(value: number | null) {
@@ -801,7 +831,7 @@ export class FlightService {
     this.saveFlight();
   }
   get fzfw(): number {
-    return this.flight.fzfw ? this.flight.fzfw : this.ezfw;
+    return this.flight.fzfw !== null ? this.flight.fzfw : this.ezfw;
   }
 
   get etow(): number {
@@ -1029,7 +1059,7 @@ export class FlightService {
 
 
   set temperature(value: number | null) {
-    value ? this.flight.temperature = value : '';
+    value !== null ? this.flight.temperature = value : '';
     this.saveFlight();
   }
   get temperature(): number {

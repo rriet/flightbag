@@ -4,12 +4,15 @@
 <div class="container techlog">
     <div class="row">
         <div class="col">
-            <app-number [(value)]="_flight.fuelFinalRamp" [maxLen]="6" (blur)="copyValue(rampFuel.value, fuelDeparture);"
-                #rampFuel [req]=true [tons]=true label="Required Fuel"></app-number>
+            <app-number [(value)]="_flight.fuelFinalRamp" [maxLen]="6"
+                (blur)="copyValue(rampFuel.value, fuelDeparture);" #rampFuel [req]=true [tons]=true
+                label="Required Fuel" [sufixIcon]="'reset.svg'" (sufixClick)="_flight.resetFuelFinalRamp()">
+            </app-number>
         </div>
         <div class="col">
-            <app-number [(value)]="_flight.fuelArrivalBeforeRefuel" [maxLen]="6" (blur)="copyValue(fuelArrival.value, fuelBefore);"
-                #fuelArrival [req]=true [tons]=true label="Arrival Fuel"></app-number>
+            <app-number [(value)]="_flight.fuelArrivalBeforeRefuel" [maxLen]="6"
+                (blur)="copyValue(fuelArrival.value, fuelBefore);" #fuelArrival [req]=true [tons]=true
+                label="Arrival Fuel"></app-number>
         </div>
     </div>
     <div class="row">
@@ -28,7 +31,8 @@
         <div class="col">
             <app-number [(value)]="_flight.fuelDeparture" [maxLen]="6"
                 (blur)="copyValue(fuelDeparture.value, rampFuel);" #fuelDeparture [req]=true [tons]=true
-                label="Departure Fuel"></app-number>
+                label="Departure Fuel" [sufixIcon]="'reset.svg'" (sufixClick)="_flight.resetFuelDeparture()">
+            </app-number>
         </div>
     </div>
     <div class="row">
