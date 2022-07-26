@@ -32,7 +32,7 @@ export class PostFlightComponent implements OnInit {
     return "Chocks-On"
   }
 
-  copyFuelValue(selectedValue: number | null) {
+  copyFuelValue(selectedValue: number | null | undefined) {
     this._toastService.show('Value copied to clipboard.', { classname: 'toast-mgs', delay: 2000 });
     this._clipboard.copy(String(selectedValue));
   }

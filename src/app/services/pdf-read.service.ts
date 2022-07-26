@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist'; // <-- installation (npm i pdfjs-dist)
+import { floorCent } from '../modules/math';
 import { Airport } from '../objects/airport';
 import { AirportService } from './airport.service';
 import { FlightCalculationService } from './flight-calculation.service';
@@ -193,10 +194,10 @@ export class PdfReadService {
         // this._flight.flight.groundDistance = this.getValue(page, 'GND DIST');
 
         // Get Taxi fuel
-        this._flight.flight.fuelTaxi = this.getValue(page, 'TAXI');
+        this._flight.flight.fuelTaxi = floorCent(this.getValue(page, 'TAXI'));
 
         // Get Trip fuel
-        this._flight.flight.fuelTrip = this.getValue(page, 'TRIP');
+        this._flight.flight.fuelTrip = floorCent(this.getValue(page, 'TRIP'));
 
         // Get Contingency Fuel
         this._flight.flight.fuelContigency = this.getValue(page.replace('3P/C', '').replace('5P/C', '').replace('20MIN', ''), 'CONT');

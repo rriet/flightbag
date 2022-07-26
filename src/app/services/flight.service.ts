@@ -617,7 +617,7 @@ export class FlightService {
     this.saveFlight();
   }
   get fuelTaxi(): number {
-    return floorCent(this.flight.fuelTaxiRevised ? this.flight.fuelTaxiRevised : this.flight.fuelTaxi);
+    return this.flight.fuelTaxiRevised !== null ? this.flight.fuelTaxiRevised : this.flight.fuelTaxi;
   }
 
   set fuelTrip(value: number | null) {
@@ -625,7 +625,7 @@ export class FlightService {
     this.saveFlight();
   }
   get fuelTrip(): number {
-    return floorCent(this.flight.fuelTripRevised ? this.flight.fuelTripRevised : this.flight.fuelTrip);
+    return this.flight.fuelTripRevised !== null ? this.flight.fuelTripRevised : this.flight.fuelTrip;
   }
 
   set fuelPlanRequired(value: number | null) {

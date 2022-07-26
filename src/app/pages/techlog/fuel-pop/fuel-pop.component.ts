@@ -80,7 +80,7 @@ export class FuelPopComponent implements OnInit {
     return <FormArray>this.fuelFormGroup.get('fuels');
   }
 
-  copyFuelValue(selectedValue: number | null) {
+  copyFuelValue(selectedValue: number | null | undefined) {
     this._toastService.show('Value copied to clipboard.', { classname: 'toast-mgs', delay: 2000 });
     this._clipboard.copy(String(selectedValue));
   }
