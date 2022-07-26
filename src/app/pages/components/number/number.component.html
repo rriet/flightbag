@@ -9,7 +9,7 @@
             (click)="clicked()" (focus)="focused($event)" type="tel" (blur)="blured()" maxlength="{{_maxLen}}">
         <span class="input-group-text input-display-sufix" *ngIf="sufix || sufixIcon" (click)="sufixClicked()">
             {{sufix}}
-            <img *ngIf="sufixIcon" src="assets/img/{{sufixIcon}}">
+            <img *ngIf="sufixIcon" class="sufix-image" src="assets/img/{{sufixIcon}}">
         </span>
     </div>
 </fieldset>
