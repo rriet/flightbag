@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1658859717242,
+  "timestamp": 1658867287908,
   "index": "https://rriet.github.io/flightbag/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "https://rriet.github.io/flightbag/favicon.ico",
         "https://rriet.github.io/flightbag/index.html",
-        "https://rriet.github.io/flightbag/main.b6b650ea96c1a13b.js",
+        "https://rriet.github.io/flightbag/main.387dbb12dc9eca08.js",
         "https://rriet.github.io/flightbag/manifest.webmanifest",
         "https://rriet.github.io/flightbag/polyfills.7076518a9af696c7.js",
         "https://rriet.github.io/flightbag/runtime.71c359ab2b6e7ee9.js",
@@ -110,8 +110,8 @@
     "https://rriet.github.io/flightbag/assets/js/pdf.worker.js.map": "e38da7ce86d05d4068f4c1ebf59ebe6d9b25f880",
     "https://rriet.github.io/flightbag/assets/js/pdf.worker.min.js": "f4bd88c4ec12725ebc546666668e322924985a61",
     "https://rriet.github.io/flightbag/favicon.ico": "bfbb080c429e9378d25dbe75f80065cca3dc8bde",
-    "https://rriet.github.io/flightbag/index.html": "7672672f8134718469d7e3444fac201bc000690e",
-    "https://rriet.github.io/flightbag/main.b6b650ea96c1a13b.js": "79d9b61435f2e126c72068101ca1c8db1d2d073f",
+    "https://rriet.github.io/flightbag/index.html": "fcdfb347cb1b7ae7b09e856ace143c1a4d9bc51e",
+    "https://rriet.github.io/flightbag/main.387dbb12dc9eca08.js": "893e6bb5a2d3ebf3045cc8b83ca68e9a3014c65c",
     "https://rriet.github.io/flightbag/manifest.webmanifest": "fb432621475236da96d9ed671edeac4374b7c330",
     "https://rriet.github.io/flightbag/polyfills.7076518a9af696c7.js": "83655a6167b66fc35ed9612681459379f3969f2f",
     "https://rriet.github.io/flightbag/runtime.71c359ab2b6e7ee9.js": "08e5339830075b575709d7fd30803ec59c7df848",
