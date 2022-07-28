@@ -37,7 +37,6 @@ import { LatitudeToString } from './pipes/latitude-to-string.pipe';
 import { LongitudeToString } from './pipes/longitude-to-string.pipe';
 import { SelectComponent } from './pages/components/select/select.component';
 import { RoundNumber } from './pipes/roundNumber.pipe';
-import { EditWaypointComponent } from './pages/flight-display/fpl/edit-waypoint/edit-waypoint.component';
 import { NumDiffPipe } from './pipes/num-diff.pipe';
 import { TonDiffPipe } from './pipes/ton-diff.pipe';
 import { NumToTonsPipe } from './pipes/num-ton.pipe';
@@ -76,7 +75,6 @@ import { nl2brPipe } from './pipes/nl2br.pipe';
     FplComponent,
     SelectComponent,
     RoundNumber,
-    EditWaypointComponent,
     NumDiffPipe,
     TonDiffPipe,
     NumToTonsPipe,

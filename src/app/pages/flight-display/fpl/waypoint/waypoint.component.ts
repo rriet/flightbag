@@ -209,6 +209,10 @@ export class WaypointComponent implements OnInit {
     this._modalService.open(content, { modalDialogClass: 'waypoint-pop' });
   }
 
+  resetScroll() {
+    this.edited.emit(true);
+  }
+
   saveWaypoint() {
     this.waypoint.flightLevelActual = this.inputFl ? this.inputFl : undefined;
 
@@ -243,6 +247,6 @@ export class WaypointComponent implements OnInit {
         thisWpt.rta = thisWpt.ctm + this.inputEtaDiff;
       }
     }
-    this.edited.emit(true);
+    this.resetScroll();
   }
 }
