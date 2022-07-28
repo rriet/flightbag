@@ -26,7 +26,7 @@ export class WaypointComponent implements OnInit {
   inputFuelVar: number | null = 0;
   inputTimeVar: number | null = 0;
 
-  @Output() refresh: EventEmitter<string> = new EventEmitter<string>();
+  @Output() edited: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() waypoint: Waypoint = { name: '' };
 
@@ -243,5 +243,6 @@ export class WaypointComponent implements OnInit {
         thisWpt.rta = thisWpt.ctm + this.inputEtaDiff;
       }
     }
+    this.edited.emit(true);
   }
 }

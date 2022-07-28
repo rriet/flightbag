@@ -16,9 +16,7 @@ export class FplComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this._prefs.autoScrollFpl) {
-      this.startTimer();
-    }
+    this.restartTimer();
   }
 
   ngOnDestroy(): void {
@@ -29,16 +27,6 @@ export class FplComponent implements OnInit {
   // interval loop variable.
   interval!: any;
   waypointName: string = '';
-
-  // elapsed time to waypoint in minutes
-  // timeOverWaypoint(wpt: Waypoint): number | undefined {
-  //   // actual miutes since departure.
-  //   if (wpt.ctm !== undefined && this._flight.timeTakeoff !== null) {
-  //     let elapsed = wpt.ctm - this._flight.timeTakeoff + delay!!!!; 
-  //     return elapsed >= 0 ? elapsed : elapsed + (24 * 60);
-  //   }
-  //   return wpt.ctm ? wpt.ctm + this._flight.timeEnrouteDelay : undefined;
-  // }
 
   startTimer() {
     this.interval = window.setInterval(() => {
@@ -61,17 +49,10 @@ export class FplComponent implements OnInit {
     }
   }
 
-  refresh(name: string) {
-    // window.location.reload();
-
-    // this.waypointName = name;
-    // this.searchWaypoint();
-    // this.waypointName = '';
-  }
-
-  pauseAutoScroll() {
-    this.stopTimmer();
-    this._prefs.autoScrollFpl = false;
+  restartTimer() {
+    if (this._prefs.autoScrollFpl) {
+      this.startTimer();
+    }
   }
 
   scrollToWaypoint(): void {
