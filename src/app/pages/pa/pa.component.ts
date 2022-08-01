@@ -64,6 +64,10 @@ export class PaComponent implements OnInit {
       .replace(/\[MYNAME\]/gi, this._prefs.myname)
       .replace(/\[NUMBER\]/gi, this._flight.number)
       .replace(/\[DESTINATION\]/gi, this._flight.to)
+      .replace(/\[DESTINATION_NAME\]/gi, this._flight.toAirport.name || '')
+      .replace(/\[DESTINATION_COUNTRY\]/gi, this._flight.toAirport.country || '')
+      .replace(/\[DESTINATION_CITY\]/gi, this._flight.toAirport.city || '')
+      .replace(/\[DESTINATION\]/gi, this._flight.to)
       .replace(/\[CSDNAME\]/gi, this._prefs.csdName)
       .replace(/\[FL\]/gi, this._flight.highestLevel.slice(2,-1) + ',000')
       .replace(/\[FDCREW\]/gi, this._prefs.fdCrew);
@@ -97,6 +101,9 @@ export class PaComponent implements OnInit {
 
     this.pa = this.pa
       .replace(/\[DESTINATION\]/gi, this._flight.to)
+      .replace(/\[DESTINATION_NAME\]/gi, this._flight.toAirport.name || '')
+      .replace(/\[DESTINATION_COUNTRY\]/gi, this._flight.toAirport.country || '')
+      .replace(/\[DESTINATION_CITY\]/gi, this._flight.toAirport.city || '')
       .replace(/\[TEMPC\]/gi, String(this._flight.temperature))
       .replace(/\[TEMPF\]/gi, String(this._flight.temperatureF))
       .replace(/\[ETA_LOCAL\]/gi, minTo12hStr(this._flight.timeInflightEtaLocal));

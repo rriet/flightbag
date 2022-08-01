@@ -135,6 +135,15 @@ export class PdfReadService {
         this._flight.flight.from = this._airport.findAirportIcao(depArrAirp[0]);
         this._flight.flight.to = this._airport.findAirportIcao(depArrAirp[1]);
 
+        let today = new Date();
+        let jd = this._fcalc.calcJD(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+        this._flight.flight.from.sunrise = this._fcalc.calcSunriseUTC(jd, this._flight.flight.from.latitude || 0, this._flight.flight.from.longitude || 0);
+        this._flight.flight.from.sunset = this._fcalc.calcSunsetUTC(jd, this._flight.flight.from.latitude || 0, this._flight.flight.from.longitude || 0);
+
+        this._flight.flight.to.sunrise = this._fcalc.calcSunriseUTC(jd, this._flight.flight.to.latitude || 0, this._flight.flight.to.longitude || 0);
+        this._flight.flight.to.sunset = this._fcalc.calcSunsetUTC(jd, this._flight.flight.to.latitude || 0, this._flight.flight.to.longitude || 0);
+
         // Get aircraft type
         this._flight.flight.type = (page.match(/(A3|B7){1}[0-9A-Z]{2}/g) || [])[0];
 

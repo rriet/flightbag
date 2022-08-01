@@ -7,8 +7,6 @@ import { numberSafeCompareFunction } from 'ol/array';
 export class FlightCalculationService {
 
     isDay(latitude: number, longitude: number, JD: number, timeNow: number): boolean {
-        // this formulas uses inversed longitude
-        var longitude = -longitude;
 
         var riseMinutesGMT = this.calcSunriseUTC(JD, latitude, longitude);
         var setMinutesGMT = this.calcSunsetUTC(JD, latitude, longitude);
@@ -109,6 +107,9 @@ export class FlightCalculationService {
     //***********************************************************************/
 
     calcSunriseUTC(JD: number, latitude: number, longitude: number): number {
+
+        longitude = -1 * longitude;
+
         var t = this.calcTimeJulianCent(JD);
 
         // *** Find the time of solar noon at the location, and use
@@ -158,6 +159,9 @@ export class FlightCalculationService {
     //***********************************************************************/
 
     calcSunsetUTC(JD: number, latitude: number, longitude: number): number {
+
+        longitude = -1 * longitude;
+
         var t = this.calcTimeJulianCent(JD);
 
         // *** Find the time of solar noon at the location, and use

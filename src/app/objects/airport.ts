@@ -7,4 +7,6 @@ export interface Airport {
     latitude?: number;
     longitude?: number;
     elevation?:number;
+    sunrise?: number;
+    sunset?: number;
 }

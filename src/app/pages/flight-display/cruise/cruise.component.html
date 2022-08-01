@@ -57,7 +57,20 @@
                 </app-number>
             </div>
         </div>
-        
+        <hr>
+        <div class="row">
+            <div class="col">
+                {{_flight.from}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Sunrise: {{_flight.fromAirport.sunrise | toHours}}
+            </div>
+            <div class="col">
+                Sunset: {{_flight.fromAirport.sunset | toHours}}
+            </div>
+        </div>
         <div *ngFor="let sunSets of _flight.sunRiseSet; let i = index;">
             <hr>
             <div class="row">
@@ -71,6 +84,23 @@
                         {{sunSets.lat | latToStr}} /
                         {{sunSets.lon | lonToStr}} </div>
                 </div>
+                <div class="col">
+                    Sea Level
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                {{_flight.to}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Sunrise: {{_flight.toAirport.sunrise | toHours}}
+            </div>
+            <div class="col">
+                Sunset: {{_flight.toAirport.sunset | toHours}}
             </div>
         </div>
 
