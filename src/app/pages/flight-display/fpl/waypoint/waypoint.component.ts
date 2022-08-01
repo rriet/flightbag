@@ -247,6 +247,7 @@ export class WaypointComponent implements OnInit {
         thisWpt.rta = thisWpt.ctm + this.inputEtaDiff;
       }
     }
+    this._flight.saveFlight();
     this.resetScroll();
   }
 }

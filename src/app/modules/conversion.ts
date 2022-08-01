@@ -17,7 +17,7 @@ export function latToStr(lat: number | null = 0): string {
 
         let deg: string = String(Math.floor(lat)).padStart(2, '0');
 
-        let min: string = String(Math.round(lat % 1 * 60 * 10) / 10).padStart(4, '0');
+        let min: string = (Math.round(lat % 1 * 60 * 10) / 10).toFixed(1).padStart(4, '0');
 
         return prefix + deg + ' ' + min;
     }
@@ -37,7 +37,7 @@ export function lonToStr(lon: number | null = 0): string {
 
         let deg: string = String(Math.floor(lon)).padStart(3, '0');
 
-        let min: string = String(Math.round(lon % 1 * 60 * 10) / 10).padStart(4, '0');
+        let min: string = (Math.round(lon % 1 * 60 * 10) / 10).toFixed(1).padStart(4, '0');
 
         return prefix + deg + ' ' + min;
     }
