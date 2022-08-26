@@ -8,7 +8,7 @@ import { FlightService } from 'src/app/services/flight.service';
 export class DepartureComponent implements OnInit, OnDestroy {
 
   constructor(
-    public _flight:FlightService,
+    public _flight: FlightService,
     private _ngZone: NgZone,
   ) { }
 
@@ -25,20 +25,25 @@ export class DepartureComponent implements OnInit, OnDestroy {
   }
 
   // interval loop variable.
-  interval!:ReturnType<typeof setInterval>;
-  
+  interval!: ReturnType<typeof setInterval>;
+
   startTimer() {
     // clear interval if running, before start a new one
     clearInterval(this.interval);
 
     //run outside angular to save memory
-    this._ngZone.runOutsideAngular(()=>{
-      this.interval = setInterval(()=>{
-        this._ngZone.run(()=>{
+    this._ngZone.runOutsideAngular(() => {
+      this.interval = setInterval(() => {
+        this._ngZone.run(() => {
           // Do nothing, but forces Angular to refresh the screen and get new values.
         });
-      },1000)
+      }, 1000)
     });
+  }
+
+  blockTimeLabel(): string {
+    let diff = this._flight.timeBlock - this._flight.timeTrip;
+    return 'Block (' + (diff < 0 ? "" : "+") + diff + ')';
   }
 
   atdChanged() {

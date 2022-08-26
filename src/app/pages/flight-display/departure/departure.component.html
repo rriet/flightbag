@@ -37,7 +37,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <app-time [time]="_flight.timeBlock" label="Block time" [edit]="false" [clickable]="false"
+                <app-time [time]="_flight.timeBlock" [label]="blockTimeLabel()" [edit]="false" [clickable]="false"
                     [caution]="_flight.timeBlock - _flight.timeTrip < 20"
                     [warning]="_flight.timeBlock - _flight.timeTrip < 10"></app-time>
             </div>
