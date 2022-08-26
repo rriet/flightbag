@@ -146,7 +146,7 @@ export class WaypointComponent implements OnInit {
 
   get fplFuel(): number | null {
     if (this.waypoint.fuelReq !== undefined) {
-      return this._flight.fuelContigency + this.waypoint.fuelReq;
+      return this._flight.fuelPlanRemaining - this._flight.fuelPlanRequired + this.waypoint.fuelReq;
     }
     return null;
   }

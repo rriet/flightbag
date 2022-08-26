@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { numberSafeCompareFunction } from 'ol/array';
 
 @Injectable({
     providedIn: 'root'

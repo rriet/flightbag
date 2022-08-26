@@ -51,8 +51,9 @@ export class SpeedsComponent implements OnInit {
   }
 
   get tas(): number | null {
-    if (this._flight.perfToTemp !== null && this._flight.perfToVr !== null && this._flight.perfToQnh !== null) {
-      return Math.ceil(this._flight.perfToVr / Math.sqrt(288.15 / (this._flight.perfToTemp + 273.15) * (this._flight.perfToQnh / 1013.25)));
+    if (this._flight.perfToTemp !== null && this._flight.perfToVr !== null && this._flight.perfToQnh !== null && this._flight.fromAirport.elevation !== undefined) {
+      let qfe:number = this._flight.perfToQnh - (this._flight.fromAirport.elevation / 30);
+      return Math.ceil(this._flight.perfToVr / Math.sqrt(288.15 / (this._flight.perfToTemp + 273.15) * (qfe / 1013.25)));
     }
     return null;
   }

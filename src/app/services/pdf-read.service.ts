@@ -199,6 +199,8 @@ export class PdfReadService {
           }
         }
 
+        page = page.substring(dep1);
+
         // // get GND DIST
         // this._flight.flight.groundDistance = this.getValue(page, 'GND DIST');
 
