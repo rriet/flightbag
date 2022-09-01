@@ -1,5 +1,5 @@
 <div class="waypoint-display">
-    <li class="list-group-item"  (click)="open(content)">
+    <li class="list-group-item" (click)="open(content)">
         <div class="row">
             <div class="col">
                 <h4>{{name()}}</h4>
@@ -80,7 +80,6 @@
                         </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row">
                     <div class="col">
                         <app-time [(time)]="inputTime" [label]="'ATA: '" [req]="true"></app-time>
@@ -88,6 +87,24 @@
                     <div class="col">
                         <app-number [(value)]="inputFuel" label="FOB" [req]="true" [tons]="true" [negative]="false">
                         </app-number>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-1">
+                        <button type="button" class="btn btn-secondary btn-wpt btn-sm"
+                            (click)="inputTime = inputTime-1">-1'</button>
+                    </div>
+                    <div class="col p-1" style="margin-right: 15px;">
+                        <button type="button" class="btn btn-secondary btn-wpt btn-sm"
+                            (click)="inputTime = inputTime+1">+1'</button>
+                    </div>
+                    <div class="col p-1">
+                        <button type="button" class="btn btn-secondary btn-wpt btn-sm"
+                            (click)="inputFuel = inputFuel-100">-100kg</button>
+                    </div>
+                    <div class="col p-1">
+                        <button type="button" class="btn btn-secondary btn-wpt btn-sm"
+                            (click)="inputFuel = inputFuel+100">+100kg</button>
                     </div>
                 </div>
             </div>

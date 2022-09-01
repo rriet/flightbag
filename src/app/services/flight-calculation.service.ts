@@ -57,16 +57,13 @@ export class FlightCalculationService {
         // flight speed in NM/MIN
         let speed = distance / flightTime;
 
-        let today = new Date();
-        let jd = this.calcJD(today.getFullYear(), today.getMonth() + 1, today.getDate());
-
         let nextPosition = {lat: lat1, lon: lon1};
 
         let wasDay: boolean | null = null;
 
         // for every minute of the flight time.....
         for (let i = 0; i <= flightTime; i++) {
-            let isDay = this.isDay(nextPosition.lat, nextPosition.lon, jd, time1);
+            let isDay = this.isDay(nextPosition.lat, nextPosition.lon, JD, time1);
 
             let bearing = this.flightBearing(lat1, lon1, lat2, lon2);
             nextPosition = this.flightNextWaypoint(lat1, lon1, bearing, speed);
@@ -75,7 +72,7 @@ export class FlightCalculationService {
             time1++;
 
             // after wasDay is set, if it's different than the previous ===  sunrise/sunset
-            if (wasDay === null && wasDay != isDay ) {
+            if (wasDay !== null && wasDay != isDay ) {
                 return { time: time1, lat: nextPosition.lat, lon: nextPosition.lon, isDay: isDay};
             }
             wasDay = isDay;
