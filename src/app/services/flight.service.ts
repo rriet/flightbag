@@ -316,7 +316,7 @@ export class FlightService {
     });
   }
 
-  get sunRiseSet(): { time: number, lat: number, lon: number, isDay: boolean }[] {
+  get sunRiseSet(): { time: number, lat: number, lon: number, isDay: boolean, altitude: number }[] {
     return this.flight.sunRiseSet;
   }
 
@@ -436,6 +436,9 @@ export class FlightService {
 
       this.flight.sunRiseSet = [];
 
+      let today = new Date();
+      let jd = this._fcalc.calcJD(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
       for (let i = 0; i < navPoints.length; i++) {
         let waypoint = navPoints[i];
 
@@ -443,9 +446,6 @@ export class FlightService {
         if (waypoint.lat !== undefined && waypoint.lon !== undefined && waypoint.ctm !== undefined) {
           let time = waypoint.ctm + value;
           if (time > (24 * 60)) time = time - (24 * 60);
-
-          let today = new Date();
-          let jd = this._fcalc.calcJD(today.getFullYear(), today.getMonth() + 1, today.getDate());
 
           waypoint.isDay = this._fcalc.isDay(waypoint.lat, waypoint.lon, jd, time);
 
@@ -458,8 +458,9 @@ export class FlightService {
 
               // Calculate sunset between this waypoint and previous waypoint
               let sun = this._fcalc.getRiseSetTime((prevWpt.lat || 0), (prevWpt.lon || 0), ((prevWpt.ctm || 0) + (this.flight.timeTakeoff || 0)),
-                waypoint.lat, waypoint.lon, ((waypoint.ctm || 0) + (this.flight.timeTakeoff || 0)), jd);
+                waypoint.lat, waypoint.lon, ((waypoint.ctm || 0) + (this.flight.timeTakeoff || 0)), jd, (waypoint.flightLevelPlan || 0) * 100);
 
+              console.log(sun)
               if (sun) {
                 this.flight.sunRiseSet.push(sun);
               }
@@ -686,7 +687,7 @@ export class FlightService {
     return this.flight.fuelFinalRamp !== null ? this.flight.fuelFinalRamp : this.flight.fuelRamp;
   }
 
-  resetFuelFinalRamp () {
+  resetFuelFinalRamp() {
     this.flight.fuelFinalRamp = null;
     this.saveFlight();
   }
@@ -761,7 +762,7 @@ export class FlightService {
     return this.flight.fuelDeparture !== null ? this.flight.fuelDeparture : this.fuelFinalRamp;
   }
 
-  resetFuelDeparture () {
+  resetFuelDeparture() {
     this.flight.fuelDeparture = null;
     this.saveFlight();
   }
@@ -821,7 +822,7 @@ export class FlightService {
     return this.flight.rzfw !== null ? this.flight.rzfw : this.flight.ezfw;
   }
 
-  resetFuelEzfw () {
+  resetFuelEzfw() {
     this.flight.rzfw = null;
     this.saveFlight();
   }

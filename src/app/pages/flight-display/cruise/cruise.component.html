@@ -76,10 +76,10 @@
             <div class="row">
                 <div class="col">
                     <div *ngIf="!sunSets.isDay">
-                        Sunrise time: {{sunSets.time | toHours}} (Sea Level)<br>
+                        Sunrise time: {{sunSets.time | toHours}} ({{sunSets.altitude}})<br>
                         {{sunSets.lat | latToStr}} / {{sunSets.lon | lonToStr}} </div>
                     <div *ngIf="sunSets.isDay">
-                        Sunset time: {{sunSets.time | toHours}} (Sea Level)<br>
+                        Sunset time: {{sunSets.time | toHours}} (FL{{sunSets.altitude / 100}})<br>
                         {{sunSets.lat | latToStr}} / {{sunSets.lon | lonToStr}} </div>
                 </div>
             </div>

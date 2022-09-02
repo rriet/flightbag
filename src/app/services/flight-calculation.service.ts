@@ -5,7 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class FlightCalculationService {
 
-    isDay(latitude: number, longitude: number, JD: number, timeNow: number): boolean {
+    isDay(latitude: number, longitude: number, JD: number, timeNow: number, altitude: number = 0): boolean {
+
+        // Correct position for altitude
+        if (altitude > 0) {
+            // Calculate the line of sight for the altitude
+            let lineOfSight = this.flightLineOfSight(altitude);
+
+            // Calculate the sun azimute at position now
+            let sunAzimute = this.calcSunAzimute(JD, timeNow, latitude, longitude);
+
+            let  correctedWaypoint = this.flightNextWaypoint(latitude, longitude, sunAzimute, lineOfSight);
+
+            latitude = correctedWaypoint.lat;
+            longitude = correctedWaypoint.lon;
+        }
 
         var riseMinutesGMT = this.calcSunriseUTC(JD, latitude, longitude);
         var setMinutesGMT = this.calcSunsetUTC(JD, latitude, longitude);
@@ -43,7 +57,7 @@ export class FlightCalculationService {
         }
     }
 
-    getRiseSetTime(lat1: number, lon1: number, time1: number, lat2: number, lon2: number, time2: number, JD: number): { time: number, lat: number, lon: number, isDay: boolean } | null {
+    getRiseSetTime(lat1: number, lon1: number, time1: number, lat2: number, lon2: number, time2: number, JD: number, altitude: number = 0): { time: number, lat: number, lon: number, isDay: boolean, altitude: number } | null {
 
         // Flight time between the 2 waypoints
         let flightTime = time2 - time1;
@@ -57,13 +71,13 @@ export class FlightCalculationService {
         // flight speed in NM/MIN
         let speed = distance / flightTime;
 
-        let nextPosition = {lat: lat1, lon: lon1};
+        let nextPosition = { lat: lat1, lon: lon1 };
 
         let wasDay: boolean | null = null;
 
         // for every minute of the flight time.....
         for (let i = 0; i <= flightTime; i++) {
-            let isDay = this.isDay(nextPosition.lat, nextPosition.lon, JD, time1);
+            let isDay = this.isDay(nextPosition.lat, nextPosition.lon, JD, time1, altitude);
 
             let bearing = this.flightBearing(lat1, lon1, lat2, lon2);
             nextPosition = this.flightNextWaypoint(lat1, lon1, bearing, speed);
@@ -72,8 +86,8 @@ export class FlightCalculationService {
             time1++;
 
             // after wasDay is set, if it's different than the previous ===  sunrise/sunset
-            if (wasDay !== null && wasDay != isDay ) {
-                return { time: time1, lat: nextPosition.lat, lon: nextPosition.lon, isDay: isDay};
+            if (wasDay !== null && wasDay != isDay) {
+                return { time: time1, lat: nextPosition.lat, lon: nextPosition.lon, isDay: isDay, altitude};
             }
             wasDay = isDay;
 

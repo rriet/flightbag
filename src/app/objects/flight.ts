@@ -29,7 +29,7 @@ export interface Flight {
     alternateList: string;
     waypoints: Waypoint[];
 
-    sunRiseSet: { time: number, lat: number, lon: number, isDay: boolean }[]
+    sunRiseSet: { time: number, lat: number, lon: number, isDay: boolean, altitude: number }[]
 
     // Times and date
     dateStandardDeparture: number;
