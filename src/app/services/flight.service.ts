@@ -447,7 +447,7 @@ export class FlightService {
           let time = waypoint.ctm + value;
           if (time > (24 * 60)) time = time - (24 * 60);
 
-          waypoint.isDay = this._fcalc.isDay(waypoint.lat, waypoint.lon, jd, time);
+          waypoint.isDay = this._fcalc.isDay(waypoint.lat, waypoint.lon, jd, time, (waypoint.flightLevelPlan || 0) * 100);
 
           // if DAY/NIGHT changes from the previous waypoint
           if (wasDay != waypoint.isDay) {
@@ -460,7 +460,7 @@ export class FlightService {
               let sun = this._fcalc.getRiseSetTime((prevWpt.lat || 0), (prevWpt.lon || 0), ((prevWpt.ctm || 0) + (this.flight.timeTakeoff || 0)),
                 waypoint.lat, waypoint.lon, ((waypoint.ctm || 0) + (this.flight.timeTakeoff || 0)), jd, (waypoint.flightLevelPlan || 0) * 100);
 
-              console.log(sun)
+              // console.log(sun)
               if (sun) {
                 this.flight.sunRiseSet.push(sun);
               }
