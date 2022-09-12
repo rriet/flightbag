@@ -6,8 +6,8 @@
 
 /**
 * Calculate local time
-* @param {time | null} inputNumber UTC time in minutes from midnight
-* @param {timeZone | null} inputNumber timezone in minutes
+* @param {time | null} time UTC time in minutes from midnight
+* @param {timeZone | null} timeZone timezone in minutes
 * @returns {number | null} Local time in minutes from midnight
 */
 export function getLocalTime(time: number | null, timeZone: number | null): number | null {
@@ -31,4 +31,39 @@ export function getLocalTime(time: number | null, timeZone: number | null): numb
 export function minNowUTC(): number {
     var date = new Date(new Date());
     return date.getUTCHours() * 60 + date.getUTCMinutes();
+}
+
+/**
+* Add Times
+* @param {first | null} first time to add
+* @param {second | null} second time to add
+* @returns {number | null} Added time
+*/
+export function addTimes(first: number | null, second: number | null): number | null {
+    if (first !== null && second !== null) {
+        if (first + second < (24 * 60)) {
+            return first + second;
+        }
+        return first + second - (24 * 60);
+    }
+    return null;
+}
+
+/**
+* Subtract Times
+* @param {first | null} first Time to be subtracted (Minuend)
+* @param {second | null} second Amount beeing taken (Subtrahend)
+* @returns {number | null} Subtracted time
+*/
+export function subtractTimes(first: number | null, second: number | null): number | null {
+    if (first !== null && second !== null) {
+        if (first - second < (24 * 60)) {
+            return first - second;
+        }
+        if (first - second < 0) {
+            return first - second + (24 * 60);
+        }
+        return first - second - (24 * 60);
+    }
+    return null;
 }

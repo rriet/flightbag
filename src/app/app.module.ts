@@ -41,6 +41,7 @@ import { NumDiffPipe } from './pipes/num-diff.pipe';
 import { TonDiffPipe } from './pipes/ton-diff.pipe';
 import { NumToTonsPipe } from './pipes/num-ton.pipe';
 import { nl2brPipe } from './pipes/nl2br.pipe';
+import { MainComponent } from './pages/main/main.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { nl2brPipe } from './pipes/nl2br.pipe';
     TonDiffPipe,
     NumToTonsPipe,
     nl2brPipe,
+    MainComponent,
   ],
   imports: [
     BrowserModule,

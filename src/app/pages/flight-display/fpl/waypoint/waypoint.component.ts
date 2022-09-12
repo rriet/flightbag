@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { roundCent } from 'src/app/modules/math';
 import { Waypoint } from 'src/app/objects/waypoint';
 import { FlightService } from 'src/app/services/flight.service';
+import { addTimes, subtractTimes } from 'src/app/modules/time';
 import { minToStr, numDiff, numToTons, nunToTonsDiff } from '../../../../modules/conversion';
 
 @Component({
@@ -27,7 +28,6 @@ export class WaypointComponent implements OnInit {
   inputTimeVar: number | null = 0;
 
   @Output() edited: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   @Input() waypoint: Waypoint = { name: '' };
 
   name(): string {
