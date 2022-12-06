@@ -1,5 +1,5 @@
 export interface Prefs {
-    
+
     autoScrollFpl: boolean;
 
     timeBeforeRest: number;

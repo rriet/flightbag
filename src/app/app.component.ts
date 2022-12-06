@@ -1,5 +1,6 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
 import { MeterTableComponent } from './pages/meter-table/meter-table.component';
 import { FlightService } from './services/flight.service';
 import { PreferencesService } from './services/preferences.service';

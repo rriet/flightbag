@@ -5,6 +5,8 @@ import { PerformanceSevice } from 'src/app/services/performance.service';
 import { PdfReadService } from 'src/app/services/pdf-read.service';
 import { saveAs } from 'file-saver';
 import { ToastService } from 'src/app/services/toast-service';
+import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-flight-init',
@@ -18,6 +20,7 @@ export class FlightInitComponent implements OnInit {
     public _performance: PerformanceSevice,
     private _clipboard: ClipboardService,
     public _toastService: ToastService,
+    private _modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +45,14 @@ export class FlightInitComponent implements OnInit {
       //Step 3:Read the file as ArrayBuffer
       fileReader.readAsArrayBuffer(file);
     }
+
+    this._modalService.open(DisclaimerComponent, {
+      keyboard: false,
+      backdrop : 'static',
+      scrollable: true,
+      size: 'xl',
+      centered: true,
+     });
   }
 
   fileName(): string {
