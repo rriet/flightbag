@@ -1,5 +1,6 @@
 <div class="meter-table-container">
-    <button type="button" class="btn-close btn-meter-close" aria-label="Close" (click)="_activeModal.dismiss('Cross click')"></button>
+    <button type="button" class="btn-close btn-meter-close" aria-label="Close"
+        (click)="_activeModal.dismiss('Cross click')"></button>
     <table class="table table-sm meter-table">
         <thead>
             <tr>
@@ -13,18 +14,23 @@
                 <th class="head">Feet</th>
             </tr>
         </thead>
-        <tbody>
-            <tr scope="row" class="line" *ngFor='let levelPair of getEastWest();'>
-                <td (click)="showLevel(levelPair.west, content)" class="cell">{{levelPair.west.meter}}</td>
-                <td (click)="showLevel(levelPair.west, content)" class="cell border-left">{{levelPair.west.feet}}
-                </td>
-                <td (click)="showLevel(levelPair.east, content)" class="cell border-left">{{levelPair.east.meter}}
-                </td>
-                <td (click)="showLevel(levelPair.east, content)" class="cell border-left">{{levelPair.east.feet}}
-                </td>
-            </tr>
-        </tbody>
     </table>
+    <div class="scroll-table">
+        <table class="table table-sm meter-table">
+            <tbody>
+                <tr scope="row" class="line" *ngFor='let levelPair of getEastWest();'>
+                    <td (click)="showLevel(levelPair.west, content)" class="cell">{{levelPair.west.meter}}</td>
+                    <td (click)="showLevel(levelPair.west, content)" class="cell border-left">{{levelPair.west.feet}}
+                    </td>
+                    <td (click)="showLevel(levelPair.east, content)" class="cell border-left">{{levelPair.east.meter}}
+                    </td>
+                    <td (click)="showLevel(levelPair.east, content)" class="cell border-left">{{levelPair.east.feet}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 
@@ -36,12 +42,11 @@
                 <th class="head">Metres</th>
                 <th class="head">Feet</th>
             </tr>
-    
             <tr scope="row" class="line" class="show-row">
                 <td class="show-col cell">{{selectedLevel.meter}}</td>
                 <td class="show-col cell">{{selectedLevel.feet}}</td>
             </tr>
         </table>
     </div>
-    
+
 </ng-template>

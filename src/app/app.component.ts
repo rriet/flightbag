@@ -41,7 +41,7 @@ export class AppComponent {
   openMeterTable() {
     this._modalService.open(MeterTableComponent, {
       scrollable: true,
-      size: 'xl'
+      windowClass: 'meter-window',
      });
   }
 

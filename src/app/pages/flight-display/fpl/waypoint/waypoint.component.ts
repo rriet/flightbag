@@ -17,11 +17,7 @@ export class WaypointComponent implements OnInit {
     private _modalService: NgbModal,
   ) { }
 
-  ngOnInit(): void {
-    // this.inputFl = this.flightLevel();
-    // this.inputFuel = this.revisedFuel;
-    // this.inputTime = this.waypointTime().num;
-  }
+  ngOnInit(): void {}
 
   inputFlVar: number | null = 0;
   inputFuelVar: number | null = 0;
@@ -206,7 +202,9 @@ export class WaypointComponent implements OnInit {
   }
 
   open(content: any) {
-    this._modalService.open(content, { modalDialogClass: 'waypoint-pop' });
+    this._modalService.open(content, { 
+      modalDialogClass: 'waypoint-pop'
+    });
   }
 
   resetScroll() {

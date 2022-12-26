@@ -27,7 +27,9 @@ export class MeterTableComponent implements OnInit {
 
   showLevel(level: level, content:any) {
     this.selectedLevel = level;
-    this._modalService.open(content);
+    this._modalService.open(content,{
+      centered: true
+     });
   }
 
 }
@@ -74,5 +76,13 @@ export const LEVELS: level[] = [
   { id: 31, meter: '3,300', feet: '10,800', direction: 'E' },
   { id: 32, meter: '3,000', feet: '9,800', direction: 'W' },
   { id: 33, meter: '2,700', feet: '8,900', direction: 'E' },
+  { id: 34, meter: '2,400', feet: '7,900', direction: 'W' },
+  { id: 35, meter: '2,100', feet: '6,900', direction: 'E' },
+  { id: 36, meter: '1,800', feet: '5,900', direction: 'W' },
+  { id: 37, meter: '1,500', feet: '4,900', direction: 'E' },
+  { id: 38, meter: '1,200', feet: '3,900', direction: 'W' },
+  { id: 39, meter: '900', feet: '3,000', direction: 'E' },
+  { id: 40, meter: '600', feet: '2,000', direction: 'W' },
+  { id: 41, meter: '550', feet: '1,800', direction: 'E' },
 ];
 

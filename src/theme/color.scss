@@ -90,6 +90,8 @@
     color: var(--text-color);
 
     .btn-meter-close {
+        z-index: 1;
+        background-color: red;
         @media (prefers-color-scheme: dark) {
             filter: invert(100%);
         }

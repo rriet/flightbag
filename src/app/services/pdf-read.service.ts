@@ -80,12 +80,13 @@ export class PdfReadService {
     let natEntry: string = '';
     let natExit: string = '';
 
+    // Hold waypoint coordinates for each wind page, to match with waypoint after all pages have been loaded
+    let windWaypoints: string[] = [];
+
     pages.forEach(page => {
 
       // Remove double spaces
       page = page.replace(/ {2,}/g, ' ');
-
-      // console.log(page)
 
       if (!dispatchReleaseFinished) {
 
@@ -271,7 +272,7 @@ export class PdfReadService {
         // SYZ 117.80 338 12 512 / 509 130 0038 .... .... 112.9 UP574 300 130 / 011 P18 1 .... ....
         // TOC 58 0.831 512 / 507 130 0039 .... .... 112.5 UP574 341 132 / 007 P18 7 .... ....
         // ASNIT 338 46 516 / 507 142 0046 .... .... 111.4
-        let waypoints = page.match(/((ENTRY)[0-9]|(ETP\([0-9A-Z]{1,4}\))|(EXIT)[0-9]|[A-Z]{2,5}|([NS]{1}[0-9]{4}[EW][0-9]{5}))[ ][0-9 .\/]+[.]{4}[ ][0-9]{1,4}[.][0-9]{1}/g) || [];
+        let waypoints = page.match(/((ENTRY)[0-9]|(ETP\([0-9A-Z]{1,4}\))|(EXIT)[0-9]|[A-Z]{2,5}|([NS]{1}[0-9]{4,6}[EW][0-9]{5,7}))[ ][0-9 .\/]+[.]{4}[ ][0-9]{1,4}[.][0-9]{1}/g) || [];
 
         // ((ENTRY)[0-9]|(ETP\([0-9]D\))|(EXIT)[0-9]|[A-Z]{3,5}|([NS]{1}[0-9]{4}[EW][0-9]{5}))[ ][0-9 .\/]+[.]{4}[ ][0-9]{1,4}[.][0-9]{1}
 
@@ -283,6 +284,13 @@ export class PdfReadService {
 
           // Waypoint NAME = All chars untill SPACE
           let waypointName = waypoint.substring(0, waypoint.indexOf(' '));
+
+          // Fix waypoint name if coordinate has 15 chars....
+          if (/^([NS]{1}[0-9]{6}[EW][0-9]{7})$/.test(waypointName)) {
+            console.log(waypointName)
+            waypointName = waypointName.substring(0,5) +"/" + waypointName.substring(7,13);
+            console.log(waypointName)
+          }
 
           // Look for the pattern "HHMM .... .... NNN.N" => Than split the result in the ' .... .... '
           let timeFuel = (waypoint.match(/[0-9]{4}( .... .... )[0-9]{1,4}.[0-9]{1}/g) || [''])[0].split(' .... .... ');
@@ -356,33 +364,37 @@ export class PdfReadService {
         // look for pattern N1312.4/E07743.9
         let waypoints = page.match(/[NS][0-9]{4}.[0-9]{1}\/[EW][0-9]{5}.[0-9]{1}([ ][A-Z]{0,5})?/g) || [];
 
-        // for each waipoint, extract name and coordinates and insert into flight
-        for (let i = 0; i < waypoints.length; i++) {
-          let waypoint = waypoints[i];
-
-          let wpt = this.getWaypoints(waypoint);
-
-          // find the waypoint
-          const index = this._flight.flight.waypoints.findIndex((w) => w.name === wpt.name || w.name === wpt.coordStr);
-
-          // if waypoint was found
-          if (index !== -1) {
-            this._flight.flight.waypoints[index].lat = wpt.lat;
-            this._flight.flight.waypoints[index].lon = wpt.lon;
-
-            // Lets calculate Track and Distance ;) - if it's not the last waypoint.
-            if (i + 1 < waypoints.length) {
-              let wpt2 = this.getWaypoints(waypoints[i + 1]);
-
-              this._flight.flight.waypoints[index].distance = Math.round(this._fcalc.flightDistance(wpt.lat, wpt.lon, wpt2.lat, wpt2.lon));
-
-              this._flight.flight.waypoints[index].bearing = Math.round(this._fcalc.flightBearing(wpt.lat, wpt.lon, wpt2.lat, wpt2.lon));
-            }
-          }
-        };
+        // Add windWaypoints Array to Waypoints array
+        windWaypoints = [...windWaypoints, ...waypoints];
 
         // stop looking for waypoints
         if (page.includes('DESC FL 100 200 310 350')) {
+
+          // for each waipoint, extract name and coordinates and insert into flight
+          for (let i = 0; i < windWaypoints.length; i++) {
+            let waypoint = windWaypoints[i];
+
+            let wpt = this.getWaypoints(waypoint);
+
+            // find the waypoint
+            const index = this._flight.flight.waypoints.findIndex((w) => w.name === wpt.name || w.name === wpt.coordStr);
+
+            // if waypoint was found
+            if (index !== -1) {
+              this._flight.flight.waypoints[index].lat = wpt.lat;
+              this._flight.flight.waypoints[index].lon = wpt.lon;
+
+              // Lets calculate Track and Distance ;) - if it's not the last waypoint.
+              if (i + 1 < windWaypoints.length) {
+                let wpt2 = this.getWaypoints(windWaypoints[i + 1]);
+
+                this._flight.flight.waypoints[index].distance = Math.round(this._fcalc.flightDistance(wpt.lat, wpt.lon, wpt2.lat, wpt2.lon));
+
+                this._flight.flight.waypoints[index].bearing = Math.round(this._fcalc.flightBearing(wpt.lat, wpt.lon, wpt2.lat, wpt2.lon));
+              }
+            }
+          }
+
           windsPage = false;
         }
       }
@@ -416,10 +428,10 @@ export class PdfReadService {
       if (page.includes('WX FORECAST') || weatherPage) {
         weatherPage = true;
 
-        let airports: string[] = (page.match(/[ ][A-Z]{4}\/[A-Z]{3}[ ]/g) || []);
+        let airports: string[] = (page.match(/[A-Z]{4}\/[A-Z]{3}[ ]/g) || []);
 
         airports.forEach(airport => {
-          let tempIcao = airport.substring(1, 5);
+          let tempIcao = airport.substring(0, 4);
           // add to alternates
           alts.push({ icao: tempIcao });
           // dont inset the departue and arrival airpors in the list to be copied
@@ -461,7 +473,8 @@ export class PdfReadService {
     if (lat.substring(0, 1) === 'S') latNum *= -1;
 
     let lon = parts[1];
-    let lonNum = Number(lon.substring(1, 4)) + (Number(lon.substring(4)) / 60)
+    let lonNum = Number(lon.substring(1, 4)) + (Number(lon.substring(4)) / 60);
+
     // Revert the lon if west
     if (lon.substring(0, 1) === 'W') lonNum *= -1;
 

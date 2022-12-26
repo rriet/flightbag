@@ -4,11 +4,18 @@
             <div class="col">
                 <h4>{{name()}}</h4>
             </div>
-            <div class="col">
-                FL{{inputFl}}
+            <div *ngIf="waypoint.bearing" class="col small-text">
+                TRK {{waypoint.bearing}} 
+                <br>
+                Dist {{waypoint.distance}} NM
+            </div>
+            <div class="col small-text">
+                FL{{inputFl}} 
+                <br>
+                <div *ngIf="inputFl != planFl()">(Plan FL{{planFl()}})</div>
             </div>
         </div>
-        <div class="row">
+        <div class="row medium-text">
             <div class="col">
                 {{waypointTime().text}}
             </div>
@@ -16,8 +23,8 @@
                 <div [class.caution]="isOverweight()">Weight: {{weightNow | numToTons}}</div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="row medium-text">
+            <div class="col" [class.caution]="(inputFplRemFuelDiff||0) < 300" [class.warning]="(inputFplRemFuelDiff||0) < 0">
                 {{fuelOnboard().text}}
             </div>
         </div>

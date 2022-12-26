@@ -110,16 +110,24 @@
     visibility: hidden;
 }
 
+.meter-window {
+    top: 4%;
+    height: 95%;
+}
+
 .meter-table-container {
+
+    .scroll-table {
+        height: 80vh;
+        overflow: scroll;
+        position: relative;
+        top: -5px;
+    }
+
     .btn-meter-close {
         position: absolute;
         top: 5px;
         right: 2px;
-    }
-
-    .meter-table {
-        position: relative;
-        top: 20px;
     }
 
     .head {
@@ -127,6 +135,8 @@
         text-align: center;
         padding: 0px !important;
         border: 0px;
+        position: relative;
+        top: 10px;
     }
 
     .cell {
@@ -143,7 +153,6 @@
 
 .show-meter-dialog {
     .show-meter-table {
-
         th,
         tr {
             text-align: center;
@@ -177,4 +186,5 @@
 
 .dialog-button {
     width: 120px;
+    font-size: 0.7rem;
 }
