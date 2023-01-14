@@ -186,6 +186,7 @@
 .accordion-button {
     background-color: var(--toolbar-background);
     border-color: var(--color-light-tint);
+    color: var(--toolbar-text-color);
 
     &:not(.collapsed) {
         background-color: var(--toolbar-background);
