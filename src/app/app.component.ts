@@ -68,6 +68,7 @@ export class AppComponent {
     { title: 'TechLog', url: '/techlog', icon: "book" },
     { title: 'Dangerous Goods', url: '/dangerous-goods', icon: "warning" },
     { title: 'Inflight Display', url: '/flight-display', icon: "airplane" },
+    { title: 'Briefing', url: '/briefing', icon: "book" },
     { title: 'PA Guide', url: '/pa', icon: "book" },
     { title: 'Inflight Rest', url: '/inflight-rest', icon: "bed" },
     

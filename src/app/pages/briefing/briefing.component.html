@@ -1,0 +1,117 @@
+<div class="page-header">
+    <div class="page-title">Briefing</div>
+</div>
+<div class="container pa">
+    <div class="card mb-3">
+        <ul ngbNav #restNav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1" class="nav-tabs-item">
+                <a ngbNavLink>Departure</a>
+                <ng-template ngbNavContent>
+                    <ngb-accordion [closeOthers]="true" activeIds="static-1">
+                        <ngb-panel id="static-1" title="PM">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>T/O RWY</li>
+                                    <li>SID Designator</li>
+                                    <li>First Cleared ALT</li>
+                                    <li>MSA/MORA for climb trajectory</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-2" title="PF">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Hotspots of the taxi route</li>
+                                    <li>T/O Emmergency</li>
+                                    <li>EOSID</li>
+                                    <li>Return/Diversion Considerations</li>
+                                    <li>Special Operations</li>
+                                    <li>Non-Standard Operations</li>
+                                    <li>Fuel on Board</li>
+                                    <li>MEL (Performance & Fuel</li>
+                                    <li>NOTOC</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-3" title="Threats and Mitigations">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Terrain</li>
+                                    <li>Runway Condition</li>
+                                    <li>Tire Speed</li>
+                                    <li>Cold Weather</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-4" title="Special Operations">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Noise Abatement</li>
+                                    <li>Etops</li>
+                                    <li>De-Icing</li>
+                                    <li>Engine run-up</li>
+                                    <li>WGS-84</li>
+                                    <li>Metric Altimeter</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2" class="nav-tabs-item">
+                <a ngbNavLink>Arrival</a>
+                <ng-template ngbNavContent>
+                    <ngb-accordion [closeOthers]="true" activeIds="static-1">
+                        <ngb-panel id="static-1" title="PM">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>MORA/MOCA/MSA</li>
+                                    <li>STAR</li>
+                                    <li>Type of APP</li>
+                                    <li>MINIMUM (Temp. Correction)</li>
+                                    <li>G/A Trajectory</li>
+                                    <li>Extra Fuel and Time</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-2" title="PF">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Guidance for APP</li>
+                                    <li>Flaps / Performance</li>
+                                    <li>Reverses and Autobrake</li>
+                                    <li>Planned RWY Exit</li>
+                                    <li>Hotspots for Taxi-in</li>
+                                    <li>Reduced Engine Taxi-in</li>
+                                    <li>Non-Standard Operation</li>
+                                    <li>MEL</li>
+                                    <li>NOTAMS</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-3" title="Threats and Mitigations">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Terrain</li>
+                                    <li>Runway Conditions</li>
+                                    <li>Cross Wind Component</li>
+                                    <li>Cold Weather</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="static-4" title="Special Operations">
+                            <ng-template ngbPanelContent>
+                                <ul>
+                                    <li>Noise Abatement</li>
+                                    <li>Metric Altimeter</li>
+                                </ul>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </ng-template>
+            </li>
+            
+        </ul>
+        <div [ngbNavOutlet]="restNav" class="mt-2"></div>
+    </div>
+</div>

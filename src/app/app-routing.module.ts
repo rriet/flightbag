@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BriefingComponent } from './pages/briefing/briefing.component';
 import { DangerousGoodsComponent } from './pages/dangerous-goods/dangerous-goods.component';
 import { FlightDisplayComponent } from './pages/flight-display/flight-display.component';
 import { FlightInitComponent } from './pages/flight-init/flight-init.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'inflight-rest', component: InflightRestComponent },
   { path: 'pa', component: PaComponent },
   { path: 'performance', component: PerformanceComponent },
+  { path: 'briefing', component: BriefingComponent },
   { path: '', component: MainComponent },
   { path: 'main', component: MainComponent },
   { path: 'meter-table', component: MeterTableComponent },

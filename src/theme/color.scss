@@ -183,6 +183,20 @@
     }
 }
 
+.accordion-button {
+    background-color: var(--toolbar-background);
+    border-color: var(--color-light-tint);
+
+    &:not(.collapsed) {
+        background-color: var(--toolbar-background);
+    }
+}
+
+.accordion-item {
+    background-color: var(--background-color);
+    border-color: var(--color-light-tint);
+}
+
 .table {
     color: var(--text-color);
 }

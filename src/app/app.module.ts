@@ -43,6 +43,7 @@ import { NumToTonsPipe } from './pipes/num-ton.pipe';
 import { nl2brPipe } from './pipes/nl2br.pipe';
 import { MainComponent } from './pages/main/main.component';
 import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
+import { BriefingComponent } from './pages/briefing/briefing.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { DisclaimerComponent } from './pages/disclaimer/disclaimer.component';
     nl2brPipe,
     MainComponent,
     DisclaimerComponent,
+    BriefingComponent,
   ],
   imports: [
     BrowserModule,
