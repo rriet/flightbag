@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1672899546663,
+  "timestamp": 1673708099134,
   "index": "https://rriet.github.io/flightbag/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "https://rriet.github.io/flightbag/favicon.ico",
         "https://rriet.github.io/flightbag/index.html",
-        "https://rriet.github.io/flightbag/main.c158b7f1c445ae19.js",
+        "https://rriet.github.io/flightbag/main.31d913fb68fec48f.js",
         "https://rriet.github.io/flightbag/manifest.webmanifest",
         "https://rriet.github.io/flightbag/polyfills.7076518a9af696c7.js",
         "https://rriet.github.io/flightbag/runtime.71c359ab2b6e7ee9.js",
-        "https://rriet.github.io/flightbag/styles.d270849132bd7517.css"
+        "https://rriet.github.io/flightbag/styles.73cb94c416de88a6.css"
       ],
       "patterns": []
     },
@@ -110,12 +110,12 @@
     "https://rriet.github.io/flightbag/assets/js/pdf.worker.js.map": "e38da7ce86d05d4068f4c1ebf59ebe6d9b25f880",
     "https://rriet.github.io/flightbag/assets/js/pdf.worker.min.js": "f4bd88c4ec12725ebc546666668e322924985a61",
     "https://rriet.github.io/flightbag/favicon.ico": "bfbb080c429e9378d25dbe75f80065cca3dc8bde",
-    "https://rriet.github.io/flightbag/index.html": "f01069cd43beb85b1cceafd98ab8818f34dd68b2",
-    "https://rriet.github.io/flightbag/main.c158b7f1c445ae19.js": "2925f032eeae2d561ec9a696de8b080bf61014c3",
+    "https://rriet.github.io/flightbag/index.html": "63bcbf875be76509853c61155737b36ffa1136c1",
+    "https://rriet.github.io/flightbag/main.31d913fb68fec48f.js": "e4f1e708c1072dfb998f3c2b008ee653fffca7f3",
     "https://rriet.github.io/flightbag/manifest.webmanifest": "fb432621475236da96d9ed671edeac4374b7c330",
     "https://rriet.github.io/flightbag/polyfills.7076518a9af696c7.js": "83655a6167b66fc35ed9612681459379f3969f2f",
     "https://rriet.github.io/flightbag/runtime.71c359ab2b6e7ee9.js": "08e5339830075b575709d7fd30803ec59c7df848",
-    "https://rriet.github.io/flightbag/styles.d270849132bd7517.css": "ae074ccb1f8c4fc17fdd80b846b9fc997e3fb508"
+    "https://rriet.github.io/flightbag/styles.73cb94c416de88a6.css": "75eaf2664c0daeac337a80fe8037e63883f71860"
   },
   "navigationUrls": [
     {
