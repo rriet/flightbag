@@ -43,8 +43,8 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <app-number [(value)]="_flight.temperature" label="Temp (C|F)"
-                                [sufix]="_flight.temperatureF"></app-number>
+                            <app-text [(value)]="_flight.temperature" label="Temp (C|F)"
+                                [sufix]="_flight.temperatureF" [right]="true"></app-text>
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-outline-secondary me-2" placement="top"

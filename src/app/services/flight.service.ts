@@ -1059,12 +1059,16 @@ export class FlightService {
   }
 
 
-  set temperature(value: number | null) {
-    value !== null ? this.flight.temperature = value : '';
-    this.saveFlight();
+  set temperature(value: string | null) {
+    if (value !== null && !isNaN(parseInt(value))) {
+      this.flight.temperature = parseInt(value)
+      this.saveFlight();
+    }
+    //value !== null ? this.flight.temperature = parseInt(value) : 0;
+    
   }
-  get temperature(): number {
-    return this.flight.temperature;
+  get temperature(): string {
+    return this.flight.temperature.toString();
   }
 
 
