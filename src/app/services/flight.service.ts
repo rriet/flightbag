@@ -439,6 +439,8 @@ export class FlightService {
       let today = new Date();
       let jd = this._fcalc.calcJD(today.getFullYear(), today.getMonth() + 1, today.getDate());
 
+      let prevWpt: Waypoint|null = null;
+
       for (let i = 0; i < navPoints.length; i++) {
         let waypoint = navPoints[i];
 
@@ -450,11 +452,9 @@ export class FlightService {
           waypoint.isDay = this._fcalc.isDay(waypoint.lat, waypoint.lon, jd, time, (waypoint.flightLevelPlan || 0) * 100);
 
           // if DAY/NIGHT changes from the previous waypoint
-          if (wasDay != waypoint.isDay) {
+          if (wasDay != waypoint.isDay && prevWpt !== null) {
             // Fist time we do nothing
             if (wasDay !== null) {
-
-              let prevWpt: Waypoint = navPoints[i - 1];
 
               // Calculate sunset between this waypoint and previous waypoint
               let sun = this._fcalc.getRiseSetTime((prevWpt.lat || 0), (prevWpt.lon || 0), ((prevWpt.ctm || 0) + (this.flight.timeTakeoff || 0)),
@@ -467,6 +467,7 @@ export class FlightService {
             }
             wasDay = waypoint.isDay;
           }
+          prevWpt = waypoint;
         }
       }
     }
