@@ -12,6 +12,26 @@ export const airports: Airport[] = [
       elevation: 28
     },
     {
+      icao: "FLKK",
+      iata: "LUN",
+      country: "ZA",
+      city: "Lusaka",
+      name: "Kenneth Kaunda International Airport",
+      latitude: -15.331667,
+      longitude: 28.434167,
+      elevation: 3779
+    },
+    {
+      icao: "FVRG",
+      iata: "HRE",
+      country: "ZI",
+      city: "Harare",
+      name: "Robert Gabriel Mugabe International Airport",
+      latitude: -17.931806,
+      longitude: 31.092847,
+      elevation: 4887
+    },
+    {
       icao: "AGGM",
       iata: "MUA",
       country: "SB",
