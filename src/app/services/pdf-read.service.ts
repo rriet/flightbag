@@ -42,8 +42,11 @@ export class PdfReadService {
           });
         }
 
+        let fistPage = pagesArray[0].replace(/ {2,}/g, ' ');
+
         // check fist page is correct
-        if (pagesArray[0].includes('FLIGHT DISPATCH RELEASE')) {
+        if (fistPage.includes('FLIGHT DISPATCH RELEASE')) {
+
 
           // empty current flight
           this._flight.clearFligh();
@@ -288,7 +291,7 @@ export class PdfReadService {
           // Fix waypoint name if coordinate has 15 chars....
           if (/^([NS]{1}[0-9]{6}[EW][0-9]{7})$/.test(waypointName)) {
             console.log(waypointName)
-            waypointName = waypointName.substring(0,5) +"/" + waypointName.substring(7,13);
+            waypointName = waypointName.substring(0, 5) + "/" + waypointName.substring(7, 13);
             console.log(waypointName)
           }
 
